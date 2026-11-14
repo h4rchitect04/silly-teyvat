@@ -248,7 +248,7 @@ body.gi-choices-enabled #rightNavHolder { order: 9; }
 #gi-attack-controls[hidden] { display: none !important; }
 #gi-attack-dock { position: fixed; z-index: 5; right: 4vw; bottom: calc(var(--gi-composer-height, 0px) + var(--gi-dialogue-height, 204px) + 102px + env(safe-area-inset-bottom, 0px)); display: flex; justify-content: flex-end; pointer-events: none; }
 #gi-attack-dock > * { pointer-events: auto; }
-body:not(.gi-scene) #gi-attack-dock, body.gi-history #gi-attack-dock { display: none; }
+body:not(.gi-scene):not(.gi-classic) #gi-attack-dock, body.gi-history #gi-attack-dock { display: none; }
 #gi-choices .gi-choices-heading:has(#gi-attack-controls:not([hidden])) { position: static !important; }
 
 /* The roster scrolls sideways, which clips vertically too: pad it so the enlarged selected portrait, its ring and glow stay whole. */
@@ -257,7 +257,7 @@ body:not(.gi-scene) #gi-attack-dock, body.gi-history #gi-attack-dock { display: 
 /* ---------- Party health ---------- */
 #gi-party-health { position: fixed; z-index: 31; left: 3vw; bottom: calc(var(--gi-composer-height, 0px) + var(--gi-dialogue-height, 204px) + 102px + env(safe-area-inset-bottom, 0px)); display: flex; flex-direction: column; gap: 6px; width: min(240px, 42vw); pointer-events: none; font-family: var(--ty-font); }
 #gi-party-health[hidden] { display: none !important; }
-body:not(.gi-scene) #gi-party-health, body.gi-history #gi-party-health, body.gi-hidden #gi-party-health { display: none; }
+body:not(.gi-scene):not(.gi-classic) #gi-party-health, body.gi-history #gi-party-health, body.gi-hidden #gi-party-health { display: none; }
 .gi-party-member { display: grid; grid-template-columns: 1fr auto; gap: 3px 10px; align-items: baseline; padding: 6px 12px 8px; border-radius: 12px; background: #141b2ad9; box-shadow: inset 0 0 0 1px #d3bc8e44, 0 3px 10px #0007; color: var(--ty-cream); }
 .gi-party-member strong { font-size: 13px; font-weight: normal; text-shadow: 0 1px 3px #000; }
 .gi-party-member > span { font-size: 11px; color: var(--ty-cream-2, #d9cdb4); }

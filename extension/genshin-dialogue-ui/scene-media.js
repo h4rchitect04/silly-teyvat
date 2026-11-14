@@ -115,6 +115,8 @@ export function fittedFrame({width,height,extraWidth,extraHeight,ratio,maxWidth,
 // when no dialogue is shown. A page shorter than the longest still leaves the same room above it.
 export function dialogueTop(doc=document){
     const view=doc.defaultView,H=view.innerHeight,state=doc.body.classList;
+    // The classic chat box: a framed CG stands above it.
+    if(state.contains('gi-classic')){const box=doc.querySelector('#sheld')?.getBoundingClientRect();return box?.height?Math.min(H,box.top):H;}
     if(!state.contains('gi-scene')||state.contains('gi-history')||state.contains('gi-hidden'))return H;
     const shown=node=>Boolean(node?.getClientRects().length)&&view.getComputedStyle(node).display!=='none';
     const box=[...doc.querySelectorAll('#chat > .mes.gi-current')].find(shown);

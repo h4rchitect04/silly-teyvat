@@ -1,0 +1,96 @@
+/* Dialogue view off: the classic SillyTavern chat, every message with its own avatar, swipes and buttons,
+   in a frosted box at the foot of the scene. The place, sprites, map, HUD and battles stay as they are;
+   whatever stands behind the box shows through it blurred. */
+html:has(> body.gi-classic) { height: 100vh; height: 100dvh; overflow: hidden !important; overscroll-behavior: none !important; }
+body.gi-classic {
+    --gi-classic-width: min(max(var(--sheldWidth, 50vw), 760px), calc(100vw - 24px));
+    --gi-classic-height: clamp(280px, 42dvh, 560px);
+    --gi-classic-bottom: max(10px, env(safe-area-inset-bottom, 0px));
+    position: fixed !important; inset: 0 !important; width: 100% !important; height: 100dvh !important; min-height: 0 !important; max-height: 100dvh !important;
+    margin: 0 !important; overflow: hidden !important; overscroll-behavior: none !important;
+}
+body.gi-classic #sheld {
+    position: fixed !important;
+    z-index: 3 !important;
+    inset: auto 0 var(--gi-classic-bottom) 0 !important;
+    display: flex !important;
+    flex-direction: column;
+    width: var(--gi-classic-width) !important;
+    height: var(--gi-classic-height) !important;
+    min-width: 0; min-height: 0;
+    max-width: none !important; max-height: none !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    border: 1px solid #e5ca8770 !important;
+    border-radius: 16px !important;
+    overflow: hidden !important;
+    background: rgb(22 30 40 / calc(var(--gi-scrim-opacity, .8) * .62)) !important;
+    box-shadow: inset 0 0 0 1px #e5ca8714, 0 18px 60px #0008 !important;
+    backdrop-filter: blur(16px) saturate(1.15) !important;
+    -webkit-backdrop-filter: blur(16px) saturate(1.15) !important;
+    transform: none !important;
+    pointer-events: auto;
+}
+body.gi-classic #sheldheader { display: none !important; }
+body.gi-classic #chat {
+    position: relative !important;
+    inset: auto !important;
+    flex: 1 1 auto;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0;
+    max-height: none !important;
+    margin: 0 !important;
+    padding: 4px 10px 8px !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: #b9ac8673 transparent;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    box-shadow: none !important;
+}
+body.gi-classic #chat > .mes { background: transparent !important; }
+body.gi-classic #form_sheld {
+    position: relative !important;
+    inset: auto !important;
+    flex: 0 0 auto;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 6px 10px 10px;
+    transform: none !important;
+    border-top: 1px solid #d7c8a42b;
+    background: transparent;
+}
+body.gi-classic #send_form {
+    border: 1px solid #d7c8a440;
+    border-radius: 14px;
+    background: #1d2a36b8 !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+/* Teyvat Choices, the attack dock and party health stand above the box, as they stand above the dialogue. */
+body.gi-classic #gi-root #gi-choices {
+    position: fixed !important;
+    inset: auto max(16px, calc((100vw - var(--gi-classic-width)) / 2)) calc(var(--gi-classic-height) + var(--gi-classic-bottom) + 14px) auto !important;
+    width: min(430px, 34vw) !important;
+    max-height: min(30dvh, calc(100dvh - var(--gi-classic-height) - var(--gi-classic-bottom) - var(--topBarBlockSize, 42px) - 40px));
+}
+body.gi-classic #gi-attack-dock { right: max(16px, calc((100vw - var(--gi-classic-width)) / 2)); bottom: calc(var(--gi-classic-height) + var(--gi-classic-bottom) + 14px); }
+body.gi-classic #gi-party-health { bottom: calc(var(--gi-classic-height) + var(--gi-classic-bottom) + 14px); }
+
+@media (max-width: 760px), (max-height: 560px) {
+    body.gi-classic {
+        --gi-classic-width: calc(100vw - 16px - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px));
+        --gi-classic-height: clamp(220px, 46dvh, 440px);
+        --gi-classic-bottom: max(8px, env(safe-area-inset-bottom, 0px));
+    }
+    body.gi-classic #sheld { border-radius: 14px !important; }
+    body.gi-classic #gi-root #gi-choices { width: min(360px, calc(100vw - 32px)) !important; }
+}

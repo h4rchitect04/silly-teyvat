@@ -3,7 +3,7 @@ import {iconAsset} from './hud-icons.js';
 // as it would be without it. Each set below switches every setting in it on or off together; the
 // settings themselves stay in their tabs, and a set with only some of them on shows as partly on.
 export const FEATURE_GROUPS=[
-    {id:'story',label:'Story view',note:'Dialogue pages over the scene. Off returns the normal chat.',keys:['enabled']},
+    {id:'story',label:'Dialogue view',note:'Dialogue pages over the scene. Off shows the classic chat in a box over the scene; the game stays on.',keys:['enabled']},
     {id:'choices',label:'Choices & HUD',note:'Suggested replies and the icons around the chat.',keys:['choices']},
     {id:'stage',label:'Sprites & staging',note:'Character sprites, their expressions and placement.',keys:['nativeStaging','pageExpressions']},
     {id:'cgs',label:'Scene CGs',note:'Artwork chosen for the scene as replies arrive.',keys:['cgEnabled']},

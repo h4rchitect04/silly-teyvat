@@ -17,47 +17,47 @@ body #gi-attack-controls #gi-attack-toggle:disabled { opacity: .45; cursor: defa
 #gi-choices .gi-choices-heading { gap: 8px; }
 
 /* Enemy health: a slim bar and name at the top centre, as on Genshin's boss bars. */
-body.gi-scene #gi-combat {
+body:is(.gi-scene, .gi-classic) #gi-combat {
     position: fixed; z-index: 31; top: calc(env(safe-area-inset-top, 0px) + 12px); left: 50%; right: auto; translate: -50% 0;
     width: min(44vw, 330px); max-width: none; display: flex; flex-direction: column; gap: 7px; pointer-events: none;
 }
-body.gi-scene #gi-combat[hidden] { display: none; }
-body.gi-scene #gi-combat .gi-enemy-health {
+body:is(.gi-scene, .gi-classic) #gi-combat[hidden] { display: none; }
+body:is(.gi-scene, .gi-classic) #gi-combat .gi-enemy-health {
     position: relative; display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-rows: auto 5px; align-items: end; gap: 3px 8px; min-width: 0; width: auto;
     padding: 0; border: 0; border-radius: 0; background: none; box-shadow: none; overflow: visible;
 }
-body.gi-scene #gi-combat .gi-enemy-health img { display: none; }
-body.gi-scene #gi-combat .gi-enemy-health strong { grid-column: 1; grid-row: 1; font: 13px/1.1 var(--ty-font); letter-spacing: .02em; color: #fff; text-shadow: 0 1px 3px #000, 0 0 8px #0009; }
-body.gi-scene #gi-combat .gi-enemy-health > span:not(.gi-sr-only) { grid-column: 2; grid-row: 1; font: 11px/1.1 var(--ty-font); font-variant-numeric: tabular-nums; color: #f2dca0d9; text-shadow: 0 1px 3px #000; }
-body.gi-scene #gi-combat .gi-enemy-health .gi-hp { grid-column: 1 / -1; grid-row: 2; height: 5px; margin: 0; border-radius: 3px; overflow: hidden; background: #0b0f179e; box-shadow: 0 0 0 1px #ffffff2e, 0 1px 4px #0007; }
-body.gi-scene #gi-combat .gi-enemy-health .gi-hp::before, body.gi-scene #gi-combat .gi-enemy-health .gi-hp::after { display: none; }
-body.gi-scene #gi-combat .gi-enemy-health .gi-hp i { inset: 0 auto 0 0; max-width: 100%; border-radius: inherit; }
-body.gi-scene #gi-combat .gi-damage-pop { top: -6px; }
+body:is(.gi-scene, .gi-classic) #gi-combat .gi-enemy-health img { display: none; }
+body:is(.gi-scene, .gi-classic) #gi-combat .gi-enemy-health strong { grid-column: 1; grid-row: 1; font: 13px/1.1 var(--ty-font); letter-spacing: .02em; color: #fff; text-shadow: 0 1px 3px #000, 0 0 8px #0009; }
+body:is(.gi-scene, .gi-classic) #gi-combat .gi-enemy-health > span:not(.gi-sr-only) { grid-column: 2; grid-row: 1; font: 11px/1.1 var(--ty-font); font-variant-numeric: tabular-nums; color: #f2dca0d9; text-shadow: 0 1px 3px #000; }
+body:is(.gi-scene, .gi-classic) #gi-combat .gi-enemy-health .gi-hp { grid-column: 1 / -1; grid-row: 2; height: 5px; margin: 0; border-radius: 3px; overflow: hidden; background: #0b0f179e; box-shadow: 0 0 0 1px #ffffff2e, 0 1px 4px #0007; }
+body:is(.gi-scene, .gi-classic) #gi-combat .gi-enemy-health .gi-hp::before, body:is(.gi-scene, .gi-classic) #gi-combat .gi-enemy-health .gi-hp::after { display: none; }
+body:is(.gi-scene, .gi-classic) #gi-combat .gi-enemy-health .gi-hp i { inset: 0 auto 0 0; max-width: 100%; border-radius: inherit; }
+body:is(.gi-scene, .gi-classic) #gi-combat .gi-damage-pop { top: -6px; }
 
 /* Party health: Genshin's party column. Small portraits down the right edge, each with a thin bar; names and numbers on hover. */
-body.gi-scene #gi-party-health {
+body:is(.gi-scene, .gi-classic) #gi-party-health {
     position: fixed; z-index: 31; top: calc(env(safe-area-inset-top, 0px) + 66px); right: calc(env(safe-area-inset-right, 0px) + 10px); left: auto; bottom: auto;
     width: auto; max-width: none; display: flex; flex-direction: column; align-items: center; gap: 8px; pointer-events: none;
 }
-body.gi-scene #gi-party-health[hidden] { display: none; }
-body.gi-scene #gi-party-health .gi-party-member {
+body:is(.gi-scene, .gi-classic) #gi-party-health[hidden] { display: none; }
+body:is(.gi-scene, .gi-classic) #gi-party-health .gi-party-member {
     position: relative; display: grid; grid-template-columns: 34px; grid-template-rows: 34px 4px; justify-items: stretch; gap: 3px; width: 34px; padding: 0;
     border: 0; border-radius: 0; background: none; box-shadow: none; overflow: visible; pointer-events: auto; opacity: .92;
 }
-body.gi-scene #gi-party-health .gi-party-member .gi-circle-face { grid-column: 1; grid-row: 1; width: 34px; height: 34px; }
-body.gi-scene #gi-party-health .gi-party-member strong, body.gi-scene #gi-party-health .gi-party-member > span:not(.gi-circle-face) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-body.gi-scene #gi-party-health .gi-party-member .gi-hp { grid-column: 1; grid-row: 2; width: 100%; height: 4px; margin: 0; border-radius: 2px; overflow: hidden; background: #0b0f179e; box-shadow: 0 0 0 1px #ffffff2e; }
-body.gi-scene #gi-party-health .gi-party-member .gi-hp::before, body.gi-scene #gi-party-health .gi-party-member .gi-hp::after { display: none; }
-body.gi-scene #gi-party-health .gi-party-member .gi-hp i { inset: 0 auto 0 0; max-width: 100%; border-radius: inherit; }
-body.gi-scene #gi-party-health .gi-party-member.gi-downed { opacity: .6; }
-body.gi-scene #gi-party-health .gi-party-member.gi-downed strong::after { content: none; }
+body:is(.gi-scene, .gi-classic) #gi-party-health .gi-party-member .gi-circle-face { grid-column: 1; grid-row: 1; width: 34px; height: 34px; }
+body:is(.gi-scene, .gi-classic) #gi-party-health .gi-party-member strong, body:is(.gi-scene, .gi-classic) #gi-party-health .gi-party-member > span:not(.gi-circle-face) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+body:is(.gi-scene, .gi-classic) #gi-party-health .gi-party-member .gi-hp { grid-column: 1; grid-row: 2; width: 100%; height: 4px; margin: 0; border-radius: 2px; overflow: hidden; background: #0b0f179e; box-shadow: 0 0 0 1px #ffffff2e; }
+body:is(.gi-scene, .gi-classic) #gi-party-health .gi-party-member .gi-hp::before, body:is(.gi-scene, .gi-classic) #gi-party-health .gi-party-member .gi-hp::after { display: none; }
+body:is(.gi-scene, .gi-classic) #gi-party-health .gi-party-member .gi-hp i { inset: 0 auto 0 0; max-width: 100%; border-radius: inherit; }
+body:is(.gi-scene, .gi-classic) #gi-party-health .gi-party-member.gi-downed { opacity: .6; }
+body:is(.gi-scene, .gi-classic) #gi-party-health .gi-party-member.gi-downed strong::after { content: none; }
 @media (max-height: 520px) {
-    body.gi-scene #gi-combat { top: calc(env(safe-area-inset-top, 0px) + 8px); width: min(40vw, 300px); gap: 5px; }
-    body.gi-scene #gi-combat .gi-enemy-health strong { font-size: 12px; }
-    body.gi-scene #gi-party-health { top: calc(env(safe-area-inset-top, 0px) + 12px); gap: 5px; }
-    body.gi-scene #gi-party-health .gi-party-member { grid-template-columns: 28px; grid-template-rows: 28px 3px; width: 28px; gap: 2px; }
-    body.gi-scene #gi-party-health .gi-party-member .gi-circle-face { width: 28px; height: 28px; }
-    body.gi-scene #gi-party-health .gi-party-member .gi-hp { height: 3px; }
+    body:is(.gi-scene, .gi-classic) #gi-combat { top: calc(env(safe-area-inset-top, 0px) + 8px); width: min(40vw, 300px); gap: 5px; }
+    body:is(.gi-scene, .gi-classic) #gi-combat .gi-enemy-health strong { font-size: 12px; }
+    body:is(.gi-scene, .gi-classic) #gi-party-health { top: calc(env(safe-area-inset-top, 0px) + 12px); gap: 5px; }
+    body:is(.gi-scene, .gi-classic) #gi-party-health .gi-party-member { grid-template-columns: 28px; grid-template-rows: 28px 3px; width: 28px; gap: 2px; }
+    body:is(.gi-scene, .gi-classic) #gi-party-health .gi-party-member .gi-circle-face { width: 28px; height: 28px; }
+    body:is(.gi-scene, .gi-classic) #gi-party-health .gi-party-member .gi-hp { height: 3px; }
 }
 
 /* Round character cutouts use the Sprite wardrobe's circular icons, cropped the way its roster crops them. */

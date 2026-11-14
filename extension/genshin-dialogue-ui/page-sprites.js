@@ -259,6 +259,8 @@ export function mountPageSprites({ host, getContext, adapter = createNativeSprit
     // The top of the dialogue box. The page text changes height from page to page, so frame
     // against the controls under it plus a typical three-line box, which keeps sprites steady.
     function dialogueTop(H) {
+        // The classic chat box: the sprites stand on its top edge.
+        if (document.body.classList.contains('gi-classic')) { const box = document.querySelector('#sheld')?.getBoundingClientRect(); return box?.height ? Math.min(H, box.top) : H; }
         if (!document.body.classList.contains('gi-scene') || document.body.classList.contains('gi-history') || document.body.classList.contains('gi-hidden')) return H;
         const visible = node => node && !node.hidden && node.getClientRects().length && getComputedStyle(node).display !== 'none';
         const nav = document.querySelector('#gi-navigation'), form = document.querySelector('#form_sheld');

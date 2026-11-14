@@ -34,6 +34,7 @@ Expressions use SillyTavern's **Character Expressions** classifier settings. Cha
 - **Teyvat Choices** suggests three replies after each character message. Click one to send it.
 - **Auto** reads for you, **History** opens the full transcript for editing and swiping, and **Hide UI** clears the screen for screenshots, and **Full Screen** hides the browser around the game on PC and Android (on iPhone, add SillyTavern to the Home Screen and open it from there). Regenerate and Stop sit beside the dialogue box.
 - The HUD icons and the Paimon menu open SillyTavern's own panels, restyled to match the game.
+- Turn off **Dialogue view** (Settings → Dialogue, or the Silly Teyvat switch in the Paimon menu) to read the classic SillyTavern chat instead, in a frosted box at the foot of the scene. The place, sprites, map, HUD, Choices and battles carry on as usual.
 
 ### Characters, sprites and scenes
 

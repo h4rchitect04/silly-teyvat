@@ -17,7 +17,7 @@ LAYERS = [
     'paimon-menu.css', 'character-identity.css', 'inventory.css', 'trust.css', 'mobile-interface.css',
     'combat-hud.css', 'loading-and-media.css', 'card-drops.css', 'character-screen.css',
     'gallery-and-settings.css', 'battle-board.css', 'battle-weapons.css', 'battle-equipment.css',
-    'card-search.css',
+    'card-search.css', 'classic-chat.css',
 ]
 MARK = '\n/* @@silly-teyvat-1.19-ui@@ */\n'
 

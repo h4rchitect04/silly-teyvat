@@ -113,7 +113,7 @@ body.gi-shell { --pm-rail-width: 68px; }
 /* Top-right SillyTavern icons switched off: the toggle is hidden, its panel still opens from the menu. */
 body.gi-shell #top-settings-holder > .drawer.gi-hud-tucked { flex: 0 0 0 !important; width: 0 !important; margin: 0 !important; overflow: visible; }
 body.gi-shell #top-settings-holder > .drawer.gi-hud-tucked > .drawer-toggle { display: none !important; }
-/* Story view or Choices & HUD off: the SillyTavern icons centre at the top middle, where SillyTavern opens their panels.
+/* Choices & HUD off: the SillyTavern icons centre at the top middle, where SillyTavern opens their panels.
    The row is sized to clear the Paimon launcher on the left. */
 body.gi-shell:is(:not(.gi-enabled), :not(.gi-choices-enabled)) {
     --gi-hud-cell: min(50px, calc((100vw - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px) - 2 * var(--gi-hud-margin) - (var(--gi-hud-count) + 1) * var(--gi-hud-gap)) / (var(--gi-hud-count) + 2)));

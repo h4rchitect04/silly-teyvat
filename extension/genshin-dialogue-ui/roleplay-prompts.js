@@ -181,14 +181,14 @@ export function bindRoleplayPrompts(getContext, signal) {
         if (!input) return;
         const ctx = getContext();
         setRoleplayPrompt(ctx, input.dataset.giPrompt, input.value);
-        ctx.saveSettingsDebounced();syncRoleplayPrompts(ctx, settingsOf(ctx)?.enabled);
+        ctx.saveSettingsDebounced();syncRoleplayPrompts(ctx, true);
     }, {signal});
     document.addEventListener('click', event => {
         const button = event.target.closest?.('#gi-settings [data-gi-prompt-reset]');
         if (!button) return;
         const ctx = getContext(), id = button.dataset.giPromptReset;
         setRoleplayPrompt(ctx, id, null);
-        ctx.saveSettingsDebounced();syncRoleplayPrompts(ctx, settingsOf(ctx)?.enabled);
+        ctx.saveSettingsDebounced();syncRoleplayPrompts(ctx, true);
         const input = document.querySelector(`#gi-settings [data-gi-prompt="${id}"]`);
         if (input) input.value = roleplayPromptText(ctx, id);
     }, {signal});
