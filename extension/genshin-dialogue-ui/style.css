@@ -1100,12 +1100,12 @@ body:is(.gi-scene:not(.gi-history), .gi-classic) #gi-choices { max-height: min(4
 #gi-choices button:disabled { opacity: .55; cursor: default; }
 #gi-choices .gi-choice-refresh:hover { background: #536374e8; }
 #gi-choices button:focus-visible { outline: 2px solid #f0d790; outline-offset: 2px; }
-body.gi-choices-enabled #qr--popoutTrigger { display: none !important; }
+body.gi-hud-enabled #qr--popoutTrigger { display: none !important; }
 body.gi-scene.gi-history #gi-choices,
 body.gi-scene.gi-hidden #gi-choices { display: none !important; }
 
 /* Transparent top-right HUD. Keep native drawer elements and their actions. */
-body.gi-choices-enabled #top-bar { background: transparent !important; border: 0 !important; box-shadow: none !important; backdrop-filter: none !important; }
+body.gi-hud-enabled #top-bar { background: transparent !important; border: 0 !important; box-shadow: none !important; backdrop-filter: none !important; }
 body.gi-shell #top-settings-holder {
     position: fixed !important;
     inset: var(--gi-hud-top) calc(env(safe-area-inset-right, 0px) + var(--gi-hud-margin)) auto auto !important;
@@ -1122,33 +1122,33 @@ body.gi-shell #top-settings-holder > .drawer > .drawer-toggle {
 }
 body.gi-shell #top-settings-holder > .drawer > .drawer-toggle { display: grid; place-items: center; cursor: pointer; }
 body.gi-shell #top-settings-holder .drawer-icon { font-size: calc(var(--gi-hud-cell) * .65); }
-body.gi-choices-enabled .gi-hud-target {
+body.gi-hud-enabled .gi-hud-target {
     display: grid !important; place-items: center;
     width: var(--gi-hud-cell) !important; height: var(--gi-hud-cell) !important;
     padding: 0 !important; opacity: 1 !important; color: white !important;
     border: 0 !important; background: transparent !important; box-shadow: none !important;
 }
-body.gi-choices-enabled .gi-hud-target::before { display: none !important; }
+body.gi-hud-enabled .gi-hud-target::before { display: none !important; }
 .gi-hud-icon { display: none; pointer-events: none; }
-body.gi-choices-enabled .gi-hud-icon { display: block; width: 76%; height: 76%; object-fit: contain; fill: currentColor; filter: drop-shadow(0 2px 2px #23333a80); }
-body.gi-choices-enabled .drawer-toggle:hover .gi-hud-icon,
-body.gi-choices-enabled .drawer-toggle:focus-visible .gi-hud-icon,
-body.gi-choices-enabled .gi-hud-target.openIcon .gi-hud-icon { color: #ffdf9d; }
-body.gi-choices-enabled #extensions-settings-button { order: 1; }
-body.gi-choices-enabled #ai-config-button { order: 2; }
-body.gi-choices-enabled #WI-SP-button { order: 3; }
-body.gi-choices-enabled #advanced-formatting-button { order: 4; }
-body.gi-choices-enabled #persona-management-button { order: 5; }
-body.gi-choices-enabled #backgrounds-button { order: 6; }
-body.gi-choices-enabled #sys-settings-button { order: 7; }
-body.gi-choices-enabled #rightNavHolder { order: 8; }
-body.gi-choices-enabled #user-settings-button { order: 9; }
+body.gi-hud-enabled .gi-hud-icon { display: block; width: 76%; height: 76%; object-fit: contain; fill: currentColor; filter: drop-shadow(0 2px 2px #23333a80); }
+body.gi-hud-enabled .drawer-toggle:hover .gi-hud-icon,
+body.gi-hud-enabled .drawer-toggle:focus-visible .gi-hud-icon,
+body.gi-hud-enabled .gi-hud-target.openIcon .gi-hud-icon { color: #ffdf9d; }
+body.gi-hud-enabled #extensions-settings-button { order: 1; }
+body.gi-hud-enabled #ai-config-button { order: 2; }
+body.gi-hud-enabled #WI-SP-button { order: 3; }
+body.gi-hud-enabled #advanced-formatting-button { order: 4; }
+body.gi-hud-enabled #persona-management-button { order: 5; }
+body.gi-hud-enabled #backgrounds-button { order: 6; }
+body.gi-hud-enabled #sys-settings-button { order: 7; }
+body.gi-hud-enabled #rightNavHolder { order: 8; }
+body.gi-hud-enabled #user-settings-button { order: 9; }
 
 /* The HUD is a compact row, so its native absolute-positioned drawers must
    use viewport coordinates rather than the row as their containing block.
    Include side drawers and moved/pinned panels by ID; keep native open/close
    and internal flex/grid layouts intact. */
-body.gi-choices-enabled :is(#left-nav-panel, #rm_api_block, #AdvancedFormatting, #WorldInfo, #user-settings-block, #Backgrounds, #rm_extensions_block, #PersonaManagement, #right-nav-panel) {
+body.gi-hud-enabled :is(#left-nav-panel, #rm_api_block, #AdvancedFormatting, #WorldInfo, #user-settings-block, #Backgrounds, #rm_extensions_block, #PersonaManagement, #right-nav-panel) {
     box-sizing: border-box !important;
     position: fixed !important;
     inset: 50dvh auto auto 50vw !important;
@@ -1174,10 +1174,10 @@ body.gi-choices-enabled :is(#left-nav-panel, #rm_api_block, #AdvancedFormatting,
     box-shadow: 0 24px 80px #07111dc2, inset 0 0 0 4px #cdb98c18 !important;
     transition: none !important;
 }
-body.gi-choices-enabled :is(#left-nav-panel, #WorldInfo, #right-nav-panel) > .drag-grabber { display: none !important; }
+body.gi-hud-enabled :is(#left-nav-panel, #WorldInfo, #right-nav-panel) > .drag-grabber { display: none !important; }
 @media (max-width: 560px) {
 
-    body.gi-choices-enabled :is(#left-nav-panel, #rm_api_block, #AdvancedFormatting, #WorldInfo, #user-settings-block, #Backgrounds, #rm_extensions_block, #PersonaManagement, #right-nav-panel) {
+    body.gi-hud-enabled :is(#left-nav-panel, #rm_api_block, #AdvancedFormatting, #WorldInfo, #user-settings-block, #Backgrounds, #rm_extensions_block, #PersonaManagement, #right-nav-panel) {
         width: calc(100vw - 12px) !important;
         max-width: calc(100vw - 12px) !important;
         height: calc(100dvh - 112px) !important;
@@ -1186,7 +1186,7 @@ body.gi-choices-enabled :is(#left-nav-panel, #WorldInfo, #right-nav-panel) > .dr
     }
 }
 @media (max-height: 550px) and (orientation: landscape) {
-    body.gi-choices-enabled :is(#left-nav-panel, #rm_api_block, #AdvancedFormatting, #WorldInfo, #user-settings-block, #Backgrounds, #rm_extensions_block, #PersonaManagement, #right-nav-panel) {
+    body.gi-hud-enabled :is(#left-nav-panel, #rm_api_block, #AdvancedFormatting, #WorldInfo, #user-settings-block, #Backgrounds, #rm_extensions_block, #PersonaManagement, #right-nav-panel) {
         height: calc(100dvh - 120px) !important;
         max-height: calc(100dvh - 120px) !important;
         padding: 12px !important;
@@ -2210,16 +2210,16 @@ body.gi-shell {
     --gi-hud-gap: clamp(2px, .45vw, 6px);
     --gi-hud-cell: min(50px, calc((100vw - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px) - 2 * var(--gi-hud-margin) - var(--gi-hud-count) * var(--gi-hud-gap)) / (var(--gi-hud-count) + 1)));
 }
-body.gi-choices-enabled .gi-hud-icon { width: 86%; height: 86%; }
-body.gi-choices-enabled #ai-config-button { order: 1; }
-body.gi-choices-enabled #sys-settings-button { order: 2; }
-body.gi-choices-enabled #advanced-formatting-button { order: 3; }
-body.gi-choices-enabled #WI-SP-button { order: 4; }
-body.gi-choices-enabled #user-settings-button { order: 5; }
-body.gi-choices-enabled #backgrounds-button { order: 6; }
-body.gi-choices-enabled #extensions-settings-button { order: 7; }
-body.gi-choices-enabled #persona-management-button { order: 8; }
-body.gi-choices-enabled #rightNavHolder { order: 9; }
+body.gi-hud-enabled .gi-hud-icon { width: 86%; height: 86%; }
+body.gi-hud-enabled #ai-config-button { order: 1; }
+body.gi-hud-enabled #sys-settings-button { order: 2; }
+body.gi-hud-enabled #advanced-formatting-button { order: 3; }
+body.gi-hud-enabled #WI-SP-button { order: 4; }
+body.gi-hud-enabled #user-settings-button { order: 5; }
+body.gi-hud-enabled #backgrounds-button { order: 6; }
+body.gi-hud-enabled #extensions-settings-button { order: 7; }
+body.gi-hud-enabled #persona-management-button { order: 8; }
+body.gi-hud-enabled #rightNavHolder { order: 9; }
 
 /* ---------- Attack toggle: a labelled pill that lights up when armed ---------- */
 #gi-attack-controls { width: max-content; }
@@ -3137,21 +3137,34 @@ body.gi-shell { --pm-rail-width: 68px; }
 /* Top-right SillyTavern icons switched off: the toggle is hidden, its panel still opens from the menu. */
 body.gi-shell #top-settings-holder > .drawer.gi-hud-tucked { flex: 0 0 0 !important; width: 0 !important; margin: 0 !important; overflow: visible; }
 body.gi-shell #top-settings-holder > .drawer.gi-hud-tucked > .drawer-toggle { display: none !important; }
-/* Choices & HUD off: the SillyTavern icons centre at the top middle, where SillyTavern opens their panels.
+/* HUD icons off: the SillyTavern icons centre at the top middle, where SillyTavern opens their panels.
    The row is sized to clear the Paimon launcher on the left. */
-body.gi-shell:is(:not(.gi-enabled), :not(.gi-choices-enabled)) {
+body.gi-shell:not(.gi-hud-enabled) {
     --gi-hud-cell: min(50px, calc((100vw - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px) - 2 * var(--gi-hud-margin) - (var(--gi-hud-count) + 1) * var(--gi-hud-gap)) / (var(--gi-hud-count) + 2)));
 }
 /* The row spans the screen like SillyTavern's own, so each panel centres under it; only the icons and panels take clicks,
    leaving the Paimon launcher beside the row usable. */
-body.gi-shell:is(:not(.gi-enabled), :not(.gi-choices-enabled)) #top-settings-holder {
+body.gi-shell:not(.gi-hud-enabled) #top-settings-holder {
     inset: var(--gi-hud-top) 0 auto 0 !important;
     width: auto !important;
     margin: 0 !important;
     justify-content: center;
     pointer-events: none;
 }
-body.gi-shell:is(:not(.gi-enabled), :not(.gi-choices-enabled)) #top-settings-holder > .drawer { pointer-events: auto; }
+body.gi-shell:not(.gi-hud-enabled) #top-settings-holder > .drawer { pointer-events: auto; }
+/* SillyTavern's blurred bar sits behind exactly that row: as wide as the icons and their gaps, and as tall as one icon, with a small margin. */
+body.gi-shell:not(.gi-hud-enabled) #top-bar {
+    position: fixed !important;
+    inset: calc(var(--gi-hud-top) - 4px) auto auto 50% !important;
+    translate: -50% 0;
+    width: calc(var(--gi-hud-count) * var(--gi-hud-cell) + (var(--gi-hud-count) - 1) * var(--gi-hud-gap) + 16px) !important;
+    max-width: calc(100vw - 2 * var(--gi-hud-margin)) !important;
+    height: calc(var(--gi-hud-cell) + 8px) !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    border-radius: 14px !important;
+    pointer-events: none;
+}
 .gi-pm-tavern { margin: 18px 20px 0; }
 #gi-toolbar.gi-pm-picking .gi-pm-tavern { display: none; }
 .gi-pm-tavern h3 { margin: 0 0 8px; font-size: 15px; font-weight: normal; color: var(--pm-ink); opacity: .8; }
@@ -5810,7 +5823,7 @@ body #gi-attack-controls #gi-attack-toggle[aria-pressed="true"]::after {
 
 /* Dialogue view off: the classic SillyTavern chat, every message with its own avatar, swipes and buttons,
    in a frosted box at the foot of the scene. The place, sprites, map, HUD and battles stay as they are;
-   whatever stands behind the box shows through it blurred. */
+   whatever stands behind the box shows through it blurred and a little darker. */
 html:has(> body.gi-classic) { height: 100vh; height: 100dvh; overflow: hidden !important; overscroll-behavior: none !important; }
 body.gi-classic {
     --gi-classic-width: min(max(var(--sheldWidth, 50vw), 760px), calc(100vw - 24px));
@@ -5836,8 +5849,8 @@ body.gi-classic #sheld {
     overflow: hidden !important;
     background: rgb(22 30 40 / calc(var(--gi-scrim-opacity, .8) * .62)) !important;
     box-shadow: inset 0 0 0 1px #e5ca8714, 0 18px 60px #0008 !important;
-    backdrop-filter: blur(16px) saturate(1.15) !important;
-    -webkit-backdrop-filter: blur(16px) saturate(1.15) !important;
+    backdrop-filter: blur(16px) brightness(.72) saturate(1.1) !important;
+    -webkit-backdrop-filter: blur(16px) brightness(.72) saturate(1.1) !important;
     transform: none !important;
     pointer-events: auto;
 }

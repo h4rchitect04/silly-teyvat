@@ -13,7 +13,7 @@ export const drawerIcon = (id, persona = 'Aether') => iconAsset(id === 'persona-
 export function syncHudIcons(on, persona = 'Aether', hideTop = false) {
     for (const [id] of ST_DRAWERS) document.querySelector(`#${id}`)?.classList.toggle('gi-hud-tucked', Boolean(on && hideTop));
     document.body.classList.add('gi-shell');
-    document.body.classList.toggle('gi-choices-enabled', on);
+    document.body.classList.toggle('gi-hud-enabled', on);
     const drawers = [...document.querySelectorAll('#top-settings-holder > .drawer')].filter(el => getComputedStyle(el).display !== 'none' && !el.classList.contains('gi-hud-tucked'));
     document.body.style.setProperty('--gi-hud-count', Math.max(1, drawers.length));
     if (!on) return;
@@ -29,7 +29,7 @@ export function syncHudIcons(on, persona = 'Aether', hideTop = false) {
 
 }
 export function disposeHudIcons() {
-    document.body.classList.remove('gi-choices-enabled', 'gi-shell');
+    document.body.classList.remove('gi-hud-enabled', 'gi-shell');
     document.body.style.removeProperty('--gi-hud-count');
     document.querySelectorAll('.gi-hud-icon').forEach(el => el.remove());
     document.querySelectorAll('.gi-hud-target').forEach(el => el.classList.remove('gi-hud-target'));

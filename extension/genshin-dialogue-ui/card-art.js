@@ -17,6 +17,7 @@ const TARGETS = [
     '#group_avatar_preview .avatar img', // the group editor's portrait (a journey's stored card copy)
     '#chat .recentChat .avatar img', // Recent Chats on the welcome screen
     'body.gi-history #chat .mes .avatar img', // Dialogue Review
+    'body.gi-classic #chat .mes .avatar img', // the classic chat, with Dialogue view off
     '#user_avatar_block .avatar img', // Persona Management
 ].join(',');
 const full = file => `/characters/${encodeURIComponent(file)}`;
@@ -149,9 +150,9 @@ export function mountCardArt({getContext, root = document, loadPowerUser = () =>
     if (panel) observer.observe(panel, {childList: true, subtree: true, attributes: true, attributeFilter: ['src']});
     const personas = root.querySelector('#persona-management-block');
     if (personas && personas !== panel) observer.observe(personas, {childList: true, subtree: true, attributes: true, attributeFilter: ['src']});
-    // The chat streams constantly; only react when the welcome screen's Recent Chats change.
+    // The chat streams constantly; only react when the welcome screen's Recent Chats change, or while every message shows its avatar.
     const chat = root.querySelector('#chat');
-    const recent = new MutationObserver(list => { if (document.body.classList.contains('gi-history') || list.some(m => m.target.closest?.('.recentChatList') || [...m.addedNodes].some(n => n.nodeType === 1 && (n.matches('.recentChat, .recentChatList') || n.querySelector('.recentChat'))))) queue(); });
+    const recent = new MutationObserver(list => { if (document.body.classList.contains('gi-history') || document.body.classList.contains('gi-classic') || list.some(m => m.target.closest?.('.recentChatList') || [...m.addedNodes].some(n => n.nodeType === 1 && (n.matches('.recentChat, .recentChatList') || n.querySelector('.recentChat'))))) queue(); });
     if (chat) recent.observe(chat, {childList: true, subtree: true});
     const {eventSource, eventTypes} = getContext();
     root.addEventListener('change', keepCardShape, true);

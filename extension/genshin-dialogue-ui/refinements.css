@@ -84,16 +84,16 @@ body.gi-shell {
     --gi-hud-gap: clamp(2px, .45vw, 6px);
     --gi-hud-cell: min(50px, calc((100vw - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px) - 2 * var(--gi-hud-margin) - var(--gi-hud-count) * var(--gi-hud-gap)) / (var(--gi-hud-count) + 1)));
 }
-body.gi-choices-enabled .gi-hud-icon { width: 86%; height: 86%; }
-body.gi-choices-enabled #ai-config-button { order: 1; }
-body.gi-choices-enabled #sys-settings-button { order: 2; }
-body.gi-choices-enabled #advanced-formatting-button { order: 3; }
-body.gi-choices-enabled #WI-SP-button { order: 4; }
-body.gi-choices-enabled #user-settings-button { order: 5; }
-body.gi-choices-enabled #backgrounds-button { order: 6; }
-body.gi-choices-enabled #extensions-settings-button { order: 7; }
-body.gi-choices-enabled #persona-management-button { order: 8; }
-body.gi-choices-enabled #rightNavHolder { order: 9; }
+body.gi-hud-enabled .gi-hud-icon { width: 86%; height: 86%; }
+body.gi-hud-enabled #ai-config-button { order: 1; }
+body.gi-hud-enabled #sys-settings-button { order: 2; }
+body.gi-hud-enabled #advanced-formatting-button { order: 3; }
+body.gi-hud-enabled #WI-SP-button { order: 4; }
+body.gi-hud-enabled #user-settings-button { order: 5; }
+body.gi-hud-enabled #backgrounds-button { order: 6; }
+body.gi-hud-enabled #extensions-settings-button { order: 7; }
+body.gi-hud-enabled #persona-management-button { order: 8; }
+body.gi-hud-enabled #rightNavHolder { order: 9; }
 
 /* ---------- Attack toggle: a labelled pill that lights up when armed ---------- */
 #gi-attack-controls { width: max-content; }

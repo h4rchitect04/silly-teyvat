@@ -4,7 +4,8 @@ import {iconAsset} from './hud-icons.js';
 // settings themselves stay in their tabs, and a set with only some of them on shows as partly on.
 export const FEATURE_GROUPS=[
     {id:'story',label:'Dialogue view',note:'Dialogue pages over the scene. Off shows the classic chat in a box over the scene; the game stays on.',keys:['enabled']},
-    {id:'choices',label:'Choices & HUD',note:'Suggested replies and the icons around the chat.',keys:['choices']},
+    {id:'choices',label:'Teyvat Choices',note:'Three suggested replies after each character message.',keys:['choices']},
+    {id:'hud',label:'HUD icons',note:'Genshin icons for SillyTavern’s panels along the top of the screen.',keys:['hud']},
     {id:'stage',label:'Sprites & staging',note:'Character sprites, their expressions and placement.',keys:['nativeStaging','pageExpressions']},
     {id:'cgs',label:'Scene CGs',note:'Artwork chosen for the scene as replies arrive.',keys:['cgEnabled']},
     {id:'sound',label:'Sounds',note:'Interface sounds, voices, CG audio and battle sounds.',keys:['uiSound','spriteAudio','cgAudio','burstAudio','battleSound','diceSound']},

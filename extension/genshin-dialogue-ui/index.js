@@ -67,8 +67,8 @@ import {FRAME_CAP_OPTIONS,FRAME_CAP_MIN,FRAME_CAP_MAX,frameCapFps,setFrameCap} f
 const KEY = 'genshin_dialogue_ui';
 // A GitHub install takes the repository's name, so the folder is read from where this file is served.
 const FOLDER = `third-party/${decodeURIComponent(new URL('./', import.meta.url).pathname.split('/').filter(Boolean).at(-1))}`;
-const defaults = Object.freeze({ ...stagingDefaults, enabled: false, choices: true, composer: true, frameCap: 'unlimited', frameCapCustom: 90, textScale: 1, scrim: 0.8, revealSpeed: 45, tapAdvance: true, pageExpressions: true, narration: false, narrationMode: 'quotes', narrationKeyword: 'Narrator:', hideDialogueQuotes:false, nameTagFilter:true, nameTagScope:'all', nameTagExtra:'', guestSpeakers:false, wardrobe: true, locationEncounters:true, locationCharacterLimit:5, randomEncounters:true, encounterRate:40, allowMainDeparture:false, worldPromptAllRegions:false, roleplayPromptsEnabled:true, wildernessEncounters:true, maxEnemies:3, combatDamageMin:1, combatDamageMax:6, enemyStrikeBack:true,combatTriggerPhrase:'[start_combat]', enemyDamageMin:2, enemyDamageMax:6, enemyDice:4, userMaxHp:30, combatDifficulty:'normal', battleEffects:true, battleSound:true,uiSound:true,uiSoundVolume:.7,masterVolume:1,locationMusicEnabled:true,locationMusicVolume:.45,voiceVolume:.8,cgVolume:.8,effectsVolume:.8, personaSpriteClassify:false, soloGreeting:'standard', personaIcon: 'Aether', personaIconMode:'auto', hudTopIcons:'auto', namecard:'', signature:'', trimSprites:true, cgEnabled:true, cgClassifier:'main', cgProfile:'', choicesProfile:'', cgBypassReasoning:true, choicesBypassReasoning:true, cgPrompt:defaultCGPrompt, cgDisplayMode:'each', cgCooldown:10, cgAudio:true, spriteAudio:true, burstAudio:true, diceSound:true, trustSystem:false, travelerTwin:'Aether', master:true, cardArt:true, paimonLinks:PAIMON_LINKS, paimonRestore:{} });
-const bodyClasses = ['gi-menu-open', 'gi-enabled', 'gi-scene', 'gi-history', 'gi-hidden', 'gi-compose', 'gi-generating', 'gi-reading', 'gi-choices-enabled', 'gi-native-staging', 'gi-sprite-idle', 'gi-hud-top-off', 'gi-welcome', 'gi-classic'];
+const defaults = Object.freeze({ ...stagingDefaults, enabled: false, choices: true, hud: true, composer: true, frameCap: 'unlimited', frameCapCustom: 90, textScale: 1, scrim: 0.8, revealSpeed: 45, tapAdvance: true, pageExpressions: true, narration: false, narrationMode: 'quotes', narrationKeyword: 'Narrator:', hideDialogueQuotes:false, nameTagFilter:true, nameTagScope:'all', nameTagExtra:'', guestSpeakers:false, wardrobe: true, locationEncounters:true, locationCharacterLimit:5, randomEncounters:true, encounterRate:40, allowMainDeparture:false, worldPromptAllRegions:false, roleplayPromptsEnabled:true, wildernessEncounters:true, maxEnemies:3, combatDamageMin:1, combatDamageMax:6, enemyStrikeBack:true,combatTriggerPhrase:'[start_combat]', enemyDamageMin:2, enemyDamageMax:6, enemyDice:4, userMaxHp:30, combatDifficulty:'normal', battleEffects:true, battleSound:true,uiSound:true,uiSoundVolume:.7,masterVolume:1,locationMusicEnabled:true,locationMusicVolume:.45,voiceVolume:.8,cgVolume:.8,effectsVolume:.8, personaSpriteClassify:false, soloGreeting:'standard', personaIcon: 'Aether', personaIconMode:'auto', hudTopIcons:'auto', namecard:'', signature:'', trimSprites:true, cgEnabled:true, cgClassifier:'main', cgProfile:'', choicesProfile:'', cgBypassReasoning:true, choicesBypassReasoning:true, cgPrompt:defaultCGPrompt, cgDisplayMode:'each', cgCooldown:10, cgAudio:true, spriteAudio:true, burstAudio:true, diceSound:true, trustSystem:false, travelerTwin:'Aether', master:true, cardArt:true, paimonLinks:PAIMON_LINKS, paimonRestore:{} });
+const bodyClasses = ['gi-menu-open', 'gi-enabled', 'gi-scene', 'gi-history', 'gi-hidden', 'gi-compose', 'gi-generating', 'gi-reading', 'gi-hud-enabled', 'gi-native-staging', 'gi-sprite-idle', 'gi-hud-top-off', 'gi-welcome', 'gi-classic'];
 const icons = {
     compass: '<path d="m12 2 3 7 7 3-7 3-3 7-3-7-7-3 7-3Z"/><path d="m12 8 4 4-4 4-4-4Z"/>',
     back: '<path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/>',
@@ -236,6 +236,13 @@ function preferences() {
     if (store[KEY].spriteCrowd === undefined && store[KEY].autoHideSprites) store[KEY].spriteCrowd = 'recent';
     if (!['auto', 'recent', 'all'].includes(store[KEY].spriteCrowd ?? 'auto')) store[KEY].spriteCrowd = 'auto';
     migrateVolumes(store[KEY]);
+    // Teyvat Choices and the HUD icons were once one switch (choices). Each player keeps the HUD as the shared switch left it,
+    // and a Paimon menu switch linked to Choices & HUD stays linked to both.
+    if (store[KEY].hud === undefined && typeof store[KEY].choices === 'boolean') {
+        store[KEY].hud = store[KEY].choices;
+        const links = store[KEY].paimonLinks;
+        if (Array.isArray(links) && links.includes('choices') && !links.includes('hud')) links.splice(links.indexOf('choices') + 1, 0, 'hud');
+    }
     for (const [key, value] of Object.entries(defaults)) {
         if (typeof store[KEY][key] !== typeof value) store[KEY][key] = value;
     }
@@ -430,11 +437,11 @@ function refresh({passive=false}={}) {
     for (const el of Array.from(chatWith('gi-current'))) if (el.parentElement?.id === 'chat' && (el !== selected || !active)) el.classList.remove('gi-current');
     if (active && selected) selected.classList.add('gi-current');
     // The welcome page is styled by this class rather than by #chat:has(> .welcomePanel): a :has() on #chat is re-checked on every text change in it, and re-styles every message with it.
-    const flags = { 'gi-welcome': Boolean(document.querySelector('#chat > .welcomePanel')), 'gi-native-staging': prefs.nativeStaging, 'gi-sprite-idle': prefs.spriteIdle !== false, 'gi-hud-top-off': prefs.choices && topIconsHidden(prefs), 'gi-enabled': true, 'gi-scene': sceneActive, 'gi-classic': classic, 'gi-history': active && history, 'gi-hidden': active && hidden, 'gi-compose': active && (composing || history), 'gi-generating': active && generating, 'gi-reading': active && (morePages || index < list.length - 1 || generating || reveal.revealing) };
+    const flags = { 'gi-welcome': Boolean(document.querySelector('#chat > .welcomePanel')), 'gi-native-staging': prefs.nativeStaging, 'gi-sprite-idle': prefs.spriteIdle !== false, 'gi-hud-top-off': prefs.hud && topIconsHidden(prefs), 'gi-enabled': true, 'gi-scene': sceneActive, 'gi-classic': classic, 'gi-history': active && history, 'gi-hidden': active && hidden, 'gi-compose': active && (composing || history), 'gi-generating': active && generating, 'gi-reading': active && (morePages || index < list.length - 1 || generating || reveal.revealing) };
     const wasClassic = document.body.classList.contains('gi-classic');
     for (const [name, value] of Object.entries(flags)) document.body.classList.toggle(name, Boolean(value));
-    // The box opens on the newest message, as SillyTavern's own chat does.
-    if (classic && !wasClassic) requestAnimationFrame(() => { const chat = document.querySelector('#chat'); if (chat) chat.scrollTop = chat.scrollHeight; });
+    // The box opens on the newest message, as SillyTavern's own chat does, with every avatar shown as its card.
+    if (classic && !wasClassic) { cardArtUI?.refresh(); requestAnimationFrame(() => { const chat = document.querySelector('#chat'); if (chat) chat.scrollTop = chat.scrollHeight; }); }
     spriteUI?.sync({ on: Boolean(world && !history && (prefs.nativeStaging || prefs.pageExpressions || prefs.narration)), id: selected ? Number(current) : -1, page: shownPage, text: page.pages[shownPage]?.textContent || '', narration: narrated || Boolean(guest), guest: Boolean(guest), classifyPages: prefs.pageExpressions, enemyAction:page.pages[shownPage]?.giEnemyAction || 'neutral', complete: !generating || index < list.length - 1 || morePages, generating });
     stageEffects?.sync(Boolean(world&&!history&&!hidden),Boolean(reveal.revealing||generating));
     mediaUI?.sync({on:Boolean(live && !history && !hidden),id:Number(current),page:shownPage,generating});
@@ -453,7 +460,7 @@ function refresh({passive=false}={}) {
     if (!prefs.wardrobe) wardrobeUI?.close();
     // Top-right SillyTavern icons: shown, hidden, or (Auto) hidden on phones for a clean layout.
     const hideTop = topIconsHidden(prefs);
-    syncHudIcons(prefs.choices, personaMenuIcon(ctx), hideTop);
+    syncHudIcons(prefs.hud, personaMenuIcon(ctx), hideTop);
     document.querySelectorAll('#gi-toolbar .gi-pm-tavern img[data-persona]').forEach(img => { const src = drawerIcon('persona-management-button', personaMenuIcon(ctx)); if (img.src !== src) img.src = src; });
     if (menuOpen) paintProfile();
     combatUI?.sync({on:Boolean(world&&!openingHome),id:Number(current),generating:generating||groupGenerating||locationCastUI?.busy||personaSession?.busy,show:Boolean(live&&!history&&!hidden),idle:!(morePages||active&&index<list.length-1||generating||reveal.revealing)});
