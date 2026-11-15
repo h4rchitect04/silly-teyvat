@@ -85,6 +85,23 @@ check('Piercing damage hits the foe on standby through its shield',hp(r,'foe2')<
 {const r=board([unit('Sigewinne','party','Hydro')],{deck:['strategize','sweet-madame','hash-brown']});u(r,'Sigewinne').hp=30;
 useSkill(r,1);check('Rebound Hydrotherapy puts a Large Bolstering Bubblebalm third from the top of the deck',r.deck[2]==='large-bubblebalm');}
 // Saved movesets keep these mechanics, and can never add ones the bundled kit does not have.
+// Nilou's Golden Chalice's Bounty: Bountiful only for a party of Hydro and Dendro characters and nothing else.
+for(const [mates,want] of [[[['Collei','Dendro']],true],[[['Collei','Dendro'],['Bennett','Pyro']],false],[[['Xingqiu','Hydro']],false]]){
+    const r=board([unit('Nilou','party','Hydro'),...mates.map(([n,e])=>unit(n,'party',e))]);useSkill(r,1);
+    check(`Nilou's Skill ${want?'summons':'does not summon'} Bountiful with ${mates.map(m=>m[0]).join(' and ')}`,r.state.summons.some(x=>x.name==='Bountiful')===want);}
+{const kept=mergeKit(defaultKit('Nilou',{element:'Hydro'}),JSON.parse(JSON.stringify(defaultKit('Nilou',{element:'Hydro'}))));
+check('a saved Nilou keeps the team condition',kept.moves[1].effects.some(e=>e.when==='pureTeam'&&e.elements?.join()==='Hydro,Dendro'));}
+// Xianyun: White Clouds at Dawn makes the next switch cheaper and Driftcloud Wave hits when she is switched in.
+{const r=board([unit('Xianyun','party','Anemo'),unit('Bennett','party','Pyro')]);
+useSkill(r,1);check('White Clouds at Dawn gives an Efficient Switch',r.state.team.party.efficient===1);
+again(r);switchTo(r,'Bennett');again(r);const b=hp(r,'foe');switchTo(r,'Xianyun');check('Driftcloud Wave deals 1 Anemo (2 here) when Xianyun is switched in',b-hp(r,'foe')>=2);
+u(r,'Xianyun').energy=2;u(r,'Bennett').hp=20;again(r);useSkill(r,2);check('Stars Gather at Dusk heals the whole party',hp(r,'Bennett')>20);}
+// Mona: Illusory Bubble adds to the next Skill; Reflection is a decoy that strikes at the End Phase.
+{const r=board([unit('Mona','party','Hydro')]);u(r,'Mona').energy=3;useSkill(r,2);again(r);const b=hp(r,'foe');useSkill(r,1);
+check('Illusory Bubble makes the next Skill deal 1 + 2 Hydro (2 + 4 here)',b-hp(r,'foe')>=6);
+check('Mirror Reflection of Doom summons a Reflection that takes a hit and deals damage',r.state.summons.some(x=>x.name==='Reflection'&&x.decoy&&x.power===2));}
+// Lan Yan: Swallow-Wisp Shield puts 2 Shield points (4 here) on the active character.
+{const r=board([unit('Lan Yan','party','Anemo')]);useSkill(r,1);check('Swallow-Wisp Pinion Dance shields the active character for 4',u(r,'Lan Yan').shield>=4);}
 {const base=defaultKit('Mavuika',{element:'Pyro'}),saved=JSON.parse(JSON.stringify(base));
 const kept=mergeKit(base,saved);check('a saved moveset keeps Nightsoul, the card choice and the Fighting Spirit Burst',kept.moves[1].effects.some(e=>e.type==='nightsoul')&&kept.moves[1].effects.some(e=>e.type==='addCard'&&e.choose)&&kept.moves[2].effects.some(e=>e.per==='spent'));
 saved.moves[0].effects.push({type:'technique',name:'<img src=x onerror=alert(1)>',cost:0,effects:[{type:'damage',power:99}]});

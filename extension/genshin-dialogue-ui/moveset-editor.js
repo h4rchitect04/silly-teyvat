@@ -63,7 +63,7 @@ export function mountMovesetEditor({panel,getContext,getCharacter,status=()=>{},
             ${kit.moves.map((move,i)=>`<section class="gi-move-edit" data-move="${i}">
                 <div class="gi-move-head"><small>${KIND_LABEL[move.kind]}</small><input data-m="name" maxlength="80" value="${esc(move.name)}" aria-label="${KIND_LABEL[move.kind]} name"></div>
                 <div class="gi-move-row">
-                    ${move.kind==='normal'||move.kind==='skill'||move.kind==='burst'?`<label>Dice cost<input data-m="cost" type="number" min="0" max="8" value="${esc(move.cost ?? 3)}"></label>`:''}
+                    ${move.kind==='normal'||move.kind==='skill'||move.kind==='burst'?`<label>Dice cost<input data-m="cost" type="number" min="1" max="8" value="${esc(move.cost ?? 3)}"></label>`:''}
                     ${move.kind==='special'?`<label>Cooldown (rounds)<input data-m="cooldown" type="number" min="1" max="9" value="${esc(move.cooldown ?? 3)}"></label>`:''}
                     <label>Element<select data-m="element">${opt('',`Default (${esc(move.kind==='normal'&&!enemy?(kit.weapon==='catalyst'?element:'Physical'):element)})`)}${['Physical',...ELEMENTS].map(x=>opt(x)).join('')}</select></label>
                 </div>
@@ -94,7 +94,7 @@ export function mountMovesetEditor({panel,getContext,getCharacter,status=()=>{},
         next.moves=kit.moves.map((move,i)=>{
             const section=panel.querySelector(`.gi-move-edit[data-move="${i}"]`),field=name=>section.querySelector(`[data-m="${name}"]`)?.value;
             const out={...move,name:String(field('name') || move.name).trim().slice(0,80) || move.name};
-            if(move.kind==='normal'||move.kind==='skill'||move.kind==='burst')out.cost=num(field('cost'),0,8,move.cost ?? 3);
+            if(move.kind==='normal'||move.kind==='skill'||move.kind==='burst')out.cost=num(field('cost'),1,8,move.cost ?? 3);
             if(move.kind==='special')out.cooldown=num(field('cooldown'),1,9,3);
             const chosen=field('element');out.element=chosen || (move.kind==='normal'&&!enemy?(next.weapon==='catalyst'?element:'Physical'):undefined);if(!out.element)delete out.element;
             out.effects=[...section.querySelectorAll('.gi-effect')].map(row=>{

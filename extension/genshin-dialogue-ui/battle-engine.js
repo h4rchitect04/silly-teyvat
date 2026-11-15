@@ -626,6 +626,8 @@ function core(round){
         if(effect.when==='firstUse'&&(actor.usedThisRound?.[move.name] || 0)>1)return;if(effect.when==='repeatUse'&&(actor.usedThisRound?.[move.name] || 0)<=1)return;
         if(effect.whenReaction&&extra.reaction!==effect.whenReaction)return;
         if(effect.when==='energyAtLeast'&&(actor.energy || 0)<effect.min)return;
+        // A party of exactly these elements, every one of them present (Nilou's Golden Chalice's Bounty).
+        if(effect.when==='pureTeam'){const els=new Set(side(state,actor.side).map(u=>u.element)),want=effect.elements || [];if(!want.length||want.some(e=>!els.has(e))||[...els].some(e=>!want.includes(e)))return;}
         if(effect.unless==='summonPresent'&&state.summons.some(x=>x.side===actor.side&&x.name===effect.summon))return;
         const inHand=id=>(round.hand || []).filter(h=>h===id).length;
         const scaled=n=>effect.per==='cardsInHand'?n+Math.min(effect.cap || 99,inHand(effect.card))*(effect.each || REACTION_UNIT):effect.per==='spent'?(extra.spent || 0)*(effect.each || REACTION_UNIT):effect.per==='bond'?Math.min(effect.cap || 99,extra.bond || 0)*(effect.each || REACTION_UNIT):n;

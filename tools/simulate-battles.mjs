@@ -26,7 +26,7 @@ const tierOf=name=>isTcgBoss(name)?'boss':(defaultKitHp(name,true) ?? 30)<=30?'w
 const byTier={weak:[],standard:[],tough:[],boss:[]};for(const n of enemyNames)if(defaultKitHp(n,true))byTier[tierOf(n)].push(n);
 
 function unit(spec,sideName,partySize){
-    const [name,chosen]=String(spec).split(':'),enemy=sideName==='enemy',element=chosen || props[name]?.element || 'Physical';
+    const enemy=sideName==='enemy',[name,chosen]=enemy?[String(spec)]:String(spec).split(':'),element=chosen || props[name]?.element || 'Physical';
     const kit=defaultKit(name,{element,enemy});
     const hp=enemy?encounterHp(defaultKitHp(name,true) ?? 30,{boss:isTcgBoss(name),members:partySize}):defaultKitHp(name) ?? 30;
     return {id:`${sideName}:${name}`,side:sideName,name,card:name,element:enemy?kit.element:element,hp,maxHp:hp,shield:Number(kit.shield)||0,energy:0,maxEnergy:kit.energy || 2,
