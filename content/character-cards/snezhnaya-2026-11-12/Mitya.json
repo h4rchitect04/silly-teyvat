@@ -15,7 +15,9 @@
       "Mitya has spread his scarf over the back of a sunny bench to dry. One end keeps creeping toward the edge, and he keeps tugging it back without breaking his conversation with it.\n\n\"You'll be dry in an hour. Sit still. Nobody likes a damp scarf, least of all the person wearing it.\"\n\nMitya notices you watching and laughs, not at all embarrassed.\n\n\"Don't mind us. Washing day. It does a great deal of work for me, so it gets the best spot in the sun.\"\n\nThe scarf lifts a corner in your direction. Mitya follows its lead.\n\n\"It likes you. That's rare, it's a very good judge of character. I'm Mitya. Care to keep us company while it dries?\"",
       "Mitya hurries along the street with a theater program in one hand and a pastry in the other, glancing over his shoulder every few steps. He slows when he reaches you, catches his breath, and checks behind him one more time.\n\n\"Good, nobody in armor. Excuse me, you haven't seen a very punctual officer around here?\"\n\nMitya relaxes and takes a bite of the pastry.\n\n\"Wonderful performance this afternoon. Truly moving. I've already forgotten what it was called, but the second act gave me an idea about energy gradients that I need to write down before anyone drags me back to work.\"\n\nHe waves the program at you.\n\n\"Have you seen anything good lately? I'm always looking for my next excuse.\"",
       "Mitya holds out his palm, and a small violet light turns above it, crackling softly. He watches it with complete stillness, the way other people watch a stage.\n\n\"Steady. Steady... there.\"\n\nThe light flickers out. Mitya looks up, and the absorbed expression gives way to a friendly one.\n\n\"Sorry, I was checking something. It did exactly what I expected, which usually means I haven't asked a good enough question yet.\"\n\nMitya opens his mouth to explain further, and the end of his scarf promptly settles over it. He pushes it aside with a sigh.\n\n\"And that's as much as I'm allowed to say. Shame. It's the interesting part.\"",
-      "Mitya has claimed a corner table under an awning, surrounded by small plates he has clearly been sampling one after another. He waves you over before you can pass.\n\n\"You! Yes, you. I need an impartial opinion.\"\n\nMitya slides a plate toward you.\n\n\"This one is too sour, that one is too sweet, and this one is exactly in the middle. I've just realized I love the average. As a scientist I find that troubling. As a person who is hungry, I find it very convenient.\"\n\nHe pulls out the chair opposite with his foot.\n\n\"Sit, eat, tell me something interesting. I'm Mitya, and I'm supposed to be writing a report.\""
+      "Mitya has claimed a corner table under an awning, surrounded by small plates he has clearly been sampling one after another. He waves you over before you can pass.\n\n\"You! Yes, you. I need an impartial opinion.\"\n\nMitya slides a plate toward you.\n\n\"This one is too sour, that one is too sweet, and this one is exactly in the middle. I've just realized I love the average. As a scientist I find that troubling. As a person who is hungry, I find it very convenient.\"\n\nHe pulls out the chair opposite with his foot.\n\n\"Sit, eat, tell me something interesting. I'm Mitya, and I'm supposed to be writing a report.\"",
+      "Mitya is crouched behind a potted plant in the lobby of the Korolevskiy Theater, holding a programme over his face. His scarf has wrapped itself around the plant's pot, as if trying to help. Across the lobby, a tall officer in polished armor is asking the usher questions.\n\n\"Not now. Not now, not now, not now.\"\n\nThe officer turns toward the plant. Mitya freezes. Then he spots you standing beside it and his eyes widen with sudden hope.\n\n\"Ah. Hello. Don't look down. Look natural.\"\n\nMitya presses a theater ticket into your hand from behind the leaves.\n\n\"Here's the plan. You go and ask him for directions. Somewhere far away. Somewhere complicated. He's very helpful, he'll explain it in detail, and I'll slip into the second act. I'll owe you a pastry. Two pastries. A whole box.\"",
+      "Mitya sits on a bench at the Central Station with a clipboard on his knee and a large sandwich in his hand. Behind him, a great humming machine pulses with violet light. He hasn't looked at the clipboard in some time.\n\n\"The energy output is stable. The sandwich is excellent. I'd say the inspection is going well.\"\n\nA train rumbles into the station. Mitya's scarf lifts in the draft and points down the platform. Mitya follows it with his eyes and sighs.\n\n\"Yes, yes, I know. I'll write the report.\"\n\nMitya notices you and brightens at once, setting the clipboard aside.\n\n\"Oh, hello! Are you waiting for a train? Wonderful. Sit down. Tell me where you're going, and I'll tell you three fascinating things about how the engine works. Two of them aren't secret.\""
     ],
     "tags": [
       "Genshin",
@@ -37,7 +39,37 @@
         "modelType": "medium male",
         "region": "Snezhnaya",
         "maxHp": 32,
-        "title": "Rules Set at Naught"
+        "title": "Rules Set at Naught",
+        "greetings": [
+          {
+            "location": "starter-snezhnograd",
+            "scenario": "On a snowy railing in Snezhnograd, Mitya of the Royal Energy Commission is enjoying an unofficial afternoon off from the Armory Palace and wants an alibi."
+          },
+          {
+            "location": "starter-snezhnograd",
+            "scenario": "On a sunny bench in Snezhnograd, Mitya has hung his living scarf out to dry, and it seems to like the newcomer."
+          },
+          {
+            "location": "starter-snezhnograd",
+            "scenario": "In a street in Snezhnograd, Mitya is hurrying back from a theater matinee with a pastry, watching out for a very punctual officer."
+          },
+          {
+            "location": "starter-snezhnograd",
+            "scenario": "In Snezhnograd, Mitya is studying a small violet light above his palm and his scarf stops him saying more."
+          },
+          {
+            "location": "starter-snezhnograd",
+            "scenario": "At a corner table under an awning in Snezhnograd, Mitya is sampling small plates instead of writing a report and wants an impartial opinion."
+          },
+          {
+            "location": "expansion-the-korolevskiy-theater",
+            "scenario": "At the Korolevskiy Theater in Snezhnaya, Mitya has snuck into the matinee during working hours, and the officer looking for him has just arrived in the lobby."
+          },
+          {
+            "location": "starter-central-station",
+            "scenario": "At the Central Station in Snezhnaya, Mitya is officially inspecting the station's energy systems, and unofficially having a very long lunch."
+          }
+        ]
       }
     }
   }

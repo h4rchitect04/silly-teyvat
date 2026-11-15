@@ -27,7 +27,13 @@
         "element": "None",
         "modelType": "custom",
         "modelScale": 95,
-        "region": "Fontaine"
+        "region": "Fontaine",
+        "greetings": [
+          {
+            "location": "expansion-the-rusty-rudder",
+            "scenario": "Aboard the Rusty Rudder in Fontaine, Pitot is minding his provisions."
+          }
+        ]
       }
     }
   }

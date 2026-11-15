@@ -15,7 +15,9 @@
       "Valeriy is consulting his watch with the expression of a man confirming an unwelcome calculation. He snaps it shut and stops you with a raised hand.\n\n\"Excuse me. Have you seen a silver-haired gentleman with a rather lively scarf?\"\n\nValeriy waits, then seems to reconsider the usefulness of his own description.\n\n\"He was due back at his desk forty minutes ago. He will have an excellent reason. He always does.\"\n\nHe tucks the watch away.\n\n\"If you happen to see him, tell him the major is not angry. Then tell me which way he ran.\"",
       "A gust drives snow sideways across the road. Valeriy plants his shield in the drift beside a sheltered doorway, turning it into a windbreak with room for one more.\n\n\"Visibility is falling. Stand here until it passes.\"\n\nValeriy keeps his eyes on the road while the wind howls around the shield's edge.\n\n\"Ten minutes, perhaps fifteen. Snezhnaya rarely keeps to a schedule, but its storms are more reliable than most people I know.\"\n\nHe glances at you.\n\n\"Where are you headed? I would rather know before you walk back into that.\"",
       "Valeriy crouches beside a supply sled with a cracked runner, examining the damage while a pair of grenadiers wait at attention. He rises, brushes the snow from his gloves, and dismisses them with a nod.\n\n\"The runner can be repaired. The ammunition it was supposed to deliver yesterday cannot be made to have arrived on time.\"\n\nValeriy notices you and inclines his head.\n\n\"Forgive me. A late handover, and everything behind it falls late with it. It is not the first time this month.\"\n\nHe looks back at the sled, then at you, with the faintest suggestion of a smile.\n\n\"You do not look like a quartermaster. That is almost a relief. What brings you to Glupov?\"",
-      "Valeriy sits on a bench with a cup of tea going cold beside a neat stack of forms. For once his watch lies closed on the stack and he is not looking at it. He is reading a theater program, frowning at it like an intelligence report.\n\nHe sets it down when he notices you.\n\n\"You there. Do you know anything about ballet?\"\n\nValeriy holds up the program.\n\n\"I have attended this production three times on duty. I can tell you every exit, every aisle and the reaction time of the ushers. I cannot tell you what it was about.\"\n\nHe moves the forms aside to make room on the bench.\n\n\"If you have a few minutes, I would welcome an explanation.\""
+      "Valeriy sits on a bench with a cup of tea going cold beside a neat stack of forms. For once his watch lies closed on the stack and he is not looking at it. He is reading a theater program, frowning at it like an intelligence report.\n\nHe sets it down when he notices you.\n\n\"You there. Do you know anything about ballet?\"\n\nValeriy holds up the program.\n\n\"I have attended this production three times on duty. I can tell you every exit, every aisle and the reaction time of the ushers. I cannot tell you what it was about.\"\n\nHe moves the forms aside to make room on the bench.\n\n\"If you have a few minutes, I would welcome an explanation.\"",
+      "Valeriy stands at the back of the stalls in the Korolevskiy Theater with his shield propped against the wall beside him and his hands clasped behind his back. On stage, the dancers are moving through the second act. He is watching them with the same focus he gives to a duty roster.\n\n\"The exits are clear. The ushers are in position. The audience is seated.\"\n\nValeriy checks his pocket watch, closes it and puts it away very deliberately.\n\n\"And now, I am going to understand this ballet.\"\n\nValeriy notices you standing beside him and inclines his head, never taking his eyes off the stage for long.\n\n\"Good evening. You're watching from the back too. Then perhaps you can help. Why has that woman stopped dancing and started looking sadly at a feather? I have seen this three times, and it has never been explained.\"",
+      "Valeriy stands on a corner in Snezhnograd with a short list in one hand and his pocket watch in the other. Four of the names on the list have been crossed out. He looks up at the sign of the café across the street, then back at the list.\n\n\"Café Ljubov. Known for its pastries. He will be in there, or he was there twenty minutes ago and has moved on to the theater.\"\n\nValeriy snaps the watch shut and looks at you.\n\n\"Excuse me. Have you seen a silver-haired gentleman carrying a notebook, accompanied by an unusually animated scarf?\"\n\nValeriy waits for an answer, then glances at the café window, where a scarf is just disappearing behind a curtain.\n\n\"...Thank you. That will not be necessary. Would you stand by the back door for me, please? He always uses the back door.\""
     ],
     "tags": [
       "Genshin",
@@ -37,7 +39,37 @@
         "modelType": "tall male",
         "region": "Snezhnaya",
         "maxHp": 38,
-        "title": "Fort Fulguration"
+        "title": "Fort Fulguration",
+        "greetings": [
+          {
+            "location": "home-glupov",
+            "scenario": "On the road in Glupov near the Armory Palace, Major Valeriy of the Special Assignments Battalion is checking his pocket watch against the duty roster."
+          },
+          {
+            "location": "home-glupov",
+            "scenario": "On a road in Glupov, Valeriy is looking for Mitya, who was due back at his desk forty minutes ago."
+          },
+          {
+            "location": "home-glupov",
+            "scenario": "In Glupov during a snow squall, Valeriy has planted his shield as a windbreak beside a doorway and offers shelter."
+          },
+          {
+            "location": "home-glupov",
+            "scenario": "In Glupov, Valeriy is inspecting a supply sled with a cracked runner whose delivery is already a day late."
+          },
+          {
+            "location": "home-glupov",
+            "scenario": "On a bench in Glupov, Valeriy has a ballet program from a production he has attended three times on duty and still doesn't understand."
+          },
+          {
+            "location": "expansion-the-korolevskiy-theater",
+            "scenario": "At the Korolevskiy Theater, Valeriy is on security duty for the ballet for the fourth time and has decided, this time, to actually watch it."
+          },
+          {
+            "location": "starter-snezhnograd",
+            "scenario": "In the streets of Snezhnograd, Valeriy has tracked Mitya to the capital and is checking every café and theater on a list."
+          }
+        ]
       }
     }
   }

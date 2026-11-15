@@ -4660,14 +4660,21 @@ body.gi-keyboard :is(#gi-background-stage,#gi-sprite-stage,#gi-cg-stage,#gi-lett
 }
 #gi-wardrobe [data-panel="moveset"] > .gi-combat-art { margin-bottom: 14px; }
 @media (min-width: 901px) and (min-height: 551px) { #gi-wardrobe .gi-cs-side { padding-top: 14px; } }
-/* Profile: the card's name, then its SillyTavern details in a drawer. */
+/* Profile: the card's name and home, its greetings, then its SillyTavern details in drawers. */
 #gi-wardrobe .gi-card-profile { display: grid; gap: 10px; margin: 0 0 14px; }
-#gi-wardrobe .gi-card-profile .gi-card-name { display: grid; gap: 6px; margin: 0; }
-#gi-wardrobe .gi-card-profile .gi-card-details { margin: 0; }
-#gi-wardrobe .gi-card-details-body { display: grid; gap: 10px; padding-top: 4px; }
-#gi-wardrobe .gi-card-details-body label { display: grid; gap: 6px; margin: 0; }
-#gi-wardrobe .gi-card-details-body textarea { min-height: 60px; max-height: 40dvh; resize: vertical; }
+#gi-wardrobe .gi-card-profile :is(.gi-card-name, .gi-card-home) { display: grid; gap: 6px; margin: 0; }
+#gi-wardrobe .gi-card-profile .gi-card-home[hidden] { display: none; }
+#gi-wardrobe .gi-card-profile select { width: 100%; min-width: 0; }
+#gi-wardrobe .gi-card-profile :is(.gi-card-details, .gi-card-greetings) { margin: 0; }
+#gi-wardrobe :is(.gi-card-details-body, .gi-card-greetings-body) { display: grid; gap: 10px; padding-top: 4px; }
+#gi-wardrobe :is(.gi-card-details-body, .gi-card-greetings-body) label { display: grid; gap: 6px; margin: 0; }
+#gi-wardrobe :is(.gi-card-details-body, .gi-card-greetings-body) textarea { min-height: 60px; max-height: 40dvh; resize: vertical; }
 #gi-wardrobe .gi-card-details-body > button { justify-self: start; }
+#gi-wardrobe .gi-greeting-nav { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+#gi-wardrobe .gi-greeting-nav button { flex: none; width: 34px; height: 30px; padding: 0; font-size: 20px; line-height: 1; }
+#gi-wardrobe .gi-greeting-nav button:disabled { opacity: .35; }
+#gi-wardrobe .gi-greeting-nav span { flex: 1 1 auto; text-align: center; color: #ead6a3; font-size: .92em; }
+#gi-wardrobe .gi-greeting-actions { display: flex; flex-wrap: wrap; gap: 8px; }
 #gi-wardrobe .gi-card-portrait { display: flex; align-items: center; gap: 12px; }
 #gi-wardrobe .gi-card-portrait img { flex: none; width: 64px; height: 96px; object-fit: cover; border: 1px solid #d3bc8e55; border-radius: 6px; background: #0003; }
 #gi-wardrobe .gi-card-portrait label { flex: 1 1 auto; min-width: 0; }

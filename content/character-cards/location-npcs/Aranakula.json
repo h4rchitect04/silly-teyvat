@@ -27,7 +27,13 @@
         "element": "None",
         "modelType": "custom",
         "modelScale": 35,
-        "region": "Sumeru"
+        "region": "Sumeru",
+        "greetings": [
+          {
+            "location": "expansion-vanarana",
+            "scenario": "In the dream of Vanarana in Sumeru, at the Aranara flower nursery."
+          }
+        ]
       }
     }
   }

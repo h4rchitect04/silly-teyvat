@@ -27,7 +27,13 @@
         "element": "None",
         "modelType": "custom",
         "modelScale": 95,
-        "region": "Nod-Krai"
+        "region": "Nod-Krai",
+        "greetings": [
+          {
+            "location": "map14-nod-krai-favonius-keep",
+            "scenario": "At Favonius Keep in Nod-Krai, Anselm is working through the expedition's administrative duties."
+          }
+        ]
       }
     }
   }

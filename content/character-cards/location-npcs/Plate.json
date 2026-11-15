@@ -27,7 +27,13 @@
         "element": "None",
         "modelType": "custom",
         "modelScale": 45,
-        "region": "Snezhnaya"
+        "region": "Snezhnaya",
+        "greetings": [
+          {
+            "location": "map14-snezhnaya-huntsman-s-cabin",
+            "scenario": "At the Huntsman's Cabin in Snezhnaya, after the events of the related quest."
+          }
+        ]
       }
     }
   }

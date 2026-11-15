@@ -27,7 +27,13 @@
         "element": "None",
         "modelType": "custom",
         "modelScale": 89,
-        "region": "Natlan"
+        "region": "Natlan",
+        "greetings": [
+          {
+            "location": "map14-natlan-mother-flamegranate-tree",
+            "scenario": "At the Mother Flamegranate Tree in Natlan, after Ripe For Trouble."
+          }
+        ]
       }
     }
   }

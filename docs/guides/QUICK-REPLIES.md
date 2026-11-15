@@ -20,6 +20,8 @@ The installed **Teyvat Choices** Quick Reply set has been migrated to an empty c
 
 For a different installation, delete the old Teyvat Choices set in Quick Reply settings, or import `quick-replies/Teyvat Choices.json` over that set. The included empty set is only for removing those old actions. It is not needed on a fresh installation. Do not enable any old Teyvat generator scripts on AI-message events.
 
+Earlier game data imports turned on SillyTavern's Quick Reply extension. That shows SillyTavern's own **Default** set (**HELP**, **New Chat** and **Match UI to Background**) above the message box when Silly Teyvat is off. To hide those buttons, open **Extensions → Quick Reply** and either untick **Enable Quick Replies** or remove **Default** and the empty **Teyvat Choices** set from **Global Quick Reply Sets**. Imports no longer turn Quick Replies on.
+
 ## Turning it off
 
 Uncheck **Teyvat Choices and Genshin HUD icons** to stop automatic suggestions and restore the original toolbar icons while keeping dialogue pages. The compass or Alt+G turns off the entire dialogue mode. Your API connection, character cards, sprites and other Quick Reply sets remain configured as before.

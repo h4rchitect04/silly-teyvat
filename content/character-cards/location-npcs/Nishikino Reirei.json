@@ -27,7 +27,13 @@
         "element": "None",
         "modelType": "custom",
         "modelScale": 86,
-        "region": "Inazuma"
+        "region": "Inazuma",
+        "greetings": [
+          {
+            "location": "map14-inazuma-bourou-village",
+            "scenario": "On a porch in Bourou Village on Watatsumi Island, Nishikino Reirei has just bandaged a fisherman's wrist and notices a visitor favoring one side."
+          }
+        ]
       }
     }
   }

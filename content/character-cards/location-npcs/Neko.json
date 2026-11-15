@@ -27,7 +27,13 @@
         "element": "None",
         "modelType": "custom",
         "modelScale": 30,
-        "region": "Inazuma"
+        "region": "Inazuma",
+        "greetings": [
+          {
+            "location": "expansion-asase-shrine",
+            "scenario": "On the steps of Asase Shrine on Tsurumi Island, Neko, a talking cat and the shrine's provisional head priestess, is guarding her shrine and expects an offering of fish."
+          }
+        ]
       }
     }
   }

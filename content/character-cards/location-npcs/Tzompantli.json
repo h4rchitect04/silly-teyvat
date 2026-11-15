@@ -27,7 +27,13 @@
         "element": "None",
         "modelType": "custom",
         "modelScale": 89,
-        "region": "Natlan"
+        "region": "Natlan",
+        "greetings": [
+          {
+            "location": "expansion-easybreeze-market",
+            "scenario": "At the Street Fighting Fontainian in Easybreeze Market, Natlan, Tzompantli is minding his shop."
+          }
+        ]
       }
     }
   }

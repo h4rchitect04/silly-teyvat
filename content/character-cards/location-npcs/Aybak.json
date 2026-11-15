@@ -27,7 +27,13 @@
         "element": "None",
         "modelType": "custom",
         "modelScale": 100,
-        "region": "Sumeru"
+        "region": "Sumeru",
+        "greetings": [
+          {
+            "location": "expansion-caravan-ribat",
+            "scenario": "At Caravan Ribat in Sumeru, Aybak is waiting for his next contract."
+          }
+        ]
       }
     }
   }

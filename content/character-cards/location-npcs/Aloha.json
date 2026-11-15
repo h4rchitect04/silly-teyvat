@@ -27,7 +27,13 @@
         "element": "None",
         "modelType": "custom",
         "modelScale": 89,
-        "region": "Natlan"
+        "region": "Natlan",
+        "greetings": [
+          {
+            "location": "map14-natlan-colorfall-cliffs",
+            "scenario": "At the Sunnyshine Alpaca Park at Colorfall Cliffs in Natlan, Aloha is welcoming visitors."
+          }
+        ]
       }
     }
   }

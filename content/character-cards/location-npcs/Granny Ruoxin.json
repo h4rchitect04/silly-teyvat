@@ -27,7 +27,13 @@
         "element": "None",
         "modelType": "custom",
         "modelScale": 78,
-        "region": "Liyue"
+        "region": "Liyue",
+        "greetings": [
+          {
+            "location": "wild-liyue-qingce-village",
+            "scenario": "Beneath a tree in Qingce Village, Granny Ruoxin is shelling beans in the shade and welcomes a tired traveler to sit and rest."
+          }
+        ]
       }
     }
   }

@@ -27,7 +27,13 @@
         "element": "None",
         "modelType": "custom",
         "modelScale": 95,
-        "region": "Fontaine"
+        "region": "Fontaine",
+        "greetings": [
+          {
+            "location": "map14-fontaine-fleuve-cendre",
+            "scenario": "In Fleuve Cendre in Fontaine, Tetreaux is tending bar."
+          }
+        ]
       }
     }
   }

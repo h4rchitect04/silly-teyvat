@@ -27,7 +27,13 @@
         "element": "None",
         "modelType": "custom",
         "modelScale": 86,
-        "region": "Sumeru"
+        "region": "Sumeru",
+        "greetings": [
+          {
+            "location": "map14-sumeru-bayda-harbor",
+            "scenario": "At Bayda Harbor in Sumeru, Shajar is in the middle of inspections."
+          }
+        ]
       }
     }
   }

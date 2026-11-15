@@ -25,7 +25,7 @@ const locations=ctx=>backgroundRegions(ctx).flatMap(r=>r.locations);
 export function rememberDefaultLocations(ctx){
     const prefs=mediaSettings(ctx);prefs.defaultCharacterLocations ??= {};let changed=false;
     for(const location of locations(ctx))for(const avatar of location.residents || []){
-        if(!Object.hasOwn(prefs.defaultCharacterLocations,avatar)){prefs.defaultCharacterLocations[avatar]=location.id;changed=true;}
+        if(prefs.defaultCharacterLocations[avatar]==null){prefs.defaultCharacterLocations[avatar]=location.id;changed=true;}
     }
     if(changed)ctx.saveSettingsDebounced();return prefs.defaultCharacterLocations;
 }
@@ -53,6 +53,12 @@ export function placeResident(ctx,avatar,locationId){
     for(const location of locations(ctx))location.residents=(location.residents || []).filter(a=>a!==avatar);
     if(target)target.residents.push(avatar);
     delete locationCastState(ctx).placements[avatar];delete locationCastState(ctx).leftBehind?.[avatar];ctx.saveSettingsDebounced();saveTravel(ctx);
+}
+// Profile's Home waypoint: where the character lives, and where a greeting with no waypoint of its own
+// starts. None (null) is remembered too, so the bundled home is not given back on the next start.
+export function setCharacterHome(ctx,avatar,locationId){
+    placeResident(ctx,avatar,locationId || null);
+    rememberDefaultLocations(ctx)[avatar]=locationId || null;ctx.saveSettingsDebounced();
 }
 export function residentsAt(ctx,id){
     return id?encounterResidents(ctx,id):[];

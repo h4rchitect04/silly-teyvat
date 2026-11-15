@@ -27,7 +27,13 @@
         "element": "None",
         "modelType": "custom",
         "modelScale": 84,
-        "region": "Sumeru"
+        "region": "Sumeru",
+        "greetings": [
+          {
+            "location": "map14-sumeru-bayda-harbor",
+            "scenario": "At Bayda Harbor in Sumeru, Adel is watching the boats come and go."
+          }
+        ]
       }
     }
   }

@@ -27,7 +27,13 @@
         "element": "None",
         "modelType": "custom",
         "modelScale": 95,
-        "region": "Fontaine"
+        "region": "Fontaine",
+        "greetings": [
+          {
+            "location": "map14-fontaine-annapausis",
+            "scenario": "At Annapausis in Fontaine, in the Narzissenkreuz story era, before Jakob's death in Search in the Algae Sea. A story-era encounter."
+          }
+        ]
       }
     }
   }

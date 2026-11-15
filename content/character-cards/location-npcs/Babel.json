@@ -27,7 +27,13 @@
         "element": "None",
         "modelType": "custom",
         "modelScale": 94,
-        "region": "Sumeru"
+        "region": "Sumeru",
+        "greetings": [
+          {
+            "location": "expansion-tanit-camps",
+            "scenario": "At the Tanit Camps in the Sumeru desert, during the Tanit storyline, before Her Foes Rage Like Great Waters. A story-era encounter."
+          }
+        ]
       }
     }
   }

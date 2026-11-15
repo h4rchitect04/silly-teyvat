@@ -27,7 +27,13 @@
         "element": "None",
         "modelType": "custom",
         "modelScale": 100,
-        "region": "Inazuma"
+        "region": "Inazuma",
+        "greetings": [
+          {
+            "location": "expansion-kujou-encampment",
+            "scenario": "At the Kujou Encampment on Kannazuka, Kujou Masahito, the disgraced heir of the Kujou Clan, is overseeing the camp's supplies when a stranger arrives."
+          }
+        ]
       }
     }
   }

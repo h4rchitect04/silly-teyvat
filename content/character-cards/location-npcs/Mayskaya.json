@@ -27,7 +27,13 @@
         "element": "None",
         "modelType": "custom",
         "modelScale": 86,
-        "region": "Snezhnaya"
+        "region": "Snezhnaya",
+        "greetings": [
+          {
+            "location": "expansion-rankova-zorya",
+            "scenario": "At Rankova Zorya in Snezhnaya, after the station's restoration quests."
+          }
+        ]
       }
     }
   }

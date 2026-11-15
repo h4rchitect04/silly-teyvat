@@ -27,7 +27,13 @@
         "element": "None",
         "modelType": "custom",
         "modelScale": 86,
-        "region": "Fontaine"
+        "region": "Fontaine",
+        "greetings": [
+          {
+            "location": "expansion-the-rusty-rudder",
+            "scenario": "Aboard the Rusty Rudder in Fontaine, Lasselin is working the deck."
+          }
+        ]
       }
     }
   }

@@ -34,7 +34,7 @@ import {hostileSpeaker,syncEnemyPersonaPrompt,enemyPersonaPrompt} from './enemy-
 import { mountLocationCast } from './location-cast.js';
 import { loadCharacterHomes } from './character-homes.js';
 import { castIdentity, defaultCharacterLocation } from './location-cast.js';
-import { startCharacterAtHome } from './character-location.js';
+import { followGreeting, startCharacterAtHome } from './character-location.js';
 import { loadStarterLocations } from './starter-locations.js';
 import { loadStarterCGs } from './starter-cgs.js';
 import { alignEnemyPools, addNewEnemies } from './enemy-regions.js';
@@ -1100,7 +1100,8 @@ export async function initialize(options = {}) {
         }finally{release?.();}
     });
     subscribe('CHAT_CREATED',async()=>{
-        const ctx=context();if(!keepAbyssGreeting(ctx)&&!randomizeGreeting(ctx))return;
+        // A random greeting starts the chat at that greeting's own waypoint, with its scenario.
+        const ctx=context();if(!keepAbyssGreeting(ctx)&&!randomizeGreeting(ctx))return;followGreeting(ctx);
         const release=loadingUI?.hold(loadingPlace(ctx),{instant:true});
         try{await ctx.saveChat?.();await ctx.reloadCurrentChat?.();}finally{release?.();}
     });
@@ -1114,7 +1115,9 @@ export async function initialize(options = {}) {
     subscribe('GENERATION_ENDED',releaseGroupReply);
     for(const key of ['GENERATION_STOPPED','CHAT_CHANGED'])subscribe(key,forgetGroupReply);
     subscribe('CHARACTER_MESSAGE_RENDERED',id=>finishSplitReply(context(),id));
-    subscribe('MESSAGE_SWIPED',id=>{restoreSwipedSpeaker(context(),id);});
+    subscribe('MESSAGE_SWIPED',id=>{restoreSwipedSpeaker(context(),id);
+        // Swiping to another greeting moves the opening scene to that greeting's waypoint, with its music and scenario.
+        if(Number(id)===0&&followGreeting(context()))schedule();});
     subscribe('GENERATION_STARTED', type => { if (type === 'quiet') return; generating = true; followLatest = true; view.send('SHOW'); stopAuto(); schedule(); announce('Reply is being written. The native Stop button is available.'); });
     // AI Config edits and preset switches flow back into Settings → Prompts.
     for (const key of ['SETTINGS_UPDATED', 'OAI_PRESET_CHANGED_AFTER', 'MAIN_API_CHANGED']) subscribe(key, () => syncRoleplayPrompts(context(), true));

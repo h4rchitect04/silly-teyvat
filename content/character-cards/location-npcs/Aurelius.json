@@ -27,7 +27,13 @@
         "element": "None",
         "modelType": "custom",
         "modelScale": 89,
-        "region": "Sumeru"
+        "region": "Sumeru",
+        "greetings": [
+          {
+            "location": "map14-sumeru-vimara-village",
+            "scenario": "In Vimara Village in Sumeru, Aurelius is back from a hunt."
+          }
+        ]
       }
     }
   }

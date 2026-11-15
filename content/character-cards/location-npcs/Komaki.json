@@ -27,7 +27,13 @@
         "element": "None",
         "modelType": "custom",
         "modelScale": 78,
-        "region": "Inazuma"
+        "region": "Inazuma",
+        "greetings": [
+          {
+            "location": "map14-inazuma-bourou-village",
+            "scenario": "In her garden in Bourou Village on Watatsumi Island, Komaki is watering her glowing Spiritherbs and offers free fortunes to newcomers."
+          }
+        ]
       }
     }
   }

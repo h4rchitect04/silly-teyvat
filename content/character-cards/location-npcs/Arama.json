@@ -27,7 +27,13 @@
         "element": "None",
         "modelType": "custom",
         "modelScale": 35,
-        "region": "Sumeru"
+        "region": "Sumeru",
+        "greetings": [
+          {
+            "location": "expansion-vanarana",
+            "scenario": "In Vanarana, Sumeru, during Aranyaka, before Arama becomes the new Ashvattha Tree. A story-era encounter."
+          }
+        ]
       }
     }
   }

@@ -27,7 +27,13 @@
         "element": "None",
         "modelType": "custom",
         "modelScale": 86,
-        "region": "Sumeru"
+        "region": "Sumeru",
+        "greetings": [
+          {
+            "location": "expansion-caravan-ribat",
+            "scenario": "At the Gilded Journey hotel in Caravan Ribat, Sumeru, Maryam is welcoming guests."
+          }
+        ]
       }
     }
   }

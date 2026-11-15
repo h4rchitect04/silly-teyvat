@@ -27,7 +27,13 @@
         "element": "None",
         "modelType": "custom",
         "modelScale": 95,
-        "region": "Inazuma"
+        "region": "Inazuma",
+        "greetings": [
+          {
+            "location": "expansion-kujou-encampment",
+            "scenario": "At the Kujou Encampment, after the events at Tatarasuna, Xavier, an inventor and aspiring film director, is framing shots of the soldiers with his fingers and wants to cast a visitor."
+          }
+        ]
       }
     }
   }

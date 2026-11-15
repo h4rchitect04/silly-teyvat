@@ -27,7 +27,13 @@
         "element": "None",
         "modelType": "custom",
         "modelScale": 95,
-        "region": "Fontaine"
+        "region": "Fontaine",
+        "greetings": [
+          {
+            "location": "expansion-petrichor",
+            "scenario": "In Petrichor in Fontaine, Tiepolo is going about the village."
+          }
+        ]
       }
     }
   }

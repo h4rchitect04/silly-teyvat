@@ -27,7 +27,13 @@
         "element": "None",
         "modelType": "custom",
         "modelScale": 84,
-        "region": "Liyue"
+        "region": "Liyue",
+        "greetings": [
+          {
+            "location": "wild-liyue-qingce-village",
+            "scenario": "At Fanmu Carpenter's in Qingce Village, Master Lu is planing a board at his workbench and sizes up a visitor's hands."
+          }
+        ]
       }
     }
   }

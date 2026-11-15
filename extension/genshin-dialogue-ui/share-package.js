@@ -253,13 +253,10 @@ async function importLook(ctx,saved,server,manifest,replace,overwrite){
         // SillyTavern starts from the look saved in the player's settings, not from the theme file.
         if(isNew&&ctx.powerUserSettings){const {name,...look}=manifest.theme;Object.assign(ctx.powerUserSettings,look,{theme:name});}
     }
-    if(manifest.quickReplies){
-        const isNew=!named(server.quickReplyPresets,manifest.quickReplies.name);
-        if(isNew||replace||overwrite.has('quick-replies'))await saved('/api/quick-replies/save',manifest.quickReplies);
-        if(isNew){
-            const quick=ctx.extensionSettings.quickReplyV2 ??= {};quick.isEnabled=true;quick.config ??= {};quick.config.setList ??= [];
-            if(!quick.config.setList.some(item=>item.set===manifest.quickReplies.name))quick.config.setList.push({set:manifest.quickReplies.name,isVisible:true});
-        }
+    // Teyvat Choices is built in, so the bundled set is empty and only clears an old set's scripts.
+    // Never install it fresh or turn Quick Replies on: that shows SillyTavern's Default set as well.
+    if(manifest.quickReplies&&named(server.quickReplyPresets,manifest.quickReplies.name)&&(replace||overwrite.has('quick-replies'))){
+        await saved('/api/quick-replies/save',manifest.quickReplies);
     }
 }
 const KINDS=['cards','sprites','files','backgrounds','avatars'];

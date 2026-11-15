@@ -106,6 +106,10 @@ player's own. After adding a card or changing the file, run
 uses SillyTavern's own tag code, reuses tags by name and only adds; close or reload other SillyTavern tabs, since a
 tab that saves later would write its older tag list back.
 
+## Greeting places
+
+Each card's greetings (`first_mes`, then `alternate_greetings`) can be linked to a waypoint and a scenario in `data.extensions.silly_teyvat.greetings`, one entry per greeting in the same order (`null` for one without a link, which starts at the character's home). `greeting-scenes.js` reads them: a new solo chat starts at its greeting's waypoint, the scenario becomes the chat's scenario override (never replacing one the player wrote), and swiping the first message moves the opening scene while the party has not travelled. Meeting a character alone at a place uses one of their greetings written for it. Profile in Character Customization edits greetings, their places and the home waypoint, and saves them together so the order holds. The assignments made on 2026-11-14, with the text of every greeting written then, are recorded in `content/character-cards/greeting-scenes-2026-11-14.json`; the cards in the live SillyTavern are the source. Enemy greetings are left unlinked, since enemies roam. Check: `node tools/tests/test-greeting-scenes.mjs`.
+
 ## Lorebook
 
 The Genshin Impact Lorebook lives in the live SillyTavern (`worlds/Genshin Impact Lorebook.json`) and ships in the game data export. After adding characters or waypoints, run `python3 tools/add-lorebook-entries.py --user-dir <SillyTavern>/data/default-user` to list cards and waypoints that no entry's key mentions yet, then add `--apply --backup DIR`. New entries come from the card descriptions and the location catalog; edit its `REWRITES` table for hand-written entries such as Mitya, Valeriy and the Armory Palace. A second run should report nothing to add.

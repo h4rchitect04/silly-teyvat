@@ -27,7 +27,13 @@
         "element": "None",
         "modelType": "custom",
         "modelScale": 62,
-        "region": "Fontaine"
+        "region": "Fontaine",
+        "greetings": [
+          {
+            "location": "expansion-merusea-village",
+            "scenario": "In Merusea Village in Fontaine, Virda is about to start training."
+          }
+        ]
       }
     }
   }

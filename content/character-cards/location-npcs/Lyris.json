@@ -27,7 +27,13 @@
         "element": "None",
         "modelType": "custom",
         "modelScale": 86,
-        "region": "Fontaine"
+        "region": "Fontaine",
+        "greetings": [
+          {
+            "location": "map14-fontaine-annapausis",
+            "scenario": "At Annapausis in Fontaine. A historical or dreamlike encounter; Lyris is a figure of the past, not a present-day resident."
+          }
+        ]
       }
     }
   }
