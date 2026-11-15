@@ -40,7 +40,6 @@ export function releaseGroupReply(){
     held=null;
 }
 export function forgetGroupReply(){releaseGroupReply();expecting=false;}
-export const holdingGroupReply=()=>Boolean(held);
 // On load and after every group round: a hold this extension made and never released (a reload or
 // an interrupted generation) is undone, so the player's own group trimming setting is never left off.
 export function repairGroupTrimming(ctx){

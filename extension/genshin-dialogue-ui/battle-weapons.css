@@ -327,7 +327,7 @@ body #gi-attack-controls #gi-attack-toggle[aria-pressed="true"]::after {
 /* Beams: a large square centred on the crest, so turning it keeps them on the crest. */
 #gi-battle .tb-result[data-outcome="victory"] .tb-result-rays { inset: auto; left: var(--cx, 50%); top: var(--cy, 40%); width: 260vmax; height: 260vmax; translate: -50% -50%; opacity: 0;
     background: conic-gradient(from 0deg at 50% 50%, #0000 0 4deg, #ffb54a66 4deg 6deg, #0000 6deg 22deg, #ffcf6b44 22deg 25deg, #0000 25deg 47deg, #ffb54a55 47deg 49deg, #0000 49deg 70deg, #ffd78a44 70deg 73deg, #0000 73deg 101deg, #ffb54a66 101deg 103deg, #0000 103deg 140deg, #ffcf6b44 140deg 143deg, #0000 143deg 181deg, #ffb54a55 181deg 183deg, #0000 183deg 222deg, #ffd78a44 222deg 225deg, #0000 225deg 262deg, #ffb54a66 262deg 264deg, #0000 264deg 300deg, #ffcf6b44 300deg 303deg, #0000 303deg 338deg, #ffb54a55 338deg 340deg, #0000 340deg);
-    mask: radial-gradient(circle at 50% 50%, #000 0 1.2%, #0000 26%); animation: tb-rays-in 1600ms 150ms ease-out both, tb-rays-turn 48s 1750ms linear infinite; }
+    mask: radial-gradient(circle at 50% 50%, #000 0 1.2%, #0000 26%); animation: tb-result-rays-in 1600ms 150ms ease-out both, tb-rays-turn 48s 1750ms linear infinite; }
 /* Title: lands from a blur (tb-victory), then a shine sweeps across the letters. */
 #gi-battle .tb-result[data-outcome="victory"] h3 { color: transparent; text-shadow: none; -webkit-background-clip: text; background-clip: text;
     background-image: linear-gradient(100deg, #fff3d0 0 42%, #ffffff 48%, #ffe29a 52%, #fff3d0 58% 100%); background-size: 320% 100%; background-position: 100% 0;
@@ -378,7 +378,8 @@ body #gi-attack-controls #gi-attack-toggle[aria-pressed="true"]::after {
 @keyframes tb-crest-in { 0% { opacity: 0; transform: rotate(-200deg) scale(.2); } 60% { opacity: 1; transform: rotate(12deg) scale(1.12); } to { opacity: .9; transform: rotate(0) scale(1); } }
 @keyframes tb-crest-glow { 50% { filter: drop-shadow(0 0 28px #ffcf6bee); } }
 @keyframes tb-band { from { opacity: 0; transform: scaleX(0); } to { opacity: 1; transform: scaleX(1); } }
-@keyframes tb-rays-in { 0% { opacity: 0; transform: scale(.3) rotate(-25deg); } 30% { opacity: 1; } to { opacity: .6; transform: scale(1) rotate(0); } }
+/* Not tb-rays-in: that name is the Burst build-up (battle.css), and a second definition would replace it. */
+@keyframes tb-result-rays-in { 0% { opacity: 0; transform: scale(.3) rotate(-25deg); } 30% { opacity: 1; } to { opacity: .6; transform: scale(1) rotate(0); } }
 @keyframes tb-rays-turn { to { rotate: 360deg; } }
 @keyframes tb-shine { from { background-position: 100% 0; } to { background-position: 0 0; } }
 @keyframes tb-twinkle { 0%, 100% { opacity: 0; scale: .4; } 40% { opacity: 1; scale: 1.1; } 60% { opacity: .9; scale: .9; } }

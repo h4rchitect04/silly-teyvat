@@ -150,9 +150,16 @@ export function mountCardArt({getContext, root = document, loadPowerUser = () =>
     if (panel) observer.observe(panel, {childList: true, subtree: true, attributes: true, attributeFilter: ['src']});
     const personas = root.querySelector('#persona-management-block');
     if (personas && personas !== panel) observer.observe(personas, {childList: true, subtree: true, attributes: true, attributeFilter: ['src']});
-    // The chat streams constantly; only react when the welcome screen's Recent Chats change, or while every message shows its avatar.
+    // The chat streams constantly; only react when the welcome screen's Recent Chats change, or, while every message
+    // shows its avatar (Review, the classic chat), when elements arrive outside a message's text. A reply being
+    // written changes only its text, timer and token count, and a scan reads every avatar in the page.
     const chat = root.querySelector('#chat');
-    const recent = new MutationObserver(list => { if (document.body.classList.contains('gi-history') || document.body.classList.contains('gi-classic') || list.some(m => m.target.closest?.('.recentChatList') || [...m.addedNodes].some(n => n.nodeType === 1 && (n.matches('.recentChat, .recentChatList') || n.querySelector('.recentChat'))))) queue(); });
+    const element = node => node.nodeType === 1;
+    const recent = new MutationObserver(list => {
+        const everyMessage = document.body.classList.contains('gi-history') || document.body.classList.contains('gi-classic');
+        if (list.some(m => everyMessage && !m.target.closest?.('.mes_text, .mes_reasoning') && [...m.addedNodes].some(element)
+            || m.target.closest?.('.recentChatList') || [...m.addedNodes].some(n => element(n) && (n.matches('.recentChat, .recentChatList') || n.querySelector('.recentChat'))))) queue();
+    });
     if (chat) recent.observe(chat, {childList: true, subtree: true});
     const {eventSource, eventTypes} = getContext();
     root.addEventListener('change', keepCardShape, true);

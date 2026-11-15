@@ -7,7 +7,7 @@ import {playedAvatars,linkedCard} from './persona-link.js';
 import {NARRATOR_AVATAR} from './narrator.js';
 import {personaCard} from './persona-wardrobe.js';
 import {syncPromptOrder} from './prompt-order.js';
-import {DIFFICULTY,partyScale,encounterHp} from './battle-engine.js';
+import {DIFFICULTY,encounterHp} from './battle-engine.js';
 import {isTcgBoss} from './boss-kits.js';
 import {restockBag} from './battle-items.js';
 import {journeyBag} from './starter-decks.js';

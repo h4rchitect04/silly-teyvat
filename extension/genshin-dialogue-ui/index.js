@@ -31,9 +31,8 @@ import { mountStatueResonance } from './statue-resonance.js';
 import {beginOpeningScene} from './opening-scene.js';
 import {enemySpeaker} from './enemy-actions.js';
 import {hostileSpeaker,syncEnemyPersonaPrompt,enemyPersonaPrompt} from './enemy-persona.js';
-import { mountLocationCast } from './location-cast.js';
+import { mountLocationCast, castIdentity, defaultCharacterLocation } from './location-cast.js';
 import { loadCharacterHomes } from './character-homes.js';
-import { castIdentity, defaultCharacterLocation } from './location-cast.js';
 import { followGreeting, startCharacterAtHome } from './character-location.js';
 import { loadStarterLocations } from './starter-locations.js';
 import { loadStarterCGs } from './starter-cgs.js';
@@ -449,7 +448,7 @@ function refresh({passive=false}={}) {
     const placeNow=backgroundUI?.current;
     if(placeNow?.location?.id){if(lastPlaceId&&placeNow.location.id!==lastPlaceId)holdTravelLoad(placeNow);if(placeNow.location.id!==lastPlaceId)backgroundMenuUI?.sync();lastPlaceId=placeNow.location.id;}
     locationCastUI?.sync({on:Boolean(world&&!openingHome),generating:generating||groupGenerating||combatUI?.busy||personaSession?.busy});
-    worldMapUI?.sync({on:world,show:Boolean(world&&!history&&!hidden&&!menuOpen),location:backgroundUI?.current,loading:Boolean(loadingUI?.visible)});
+    worldMapUI?.sync({on:world,show:Boolean(world&&!history&&!hidden&&!menuOpen),location:backgroundUI?.current,loading:Boolean(loadingUI?.visible),generating});
     // Arriving at a Statue of The Seven offers the Traveler its element once the new place is on screen and nothing is busy.
     statueUI?.sync({on:world,ready:Boolean(live&&!history&&!hidden&&!menuOpen&&!generating&&!groupGenerating&&!loadingUI?.visible&&!combatUI?.busy&&!combatUI?.engaged&&!locationCastUI?.busy&&!personaSession?.busy&&!worldMapUI?.busy&&!document.querySelector('dialog[open]:not(#gi-statue)'))});
     for (const el of uiActions('wardrobe')) el.hidden = !prefs.wardrobe;
@@ -491,7 +490,8 @@ function refresh({passive=false}={}) {
     soloButton.disabled = Boolean(personaSession?.busy);
     for (const action of ['auto', 'history', 'hide']) document.querySelector(`#gi-toolbar [data-gi-action="${action}"]`).disabled = !active;
     document.querySelector('#gi-review-heading').hidden = !active || !history;
-    document.querySelector('#gi-navigation').hidden = !active || history || hidden;
+    const navigation = document.querySelector('#gi-navigation');
+    navigation.hidden = !active || history || hidden;
     const regeneration=regenerationState(ctx,{id:Number(current),generating,editing:editing()||deleting(),busy:regenerating});
     const regenerateButton=document.querySelector('#gi-regenerate');
     regenerateButton.hidden=!active || history || hidden || generating || !regeneration.visible;regenerateButton.disabled=!regeneration.allowed;
@@ -499,15 +499,16 @@ function refresh({passive=false}={}) {
     const position = document.querySelector('#gi-position');
     position.textContent = `${index + 1} / ${list.length}${page.pages.length > 1 ? ` · ${page.index + 1} / ${page.pages.length}` : ''}`;
     position.setAttribute('aria-label', `Message ${index + 1} of ${list.length}, page ${page.index + 1} of ${page.pages.length}`);
-    document.querySelector('[data-gi-action="previous"]').disabled = index <= 0 && page.index <= 0;
-    const previous = document.querySelector('[data-gi-action="previous"]');
+    // Scoped to the navigation bar: an attribute lookup from the document walks the whole transcript first.
+    const previous = navigation.querySelector('[data-gi-action="previous"]');
+    previous.disabled = index <= 0 && page.index <= 0;
     previous.title = page.index > 0 ? 'Previous dialogue page' : 'Previous message';
     previous.setAttribute('aria-label', previous.title);
-    const next = document.querySelector('#gi-navigation [data-gi-action="next"]');
+    const next = navigation.querySelector('[data-gi-action="next"]');
     next.disabled = index === list.length - 1 && !morePages && !reveal.revealing;
     next.title = reveal.revealing ? 'Show the rest of this dialogue' : morePages ? 'Next dialogue page' : 'Next message';
     next.setAttribute('aria-label', next.title);
-    document.querySelector('[data-gi-action="latest"]').disabled = index === list.length - 1 && !morePages;
+    navigation.querySelector('[data-gi-action="latest"]').disabled = index === list.length - 1 && !morePages;
     for (const action of ['auto', 'history', 'compose', 'hide']) {
         const el = document.querySelector(`#gi-toolbar [data-gi-action="${action}"]`);
         el.setAttribute('aria-pressed', String(({ auto, history, compose: composing, hide: hidden })[action]));
@@ -516,7 +517,7 @@ function refresh({passive=false}={}) {
     const hide = document.querySelector('#gi-toolbar [data-gi-action="hide"]');
     const hideLabel = hidden ? 'Show UI' : 'Hide UI';
     hide.setAttribute('aria-label', hideLabel);
-    hide.querySelector('span').textContent = hideLabel; hide.setAttribute('aria-pressed', String(hidden));
+    hide.querySelector('span').textContent = hideLabel;
     paintFullscreen();
     const notice = document.querySelector('#gi-notice');
     const conflict = conflictText();
@@ -524,7 +525,7 @@ function refresh({passive=false}={}) {
     notice.querySelector('p').textContent = conflict;
     syncSettings(!passive);
     // Measure everything first: reading layout between these writes would force a reflow for each one.
-    const arrow=document.querySelector('#gi-navigation [data-gi-action="next"]').getBoundingClientRect(),nav=document.querySelector('#gi-navigation').getBoundingClientRect();
+    const arrow=next.getBoundingClientRect(),nav=navigation.getBoundingClientRect();
     const dialogue=(selected?.querySelector('.gi-page') || selected?.querySelector('.mes_block') || document.querySelector('#chat')).getBoundingClientRect();
     const actionLeft=Math.max(arrow.right+5,Math.min(innerWidth-8,dialogue.right)-(arrow.width || 44));
     document.body.style.setProperty('--gi-stop-left',`${actionLeft}px`);document.body.style.setProperty('--gi-stop-top',`${arrow.top}px`);document.body.style.setProperty('--gi-action-size',`${arrow.height || 44}px`);document.body.style.setProperty('--gi-action-width',`${arrow.width || 44}px`);document.body.style.setProperty('--gi-action-left',`${actionLeft-nav.left}px`);document.body.style.setProperty('--gi-attack-left',`${Math.max(8,dialogue.left)-nav.left}px`);document.body.style.setProperty('--gi-action-top',`${arrow.top-nav.top}px`);
@@ -931,7 +932,7 @@ export async function initialize(options = {}) {
     if(preferences().cardArt)cardArtUI=mountCardArt({getContext:context});
     loadingUI=createLoadingScreen({isReady:stageReady,onChange:schedule});
     keyboardFrame=createKeyboardFrame({onChange:()=>{spriteUI?.relayout();schedule();}});
-    backgroundUI=mountBackgrounds({host,getContext:context,adapter:mediaAdapter,announce,onChange:schedule});
+    backgroundUI=mountBackgrounds({host,getContext:context,onChange:schedule});
     locationCastUI=mountLocationCast({host,getContext:context,adapter:castAdapter,announce,onChange:event=>{
         if(followLatest&&(event.added||event.removed))void spriteUI?.refreshPresentation().catch(error=>console.warn('[Silly Teyvat] Travel stage',error));
         schedule();
@@ -942,7 +943,7 @@ export async function initialize(options = {}) {
         openJourney:id=>journeyAdapter.open(id),
         prepareTeleport:location=>locationCastUI.prepareTeleport(location),commitTeleport:plan=>locationCastUI.commitTeleport(plan),onTeleport:jumpToArrival,retryCast:()=>locationCastUI.retry(),
         openStatue:location=>statueUI?.open(location),
-        onChange:()=>{backgroundUI.refresh();schedule();}});
+        onChange:schedule});
     statueUI=mountStatueResonance({host,getContext:context,announce,onChange:schedule});
     // SillyTavern's Backgrounds menu lists every location; choosing one in a journey teleports there.
     backgroundMenuUI=mountBackgroundMenu({getContext:context,announce,
@@ -952,7 +953,7 @@ export async function initialize(options = {}) {
         teleport:id=>worldMapUI.teleport(id)});
     mediaUI = mountSceneMedia({host,getContext:context,adapter:mediaAdapter,sound,announce});
     spriteUI = mountPageSprites({ host, getContext: context, adapter: spriteAdapter, isDefeated: defeatedHere, announce, renderMessage: id => document.querySelector(`#chat > .mes[mesid="${id}"] .mes_text`), onAppearance:event=>mediaUI?.appearance(event) });
-    wardrobeUI = mountWardrobe({ host, getContext: context, adapter: wardrobeAdapter, personaAdapter, mediaAdapter, previewAudio:files=>mediaUI.previewAudio(files), previewCG:cg=>mediaUI.previewCG(cg), onMediaChange:(options={})=>{backgroundUI.refresh();if(options.reclassify)mediaUI.reclassifyCurrent();else mediaUI.refresh();schedule();}, onChange: async (character,options) => { if(options?.classification){schedule();return;}
+    wardrobeUI = mountWardrobe({ host, getContext: context, adapter: wardrobeAdapter, personaAdapter, mediaAdapter, previewAudio:files=>mediaUI.previewAudio(files), previewCG:cg=>mediaUI.previewCG(cg), onMediaChange:(options={})=>{if(options.reclassify)mediaUI.reclassifyCurrent();else mediaUI.refresh();schedule();}, onChange: async (character,options) => { if(options?.classification){schedule();return;}
         if(options?.presentation)await spriteUI?.refreshPresentation();else await spriteUI?.refreshSprite(character,options);schedule(); } });
     combatUI=mountCombat({host,getContext:context,adapter:combatAdapter,diceAdapter,announce,onChange:event=>{inventoryUI?.refresh();if(event?.transformed)locationMusicUI?.formChanged(event.transformed.form);if(event?.roundSettled)locationMusicUI?.roundSettled();if(event?.hit)spriteUI?.hit(event.hit);if(event?.hurt)spriteUI?.hurt(event.hurt);if(event?.healed)spriteUI?.heal(event.healed);if(event?.slain)spriteUI?.defeat(event.defeated);if(event?.defeated)locationCastUI?.retry();if(event?.removed)void spriteUI?.refreshPresentation().catch(error=>console.warn('[Silly Teyvat] Party stage',error));schedule();}});
     choiceUI = mountChoices({ host, getContext: context, adapter: choicesAdapter, announce });

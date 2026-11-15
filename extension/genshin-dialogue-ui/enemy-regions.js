@@ -203,7 +203,6 @@ export function enemyNative(name,region){
     const list=ENEMY_REGIONS[name],where=known(region);
     return !list||!where||list.includes(where);
 }
-export const nativeRegions=name=>ENEMY_REGIONS[name] || null;
 
 // Adds the 1.63 enemies to saved pools without touching anything else in them: each enemy once,
 // as soon as its character card is installed. Pools a player emptied or edited keep their own choices.

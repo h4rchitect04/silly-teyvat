@@ -4,9 +4,8 @@ import {combatState,clearEnemy,activeEnemies,combatAllies,allyElement,partyMembe
 import {defaultKit,mergeKit,kitOverrideFor,travelerKit,foeKit,playableKit,burstSplashName} from './combat-kits.js';
 import {characterProperties,isEnemy} from './character-properties.js';
 import {circularCharacterAvatar} from './character-avatars.js';
-import {personaCard} from './persona-wardrobe.js';
+import {personaCard,activePersonaAvatar,personaKey} from './persona-wardrobe.js';
 import {linkedCard} from './persona-link.js';
-import {activePersonaAvatar,personaKey} from './persona-wardrobe.js';
 import {activeGroup} from './party.js';
 import {resonanceOf,planIntent,innateAura,auraList,applyForm} from './battle-engine.js';
 import {addToBag,CARD_DEFS,ITEMS} from './battle-items.js';

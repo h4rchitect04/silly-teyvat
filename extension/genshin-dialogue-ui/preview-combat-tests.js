@@ -1,4 +1,4 @@
-import {mountCombat,appendCombatMessage} from './combat.js';
+import {mountCombat} from './combat.js';
 import {mountChoices} from './choices.js';
 import {mountElementalDice} from './elemental-dice.js';
 import {mountWildernessEditor} from './wilderness.js';

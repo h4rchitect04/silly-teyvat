@@ -1,4 +1,4 @@
-import {resolveRound,rollFuel,diceCount,resonanceOf,partyScale,planIntent,intentPreview,fleeChance,auraList,REACTION_UNIT,startRound,useSkill,switchTo,playCard,tuneDie,declareEnd,enemyTurn,endPhase,finishRound,moveCheck,cardCheck,costOf,chooseDice,forecast,autoAction,bestAction,autoRound,applyInfusion,moveElement,activeOf,drawCards,deckFrom,sortDice} from './battle-engine.js';
+import {resolveRound,rollFuel,diceCount,resonanceOf,partyScale,planIntent,intentPreview,fleeChance,auraList,REACTION_UNIT,startRound,useSkill,switchTo,playCard,tuneDie,declareEnd,enemyTurn,endPhase,finishRound,cardCheck,costOf,chooseDice,forecast,autoAction,bestAction,autoRound,applyInfusion,moveElement,drawCards,deckFrom,sortDice} from './battle-engine.js';
 import {ITEMS,rollLoot,applyDiceItem,STARTER_BAG} from './battle-items.js';
 import {defaultKit,describeMove,escapeHtml,hasBundledKit,mergeKit,playableKit,foeKit} from './combat-kits.js';
 import {mountBattle} from './battle-ui.js';

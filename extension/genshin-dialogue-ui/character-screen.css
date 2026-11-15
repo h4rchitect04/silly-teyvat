@@ -206,12 +206,10 @@
 @media (max-width: 600px) and (orientation: portrait) {
     #gi-wardrobe header { grid-template-columns: minmax(0, 1fr) auto; }
     #gi-wardrobe header > button[data-w="close"] { grid-column: 2; }
-    #gi-wardrobe header > .gi-cs-key { display: none; }
     #gi-wardrobe header .gi-roster { max-width: none; height: 56px; }
     #gi-wardrobe .gi-cs-side { margin-inline: 8px; }
 }
 @media (max-height: 550px) and (orientation: landscape) {
-    #gi-wardrobe header { min-height: 46px; }
     #gi-wardrobe .gi-cs-emblem { width: 40px; height: 40px; }
     #gi-wardrobe header .gi-roster button { width: 44px; }
     #gi-wardrobe header .gi-roster .gi-roster-face { left: 5px; width: 34px; height: 34px; }

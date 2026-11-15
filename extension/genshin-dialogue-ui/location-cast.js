@@ -232,11 +232,14 @@ export function mountLocationCast({host,getContext,adapter=createLocationCastAda
             const state=locationCastState(ctx),avatar=ctx.characters?.[ctx.characterId]?.avatar;if(!inPartyChat(ctx)&&avatar&&!state.opening&&!state.encounter&&!state.arrival)beginOpeningScene(ctx,avatar,travelState(ctx).location?.id);
             if(api.chatKey&&key!==api.chatKey){revision++;finishAnswer(null);failed='';signature='';}api.chatKey=key;
             if(!enabled){finishAnswer(null);return;}
+            // Nothing is reconciled while a reply is written or a change is under way, so the roster (every
+            // waypoint and card) is not read on each streamed frame.
+            if(busy||generating)return;
             rememberDefaultLocations(ctx);
             const next=signatureFor(ctx);
-            if(!busy&&!generating&&next!==signature&&next!==failed){signature=next;void api.reconcile(next);}
+            if(next!==signature&&next!==failed){signature=next;void api.reconcile();}
         },
-        async reconcile(nextSignature=''){
+        async reconcile(){
             if(disposed||busy||generating||!enabled)return;
             const ctx=getContext(),key=castIdentity(ctx),token=revision,plan=castMembership(ctx),state=locationCastState(ctx);
             if(!travelState(ctx).location?.id)return;

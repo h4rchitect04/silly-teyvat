@@ -98,7 +98,6 @@ const SLOTS = [
     {id:'character',key:'silly_teyvat_rp_character',text:DEFAULT_CHARACTER_PROMPT,position:0,depth:0},
     {id:'systems',key:'silly_teyvat_rp_systems',text:DEFAULT_SYSTEMS_PROMPT,position:0,depth:0},
 ];
-export const ROLEPLAY_PROMPT_IDS = SLOTS.map(s=>s.id);
 
 const settingsOf = ctx => ctx.extensionSettings?.genshin_dialogue_ui;
 function store(ctx) {

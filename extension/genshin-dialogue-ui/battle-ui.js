@@ -7,8 +7,8 @@ import {requestFrame,cancelFrame} from './frame-rate.js';
 // Roll Phase, then turns in alternation. On your turn play cards and tune dice (Fast Actions), then
 // use a skill, switch characters, flee or end your round (Combat Actions). Every action plays out
 // at once: skill name, the card lunging, impacts, damage numbers, reactions and sounds.
-import {startRound,useSkill,switchTo,playCard,tuneDie,declareEnd,flee as fleeAction,enemyTurn,endPhase,finishRound,moveCheck,cardCheck,cardCost,tuneCheck,switchCost,costOf,anyCost,chooseDice,diceFit,forecast,bestAction,takeAction,movesOf,preparedDue,usePrepared,chooseCard,
-    drawCards,deckFrom,sortDice,activeOf,isActive,isStunned,alive,unitById,moveElement,moveNeedsTarget,intentPreview,fleeChance,partyElements,activeElement,auraList,innateAura,burstReady,REACTIONS,RESONANCE,ELEMENTS,FIELDS,HAND_START} from './battle-engine.js';
+import {startRound,switchTo,tuneDie,enemyTurn,endPhase,finishRound,moveCheck,cardCheck,cardCost,tuneCheck,switchCost,costOf,anyCost,chooseDice,diceFit,forecast,bestAction,takeAction,movesOf,preparedDue,usePrepared,chooseCard,
+    drawCards,deckFrom,sortDice,activeOf,isActive,alive,unitById,moveElement,moveNeedsTarget,intentPreview,fleeChance,partyElements,activeElement,auraList,innateAura,burstReady,REACTIONS,RESONANCE,ELEMENTS,FIELDS,HAND_START} from './battle-engine.js';
 import {describeMove,escapeHtml,KIND_LABEL} from './combat-kits.js';
 // Cards in a battle include the ones skills create (CARD_DEFS); the board reads them all as ITEMS.
 import {CARD_DEFS as ITEMS,itemArt,kindLabel} from './battle-items.js';
@@ -62,7 +62,6 @@ const ICON={
 const COIN_LAND=2390;
 // Each board's SVG gradients need their own ids: a reference resolves to the first in the page, which may be a closed board.
 let boards=0;
-const ordinal=n=>{const s=['th','st','nd','rd'],v=n%100;return n+(s[(v-20)%10] || s[v] || s[0]);};
 
 export function mountBattle({host,sound=createBattleSound(),onBurst=()=>{},onStopVoice=()=>{},onTransform=()=>{}}){
     const dialog=document.createElement('dialog');dialog.id='gi-battle';dialog.setAttribute('aria-label','Battle');
@@ -570,7 +569,7 @@ export function mountBattle({host,sound=createBattleSound(),onBurst=()=>{},onSto
     function chooseMove(index){
         if(!myTurn())return;
         if(pick?.type==='skill'&&pick.move===index){confirm();return;}
-        const u=activeOf(state,'party'),check=moveCheck(round,index);
+        const check=moveCheck(round,index);
         if(!check.ok&&!/dice/i.test(check.reason || '')){deny(`.tb-skills [data-move="${index}"]`,check.reason);return;}
         select({type:'skill',move:index});
     }

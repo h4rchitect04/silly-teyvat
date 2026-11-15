@@ -1,5 +1,7 @@
 // User-supplied assets replace glyphs only. Native drawer actions stay intact.
-export const iconAsset = name => new URL(`assets/icons/${encodeURIComponent(name)}.webp`, import.meta.url).href;
+// Asked for on every refresh, so each address is worked out once.
+const assets = new Map();
+export const iconAsset = name => { let href = assets.get(name); if (!href) assets.set(name, href = new URL(`assets/icons/${encodeURIComponent(name)}.webp`, import.meta.url).href); return href; };
 const mapping = {
     'advanced-formatting-button': 'AI Response Formatting', 'ai-config-button': 'AI Response Configuration', 'sys-settings-button': 'API Connections',
     'WI-SP-button': 'World Info', 'user-settings-button': 'User Settings',

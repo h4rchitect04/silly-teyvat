@@ -7,7 +7,6 @@ import {PROMPT_GROUPS,defaultPrompt,fillPrompt,promptText,setPromptText} from '.
 import {renderPromptLibrary,roleplayPromptText,setRoleplayPrompt} from './roleplay-prompts.js';
 import {choicePrompt} from './choices-api.js';
 import {combatTriggerPrompt} from './enemy-actions.js';
-import {worldScalePrompt} from './world-data.js';
 import {ABYSS_HOME,abyssAvatar,abyssGreeting,freshenTwinPersonas,keepAbyssGreeting,playedTwin,restoreTwinCards,syncTwinPrompt,twinRoles,twinRolesPrompt,wearTwinCards} from './twin-roles.js';
 import {locationResidents} from './location-encounters.js';
 import {defaultCharacterLocation,homeDefaults} from './location-cast.js';

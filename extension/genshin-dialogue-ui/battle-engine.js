@@ -868,7 +868,7 @@ function core(round){
     }
     // Passive supports (cheaper cards or switches): the first one that applies, if it has a use left this round.
     function supportReady(test){return (state.supports || []).find(entry=>{const def=supportDef(entry);return def&&test(def)&&(entry.n || 0)<(def.per || 99);}) || null;}
-    function addSupport(item,id,step){
+    function addSupport(item,id){
         state.supports ??= [];state.supportSeq=(state.supportSeq || 0)+1;
         const entry={id:`support:${state.supportSeq}`,item:id,name:item.name,uses:item.support.uses || 0,progress:0,n:0};
         state.supports.push(entry);supportsChanged('add',entry);

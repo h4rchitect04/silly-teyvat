@@ -19,14 +19,24 @@ export function combatSpeaker(ctx,message){
     return card || null;
 }
 export function enemySpeaker(ctx,message){const card=combatSpeaker(ctx,message);return card&&isEnemy(ctx,card)?card:null;}
+// The patterns that hide the trigger phrase. Pages are split again on every streamed frame, so they are built
+// once per phrase.
+let markerFor,markerCache;
+function markerPatterns(phrase){
+    if(phrase!==markerFor){
+        const hide=markerPhrase(phrase)?new RegExp(escapeRegExp(phrase),'gi'):null;
+        // While the reply streams, a half-written marker at the very end is hidden as well.
+        const partial=hide?new RegExp(`(?:${[...phrase].slice(0,-1).map((_,i)=>escapeRegExp(phrase.slice(0,i+2))).reverse().join('|')})$`,'i'):null;
+        markerFor=phrase;markerCache={hide,partial};
+    }
+    return markerCache;
+}
 // This explicit action token is authored with the enemy's reply. No emotion
 // classifier, keyword search for attack prose or user message chooses its pose.
 export function enemyDialoguePages(pages,message,phrase=DEFAULT_COMBAT_TRIGGER){
     if(message.is_user||message.is_system)return pages;
     const result=[];let attack=false;
-    const hide=markerPhrase(phrase)?new RegExp(escapeRegExp(phrase),'gi'):null;
-    // While the reply streams, a half-written marker at the very end is hidden as well.
-    const partial=hide?new RegExp(`(?:${[...phrase].slice(0,-1).map((_,i)=>escapeRegExp(phrase.slice(0,i+2))).reverse().join('|')})$`,'i'):null;
+    const {hide,partial}=markerPatterns(phrase);
     for(const page of pages){
         const walker=page.ownerDocument.createTreeWalker(page,NodeFilter.SHOW_TEXT);const nodes=[];while(walker.nextNode())nodes.push(walker.currentNode);
         if(message.is_enemy){

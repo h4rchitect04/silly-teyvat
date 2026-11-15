@@ -457,7 +457,6 @@ function describeOne(effect,{t,el,elText,element}){
         case 'bite':return `Puts ${effect.amount} Bite Target on the opposing active character.`;
         case 'convertDice':return `Turns ${effect.amount} dice into ${effect.face==='self'?'its element':effect.face || 'Omni'}.`;
         case 'heal':return `Heals ${t} for ${effect.amount} HP.`;
-        case 'heal':return `Heals ${t} for ${effect.amount} HP.`;
         case 'shield':return `Shields ${t} for ${effect.amount}.`;
         case 'buff':
             if(effect.stat==='infuse')return `Infuses ${t === 'self' ? 'own' : `${t}'s`} Normal Attacks with ${element || 'elemental'} power for ${plural(effect.rounds,'round')}.`;

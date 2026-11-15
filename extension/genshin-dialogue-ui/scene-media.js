@@ -195,7 +195,8 @@ export function mountSceneMedia({host,getContext,adapter=createMediaAdapter(getC
     function clearFull() { if(!stage.hidden && audioKind==='cg' && frame.hidden)stopSound(); hideStage(); }
     function closeFrame() { if(!frame.hidden && audioKind==='cg' && stage.hidden)stopSound(); hideFrame(); }
     // A saved message keeps a copy of its CG; its current settings still apply unless the CG was removed.
-    const liveCG = (prefs,cg) => Object.values(prefs.characterCGs).flat().find(entry=>entry.id===cg.id) || cg;
+    // Asked on every refresh while a CG is shown, so the lists are searched in place rather than joined into one first.
+    const liveCG = (prefs,cg) => { for (const entries of Object.values(prefs.characterCGs)) { const entry = entries.find(x=>x.id===cg.id); if (entry) return entry; } return cg; };
     const videoSound = (prefs,cg) => ({volume:cgVolume(prefs,cg.videoVolume),sound:prefs.cgAudio !== false});
     function paint(saved, key, fresh=false) {
         const prefs = mediaSettings(getContext());

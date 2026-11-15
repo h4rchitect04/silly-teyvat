@@ -90,8 +90,9 @@ export function mountCombat({host,getContext,onChange=()=>{},announce=()=>{},ada
         else if(controls.parentElement!==dock)dock.append(controls);
     }
     // Sprites coming and going (and their hidden flags while they decode) change nothing about where Attack sits, and
-    // placeControls measures layout, so those mutations are skipped: with a crowded stage they came in dozens.
-    const inStage=record=>Boolean((record.target.nodeType===Node.ELEMENT_NODE?record.target:record.target.parentElement)?.closest('#gi-sprite-stage'));
+    // placeControls measures layout, so those mutations are skipped: with a crowded stage they came in dozens. So are
+    // changes inside a dialog (the map's pins, the battle board, the Characters screen), which come in hundreds.
+    const inStage=record=>Boolean((record.target.nodeType===Node.ELEMENT_NODE?record.target:record.target.parentElement)?.closest('#gi-sprite-stage, dialog'));
     const layout=new MutationObserver(records=>{if(records.every(inStage))return;placeControls();});layout.observe(host,{subtree:true,childList:true,attributes:true,attributeFilter:['hidden']});layout.observe(document.body,{attributes:true,attributeFilter:['class']});placeControls();
     const sword=controls.querySelector('button'),abort=new AbortController();
     // One dialog asks every combat question: which party members to fight, and whether to revive a fallen one.

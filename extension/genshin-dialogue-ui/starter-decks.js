@@ -91,7 +91,6 @@ export function saveStarterDeck(ctx,avatar,{cards,random=false}){
     ctx.saveSettingsDebounced?.();
     return starterDeckOf(ctx,avatar);
 }
-export function resetStarterDeck(ctx,avatar){delete store(ctx)[avatar];ctx.saveSettingsDebounced?.();return starterDeckOf(ctx,avatar);}
 // The character a journey was started with: the open card, the card a travel journey was made from,
 // or the first companion in the scene.
 export function journeyCharacter(ctx){
