@@ -75,6 +75,8 @@ export function mountTrust({host,getContext,announce=()=>{}}){
     host.append(dialog);
     const toasts=el('div','gi-trust-toasts');toasts.setAttribute('aria-hidden','true');host.append(toasts);
     const abort=new AbortController(),on=(node,type,fn)=>node.addEventListener(type,fn,{signal:abort.signal}),$=s=>dialog.querySelector(s);
+    // For elements that are redrawn and thrown away with their listeners: none of the abort signal, which would keep an entry for each one until dispose.
+    const listen=(node,type,fn,opt)=>node.addEventListener(type,fn,opt);
     const noted=new Set();let selected='',asking='',token=0;
     function thoughtBox(entry,card){
         const box=el('article','gi-thought');
@@ -94,7 +96,7 @@ export function mountTrust({host,getContext,announce=()=>{}}){
         const meter=el('div','gi-trust-meter');meter.append(heartRow(level),el('b','',`${level} / ${TRUST_MAX}`));
         const ask=el('button','gi-trust-ask');ask.type='button';ask.textContent=asking===card.avatar?'Thinking...':'What do they think of you?';ask.disabled=Boolean(asking);
         ask.setAttribute('aria-busy',String(asking===card.avatar));
-        on(ask,'click',()=>void ask_(card));
+        listen(ask,'click',()=>void ask_(card));
         box.append(head,meter,el('p','gi-trust-hint',band.hint),ask);
         if(asking===card.avatar){const wait=el('div','gi-thought gi-thought-wait');wait.append(el('i'),el('i'),el('i'));wait.setAttribute('role','status');wait.setAttribute('aria-label',`${card.name} is thinking`);box.append(wait);}
         else{const saved=thoughtBox(savedThoughts(getContext(),card.avatar),card);if(saved)box.append(saved);}
@@ -106,7 +108,7 @@ export function mountTrust({host,getContext,announce=()=>{}}){
             const b=el('button','gi-trust-person');b.type='button';b.setAttribute('aria-pressed',String(avatar===selected));
             const img=el('img');img.alt='';img.draggable=false;img.loading='lazy';img.src=portrait(ctx,card);
             const text=el('span');text.append(el('b','',card.name),heartRow(level));if(present)text.append(el('small','','With you'));
-            b.append(img,text);on(b,'click',()=>{selected=avatar;paint();});
+            b.append(img,text);listen(b,'click',()=>{selected=avatar;paint();});
             return b;
         }));
         if(!roster.length)list.append(el('p','gi-trust-empty','Nobody yet. Meet someone on your travels and they will appear here.'));

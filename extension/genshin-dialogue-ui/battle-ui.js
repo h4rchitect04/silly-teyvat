@@ -103,6 +103,8 @@ export function mountBattle({host,sound=createBattleSound(),onBurst=()=>{},onSto
     <div class="gb-vignette" aria-hidden="true"></div><p class="gi-sr-only tb-log" role="log" aria-live="polite"></p>`;
     host.append(dialog);
     const $=s=>dialog.querySelector(s),abort=new AbortController(),on=(node,type,fn,opt={})=>node.addEventListener(type,fn,{signal:abort.signal,...opt});
+    // For elements that are redrawn and thrown away with their listeners: none of the abort signal, which would keep an entry for each one until dispose.
+    const listen=(node,type,fn,opt)=>node.addEventListener(type,fn,opt);
     const particles=createParticles(dialog.querySelector('.gb-particles'));
     // The board's phase. Each phase lists the phases that may follow it, so a stray timer or click cannot leave the
     // board somewhere no part of the flow expects. intro: VS, coin toss and starting hand. turn: yours to act.
@@ -143,8 +145,8 @@ export function mountBattle({host,sound=createBattleSound(),onBurst=()=>{},onSto
         const img=card.querySelector('.tb-art>img'),src=artOf(u);if(src)img.src=src;else img.hidden=true;
         if(u.art&&u.img)img.onerror=()=>{img.onerror=null;img.src=u.img;card.classList.add('tb-portrait');};
         card.querySelector('.tb-name').textContent=u.name;
-        on(card,'click',()=>clickUnit(u.id));
-        on(card,'pointerenter',()=>unitTip(u.id,card));on(card,'pointerleave',hideTip);on(card,'focus',()=>{if(card.matches(':focus-visible'))unitTip(u.id,card);});on(card,'blur',hideTip);
+        listen(card,'click',()=>clickUnit(u.id));
+        listen(card,'pointerenter',()=>unitTip(u.id,card));listen(card,'pointerleave',hideTip);listen(card,'focus',()=>{if(card.matches(':focus-visible'))unitTip(u.id,card);});listen(card,'blur',hideTip);
         cards.set(u.id,card);return card;
     }
     // How charged an opponent's special move is: its cooldown counts down each End Phase, so the diamonds fill up
@@ -530,9 +532,9 @@ export function mountBattle({host,sound=createBattleSound(),onBurst=()=>{},onSto
             card.querySelector('img').src=itemArt(id);card.setAttribute('aria-label',`${item.name}: ${item.text} Costs ${item.cost} dice.`);
             card.classList.toggle('tb-held',pick?.type==='card'&&pick.index===i);
             if(round&&!shown&&myTurn())card.classList.toggle('tb-unaffordable',!cardCheck(round,i,pick?.type==='card'&&pick.index===i?pick.target:party().find(u=>alive(u))?.id).ok&&!(item.target==='downed'));
-            on(card,'pointerdown',event=>cardPointerDown(event,card,i));
-            on(card,'click',event=>{event.stopPropagation();if(suppressClick||!myTurn())return;if(pick?.type==='card'&&pick.index===i){if(!pick.needsTarget||pick.target)confirm();return;}select({type:'card',index:i});});
-            on(card,'pointerenter',()=>{if(!pick)showTip(card,`<small>${escapeHtml(kindLabel(item))}</small><strong>${escapeHtml(item.name)}</strong>${hexCost(null,item.cost,'tb-any')}<p>${escapeHtml(item.text)}</p>`);});on(card,'pointerleave',hideTip);
+            listen(card,'pointerdown',event=>cardPointerDown(event,card,i));
+            listen(card,'click',event=>{event.stopPropagation();if(suppressClick||!myTurn())return;if(pick?.type==='card'&&pick.index===i){if(!pick.needsTarget||pick.target)confirm();return;}select({type:'card',index:i});});
+            listen(card,'pointerenter',()=>{if(!pick)showTip(card,`<small>${escapeHtml(kindLabel(item))}</small><strong>${escapeHtml(item.name)}</strong>${hexCost(null,item.cost,'tb-any')}<p>${escapeHtml(item.text)}</p>`);});listen(card,'pointerleave',hideTip);
             hand.append(card);
         });
         $('.tb-hand').setAttribute('aria-label',`Your hand: ${ids.length} card${ids.length===1?'':'s'}`);
@@ -553,7 +555,7 @@ export function mountBattle({host,sound=createBattleSound(),onBurst=()=>{},onSto
         if(pick?.type==='switch'){
             const b=el('button','tb-move tb-move-switch tb-picked');b.type='button';
             b.innerHTML=`<span class="tb-medal">${ICON.swap}</span><span class="tb-move-cost">${costRow(switchCost(round))}</span>`;b.setAttribute('aria-label','Switch character');
-            on(b,'click',confirm);skills.append(b);return;
+            listen(b,'click',confirm);skills.append(b);return;
         }
         movesOf(u).forEach((move,index)=>{
             const b=el('button',`tb-move tb-move-${move.kind}`);b.type='button';b.dataset.move=String(index);
@@ -562,7 +564,7 @@ export function mountBattle({host,sound=createBattleSound(),onBurst=()=>{},onSto
             const need=u.kit?.resource?.min || u.maxEnergy || 2,ring=move.kind==='burst'&&!move.swapped?`<i class="tb-ring" style="--fill:${Math.min(1,(u.energy || 0)/need)}"></i>`:'';
             b.innerHTML=`<span class="tb-medal">${ring}${moveIcon(u,move)}</span><span class="tb-move-cost">${costRow(costOf(u,move))}</span>`;
             b.setAttribute('aria-label',`${KIND_LABEL[move.kind]}: ${move.name}`);
-            on(b,'click',()=>chooseMove(index));on(b,'pointerenter',()=>{if(!pick)showTip(b,moveText(u,move));});on(b,'pointerleave',hideTip);
+            listen(b,'click',()=>chooseMove(index));listen(b,'pointerenter',()=>{if(!pick)showTip(b,moveText(u,move));});listen(b,'pointerleave',hideTip);
             skills.append(b);
         });
     }
@@ -623,7 +625,7 @@ export function mountBattle({host,sound=createBattleSound(),onBurst=()=>{},onSto
             const die=el('button','tb-die tb-pick-die');die.type='button';die.dataset.i=String(d.i);die.style.setProperty('--el',EL_COLORS[d.face]);
             die.innerHTML=d.face==='Omni'?glyph('Omni'):elementImg(d.face,{white:true});die.setAttribute('aria-label',`${d.face} die${spend.has(d.i)?', will be spent':''}`);die.setAttribute('aria-pressed',String(spend.has(d.i)));
             die.classList.toggle('tb-tunable',tuning&&tuneCheck(round,d.i).ok);
-            on(die,'click',event=>{event.stopPropagation();if(tuning){void tune(d.i);return;}
+            listen(die,'click',event=>{event.stopPropagation();if(tuning){void tune(d.i);return;}
                 const now=new Set(picked&&picked.length?picked:check.dice || []);if(now.has(d.i))now.delete(d.i);else now.add(d.i);picked=[...now];sound.select();refresh();});
             box.append(die);
         }
@@ -697,7 +699,7 @@ export function mountBattle({host,sound=createBattleSound(),onBurst=()=>{},onSto
             hand.forEach((id,i)=>{const item=ITEMS[id],b=el('button','tb-start-card');b.type='button';const order=dealt.indexOf(i);b.style.setProperty('--d',`${Math.max(0,order)*110}ms`);if(order>=0)b.classList.add('tb-dealt');
                 b.innerHTML=`<img alt="" src="${itemArt(id)}" draggable="false"><b class="tb-item-cost">${whole(item?.cost)}</b><i class="tb-swap-mark">${ICON.cross}</i><span class="tb-swap-label">Switch</span>`;
                 b.setAttribute('aria-label',`${item?.name || id}${swap.has(i)?', will be switched':''}`);b.setAttribute('aria-pressed',String(swap.has(i)));b.title=item?`${item.name}: ${item.text}`:id;
-                on(b,'click',()=>{if(swap.has(i))swap.delete(i);else swap.add(i);sound.select();b.setAttribute('aria-pressed',String(swap.has(i)));});row.append(b);});
+                listen(b,'click',()=>{if(swap.has(i))swap.delete(i);else swap.add(i);sound.select();b.setAttribute('aria-pressed',String(swap.has(i)));});row.append(b);});
         };
         paint(hand.map((_,i)=>i));sound.deal?.(hand.length);
         await new Promise(resolve=>{on(box,'click',event=>{if(event.target.closest('.tb-intro-go'))resolve();});introDone=resolve;});
