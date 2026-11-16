@@ -7,6 +7,7 @@ import {queueSoloHint} from './narrator.js';
 import {linkedCard} from './persona-link.js';
 import {TWINS} from './twin-roles.js';
 import {cardGreetings,greetingScene} from './greeting-scenes.js';
+import {cardByAvatar} from './card-index.js';
 
 // One character met while travelling alone: the same arrival as the card's written greeting, wherever it happens.
 export const soloMeeting=entry=>entry.mode!=='narrator'&&entry.travellers?.length===0&&entry.residents?.length===1&&entry.residents[0]===entry.avatar;
@@ -14,7 +15,7 @@ export const soloMeeting=entry=>entry.mode!=='narrator'&&entry.travellers?.lengt
 export function playedCharacter(ctx){const card=linkedCard(ctx);return card&&!TWINS.includes(card.name)?card:null;}
 
 export function locationGreetingPrompt(ctx,character,destination,home,entry={}){
-    const names=avatars=>(avatars || []).map(a=>ctx.characters.find(c=>c.avatar===a)?.name).filter(Boolean);
+    const names=avatars=>(avatars || []).map(a=>cardByAvatar(ctx,a)?.name).filter(Boolean);
     return renderPrompt(ctx,'greeting',{character:character.name,player:ctx.name1 || 'the player',
         defeat_note:entry.reason==='defeat'?renderPrompt(ctx,'greeting_defeat',{place:entry.defeatFrom || 'the wilds'}):'',
         enemy_note:greetingNote(ctx,character),
@@ -58,7 +59,7 @@ export async function deliverLocationGreeting(getContext,entry,isCurrent,{loadSc
     if(index<0)return true;
     await script.unshallowCharacter?.(index);
     if(!isCurrent())return false;ctx=getContext();
-    const character=ctx.characters.find(c=>c.avatar===entry.avatar);
+    const character=cardByAvatar(ctx,entry.avatar);
     const narrated=entry.mode==='narrator',region=backgroundRegions(ctx).find(r=>r.locations.some(l=>l.id===entry.locationId));
     const locations=backgroundRegions(ctx).flatMap(r=>r.locations),destination=locations.find(l=>l.id===entry.locationId),home=locations.find(l=>l.id===entry.defaultLocationId);
     if(!character||!destination)return true;

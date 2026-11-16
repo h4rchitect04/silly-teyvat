@@ -25,6 +25,7 @@ import {mountStarterDeck} from './starter-decks.js';
 import {createMachine} from './machine.js';
 import {baseName} from './card-name.js';
 import {mountCardProfile,createCardProfileAdapter} from './card-profile.js';
+import {cardByAvatar} from './card-index.js';
 const KEY = 'genshin_dialogue_ui';
 export const expressionLabels = 'admiration amusement anger annoyance approval caring confusion curiosity desire disappointment disapproval disgust embarrassment excitement fear gratitude grief joy love nervousness optimism pride realization relief remorse sadness surprise neutral'.split(' ');
 export function validFolder(value) {
@@ -439,7 +440,7 @@ export function mountWardrobe({host, getContext, onChange = async () => {}, onMe
     const allLocations=()=>backgroundRegions(getContext()).flatMap(region=>(region.locations || []).filter(l=>l?.id).map(location=>({region,location})));
     function needName(kind,id){
         const ctx=getContext();
-        if(kind==='people')return ctx.characters?.find(card=>card.avatar===id)?.name || `${id.replace(/\.[a-z]+$/i,'')} (no card)`;
+        if(kind==='people')return cardByAvatar(ctx,id)?.name || `${id.replace(/\.[a-z]+$/i,'')} (no card)`;
         const found=allLocations().find(x=>x.location.id===id);return found?`${found.location.label} · ${found.region.name}`:'Removed location';
     }
     function renderCGNeeds(){

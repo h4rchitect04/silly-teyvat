@@ -59,14 +59,16 @@ import {freshJourneySource,openFreshSoloChat,randomizeGreeting} from './fresh-ch
 import {createLoadingScreen} from './loading-screen.js';
 import {nameTagNames,cleanMessageNameTags,ownTagNames,guestNamesFor} from './name-tags.js';
 import {createKeyboardFrame} from './keyboard-frame.js';
-import {applyPackagedSettings} from './share-package.js';
+import {applyPackagedSettings,restoreSillyTavern} from './share-package.js';
+import {loadRelease} from './game-data-update.js';
 import {mountShare} from './share-ui.js';
 import * as fullscreen from './fullscreen.js';
 import {FRAME_CAP_OPTIONS,FRAME_CAP_MIN,FRAME_CAP_MAX,frameCapFps,setFrameCap} from './frame-rate.js';
+import {GRAPHICS_OPTIONS,GRAPHICS_LABELS,applyGraphics,removeGraphics,detectGraphics,graphicsLevel} from './graphics.js';
 const KEY = 'genshin_dialogue_ui';
 // A GitHub install takes the repository's name, so the folder is read from where this file is served.
 const FOLDER = `third-party/${decodeURIComponent(new URL('./', import.meta.url).pathname.split('/').filter(Boolean).at(-1))}`;
-const defaults = Object.freeze({ ...stagingDefaults, enabled: false, choices: true, hud: true, composer: true, frameCap: 'unlimited', frameCapCustom: 90, textScale: 1, scrim: 0.8, revealSpeed: 45, tapAdvance: true, pageExpressions: true, narration: false, narrationMode: 'quotes', narrationKeyword: 'Narrator:', hideDialogueQuotes:false, nameTagFilter:true, nameTagScope:'all', nameTagExtra:'', guestSpeakers:false, wardrobe: true, locationEncounters:true, locationCharacterLimit:5, randomEncounters:true, encounterRate:40, allowMainDeparture:false, worldPromptAllRegions:false, roleplayPromptsEnabled:true, wildernessEncounters:true, maxEnemies:3, combatDamageMin:1, combatDamageMax:6, enemyStrikeBack:true,combatTriggerPhrase:'[start_combat]', enemyDamageMin:2, enemyDamageMax:6, enemyDice:4, userMaxHp:30, combatDifficulty:'normal', battleEffects:true, battleSound:true,uiSound:true,uiSoundVolume:.7,masterVolume:1,locationMusicEnabled:true,locationMusicVolume:.45,voiceVolume:.8,cgVolume:.8,effectsVolume:.8, personaSpriteClassify:false, soloGreeting:'standard', personaIcon: 'Aether', personaIconMode:'auto', hudTopIcons:'auto', namecard:'', signature:'', trimSprites:true, cgEnabled:true, cgClassifier:'main', cgProfile:'', choicesProfile:'', cgBypassReasoning:true, choicesBypassReasoning:true, cgPrompt:defaultCGPrompt, cgDisplayMode:'each', cgCooldown:10, cgAudio:true, spriteAudio:true, burstAudio:true, diceSound:true, trustSystem:false, travelerTwin:'Aether', master:true, cardArt:true, paimonLinks:PAIMON_LINKS, paimonRestore:{} });
+const defaults = Object.freeze({ ...stagingDefaults, enabled: false, choices: true, hud: true, composer: true, frameCap: 'unlimited', frameCapCustom: 90, graphics: 'auto', textScale: 1, scrim: 0.8, revealSpeed: 45, tapAdvance: true, pageExpressions: true, narration: false, narrationMode: 'quotes', narrationKeyword: 'Narrator:', hideDialogueQuotes:false, nameTagFilter:true, nameTagScope:'all', nameTagExtra:'', guestSpeakers:false, wardrobe: true, locationEncounters:true, locationCharacterLimit:5, randomEncounters:true, encounterRate:40, allowMainDeparture:false, worldPromptAllRegions:false, roleplayPromptsEnabled:true, wildernessEncounters:true, maxEnemies:3, combatDamageMin:1, combatDamageMax:6, enemyStrikeBack:true,combatTriggerPhrase:'[start_combat]', enemyDamageMin:2, enemyDamageMax:6, enemyDice:4, userMaxHp:30, combatDifficulty:'normal', battleEffects:true, battleSound:true,uiSound:true,uiSoundVolume:.7,masterVolume:1,locationMusicEnabled:true,locationMusicVolume:.45,voiceVolume:.8,cgVolume:.8,effectsVolume:.8, personaSpriteClassify:false, soloGreeting:'standard', personaIcon: 'Aether', personaIconMode:'auto', hudTopIcons:'auto', namecard:'', signature:'', trimSprites:true, cgEnabled:true, cgClassifier:'main', cgProfile:'', choicesProfile:'', cgBypassReasoning:true, choicesBypassReasoning:true, cgPrompt:defaultCGPrompt, cgDisplayMode:'each', cgCooldown:10, cgAudio:true, spriteAudio:true, burstAudio:true, diceSound:true, trustSystem:false, travelerTwin:'Aether', master:true, cardArt:true, paimonLinks:PAIMON_LINKS, paimonRestore:{} });
 const bodyClasses = ['gi-menu-open', 'gi-enabled', 'gi-scene', 'gi-history', 'gi-hidden', 'gi-compose', 'gi-generating', 'gi-reading', 'gi-hud-enabled', 'gi-native-staging', 'gi-sprite-idle', 'gi-hud-top-off', 'gi-welcome', 'gi-classic'];
 const icons = {
     compass: '<path d="m12 2 3 7 7 3-7 3-3 7-3-7-7-3 7-3Z"/><path d="m12 8 4 4-4 4-4-4Z"/>',
@@ -251,7 +253,9 @@ function preferences() {
     if (!['auto','on','off'].includes(store[KEY].hudTopIcons)) store[KEY].hudTopIcons = 'auto';
     if (!FRAME_CAP_OPTIONS.includes(store[KEY].frameCap)) store[KEY].frameCap = 'unlimited';
     store[KEY].frameCapCustom = Math.max(FRAME_CAP_MIN,Math.min(FRAME_CAP_MAX,Math.round(Number(store[KEY].frameCapCustom) || 90)));
-    setFrameCap(frameCapFps(store[KEY]));
+    if (!GRAPHICS_OPTIONS.includes(store[KEY].graphics)) store[KEY].graphics = 'auto';
+    // Graphics quality can lower the frame cap, and marks <body> for performance.css. Switched off, nothing is marked.
+    if (mounted && store[KEY].master !== false) applyGraphics(store[KEY]); else setFrameCap(frameCapFps(store[KEY]));
     store[KEY].textScale = Math.min(1.4, Math.max(0.85, Number(store[KEY].textScale) || 1));
     store[KEY].revealSpeed = Math.min(150, Math.max(0, Number(store[KEY].revealSpeed) || 0));
     store[KEY].scrim = Math.min(0.95, Math.max(0.4, Number(store[KEY].scrim) || 0.8));
@@ -379,6 +383,11 @@ function syncSettings(force=true) {
     document.querySelector('#gi-choices-reasoning-row')?.toggleAttribute('hidden', Boolean(prefs.choicesProfile));
     document.querySelector('#gi-crowd-max-row')?.toggleAttribute('hidden', prefs.spriteCrowd !== 'recent');
     document.querySelector('#gi-frame-cap-custom-row')?.toggleAttribute('hidden', prefs.frameCap !== 'custom');
+    // Auto names the level it chose and why, so the player can tell what their device was taken for.
+    const auto = document.querySelector('#gi-graphics option[value="auto"]'), found = detectGraphics();
+    if (auto) auto.textContent = `Auto (${GRAPHICS_LABELS[found.level]})`;
+    const graphicsNote = document.querySelector('#gi-graphics-note');
+    if (graphicsNote) graphicsNote.textContent = prefs.graphics === 'auto' ? `Auto chose ${GRAPHICS_LABELS[found.level]}: ${found.reason}.` : `Auto would choose ${GRAPHICS_LABELS[found.level]}: ${found.reason}.`;
     const scale = document.querySelector('#gi-text-scale-value');
     const scrim = document.querySelector('#gi-scrim-value');
     if (scale) scale.value = `${Math.round(prefs.textScale * 100)}%`;
@@ -777,6 +786,7 @@ function handleAction(event) {
         case 'share-import': shareUI?.chooseImport(); break;
         case 'share-cancel': shareUI?.cancel(); break;
         case 'share-game-data': void shareUI?.checkGameData(); break;
+        case 'share-restore': void shareUI?.restoreSillyTavern(); break;
         case 'audio-unlock': mediaUI?.unlockAudio().then(()=>announce('Sprite audio enabled on this device.')).catch(()=>fail(new Error('Audio is blocked by this browser. Check its sound permissions.'))); break;
         case 'settings':
             menu.send('CLOSE'); refresh();
@@ -1185,7 +1195,7 @@ export function dispose() {
     subscriptions = [];
     document.querySelector('#gi-root')?.remove();
     document.querySelector('#gi-settings')?.remove();
-    document.body.classList.remove(...bodyClasses);
+    document.body.classList.remove(...bodyClasses);removeGraphics();
     for (const name of ['--gi-text-scale', '--gi-scrim-opacity', '--gi-composer-height', '--gi-dialogue-height','--gi-stop-left','--gi-stop-top','--gi-action-size','--gi-action-width','--gi-action-top','--gi-action-left','--gi-attack-left']) document.body.style.removeProperty(name);
     document.querySelectorAll('#chat .gi-narration').forEach(el => el.classList.remove('gi-narration'));
     showGuestName(null, '');
@@ -1196,6 +1206,15 @@ export function dispose() {
     current = null; followLatest = true; menu.send('CLOSE'); view.send('RESET'); generating = false;
     // Switched back on later, the place is read afresh rather than compared with one from before it was off.
     lastPlaceId = ''; dismissedNotice = '';
+}
+
+// manifest.json names this for SillyTavern's Delete: once the folder is gone nothing of the extension runs
+// again, so this is the only chance to give SillyTavern back as it was. SillyTavern saves the settings and
+// reloads after the hook, and gives it five seconds.
+export async function uninstall() {
+    dispose();
+    try { await restoreSillyTavern(context(), {release: await loadRelease()}); }
+    catch (error) { console.error('[Silly Teyvat] Uninstall', error); }
 }
 
 // APP_READY also fires immediately for a late listener. Defer to avoid blocking ST's event chain.

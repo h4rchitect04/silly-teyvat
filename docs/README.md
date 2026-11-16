@@ -8,6 +8,7 @@
 - [Location music](guides/LOCATION-MUSIC.md)
 - [Game audio](guides/GAME-AUDIO.md): interface sounds and where each came from
 - [Teyvat Choices](guides/QUICK-REPLIES.md): suggested replies
+- [Performance and hardware](guides/PERFORMANCE.md): graphics quality, what each level needs, large card libraries and removing the game
 
 ## Development
 

@@ -5,6 +5,7 @@ import {personaCard} from './persona-wardrobe.js';
 import {travelState} from './backgrounds.js';
 import {sceneTrustLevels,cgTrustAllowed} from './scene-trust.js';
 import {volumeLevel} from './audio-levels.js';
+import {cardByAvatar} from './card-index.js';
 
 export function createSpriteSoundPlayer({ makeAudio = () => new Audio(), random = Math.random } = {}) {
     const audio = makeAudio(); let sequence = 0;
@@ -65,7 +66,7 @@ export function cgCredits(ctx,avatar,entry,persona=personaCard(ctx)) {
 export function sceneCGs(ctx,message) {
     const prefs = mediaSettings(ctx), cast = sceneCast(ctx,message), present = new Set(cast), location = travelState(ctx).location?.id || '';
     const persona = personaCard(ctx), entries = [], owners = new Map(), level = sceneTrustLevels(ctx,message);
-    const nameOf = avatar => ctx.characters?.find(card=>card.avatar===avatar)?.name || (persona?.avatar===avatar ? persona.name : '') || avatar.replace(/\.[a-z]+$/i,'');
+    const nameOf = avatar => cardByAvatar(ctx,avatar)?.name || (persona?.avatar===avatar ? persona.name : '') || avatar.replace(/\.[a-z]+$/i,'');
     for (const avatar of cast) {
         for (const entry of prefs.characterCGs[avatar] || []) {
             if (!entry.path || entry.blank || !cgAllowed(entry,{present,location}) || owners.has(entry)) continue;
@@ -321,7 +322,7 @@ export function mountSceneMedia({host,getContext,adapter=createMediaAdapter(getC
         // Every CG this chat has shown. Choosing one previews it the way the game showed it.
         openGallery() {
             const ctx=getContext(),prefs=mediaSettings(ctx),found=discoveredCGs(ctx),select=gallery.querySelector('select');
-            const nameOf=avatar=>ctx.characters?.find(card=>card.avatar===avatar)?.name || (personaCard(ctx)?.avatar===avatar?personaCard(ctx).name:'') || 'Other scenes';
+            const nameOf=avatar=>cardByAvatar(ctx,avatar)?.name || (personaCard(ctx)?.avatar===avatar?personaCard(ctx).name:'') || 'Other scenes';
             const avatars=[...new Set(found.map(x=>x.avatar))].sort((a,b)=>nameOf(a).localeCompare(nameOf(b)));
             const total=avatar=>Object.entries(prefs.characterCGs).flatMap(([owner,entries])=>entries.filter(cg=>cg.path&&!cg.blank&&cgCredits(ctx,owner,cg)[0]===avatar)).length;
             const keep=select.value;

@@ -3,13 +3,14 @@ import {defaultKitHp,enemyElement} from './combat-kits.js';
 import {isTcgBoss} from './boss-kits.js';
 import {newUuid} from './local-id.js';
 import {baseName} from './card-name.js';
+import {cardByAvatar} from './card-index.js';
 export const ELEMENTS=['Pyro','Hydro','Anemo','Electro','Dendro','Cryo','Geo'];
 export const MODEL_SCALE_MIN=30,MODEL_SCALE_MAX=110;
 export const MODEL_TYPES=['small female','medium female','medium male','tall female','tall male'];
 let bundled={};
 export async function loadCharacterProperties(){const response=await fetch(new URL('./assets/character-properties.json',import.meta.url));if(!response.ok)throw new Error('Character properties unavailable.');bundled=await response.json();}
 export function characterProperties(ctx,card){
-    if(typeof card==='string')card=ctx.characters?.find(c=>c.avatar===card);
+    if(typeof card==='string')card=cardByAvatar(ctx,card);
     if(!card)return {role:'character',playable:false,element:'None',maxHp:30};
     const base={role:'character',playable:false,element:'None',modelType:'',region:'',maxHp:30,modelScale:90,deathMessage:'{name} falls still. The threat has passed.'};
     const fromCard=card.data?.extensions?.silly_teyvat || {},saved=mediaSettings(ctx).characterProperties?.[card.avatar] || {};
@@ -63,7 +64,7 @@ export function saveCharacterProperties(ctx,card,values){
     if(next.role==='enemy')next.playable=false;
     next.hpCustom=Boolean(before.hpCustom||Number(next.maxHp)!==Number(before.maxHp));
     const prefs=mediaSettings(ctx);prefs.characterProperties ??= {};
-    if(card.isPersona){const canonical=ctx.characters?.find(c=>c.avatar===card.avatar);if(canonical){const npc=characterProperties(ctx,canonical);next.role=npc.role;next.playable=npc.playable;}}
+    if(card.isPersona){const canonical=cardByAvatar(ctx,card.avatar);if(canonical){const npc=characterProperties(ctx,canonical);next.role=npc.role;next.playable=npc.playable;}}
     prefs.characterProperties[card.avatar]=next;ctx.saveSettingsDebounced();return next;
 }
 // Maximum HP is edited with the moveset in Character Customization → Combat. Resetting it there

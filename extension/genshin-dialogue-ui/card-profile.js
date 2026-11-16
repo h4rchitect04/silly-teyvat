@@ -8,6 +8,7 @@ import {cardGreetings,greetingScenes,normalizeScenes} from './greeting-scenes.js
 import {worldWaypoints} from './world-data.js';
 import {defaultCharacterLocation,setCharacterHome} from './location-cast.js';
 import {isEnemy} from './character-properties.js';
+import {cardByAvatar} from './card-index.js';
 
 // [field, label, rows, data key where the V2 card's data block names it differently]
 export const CARD_FIELDS=[
@@ -56,7 +57,7 @@ export function keepSpriteFolder(ctx,card){
 }
 
 export function createCardProfileAdapter(getContext){
-    const find=avatar=>getContext().characters?.find(c=>c.avatar===avatar);
+    const find=avatar=>cardByAvatar(getContext(),avatar);
     async function reload(card){
         const ctx=getContext(),index=ctx.characters?.findIndex(c=>c.avatar===card.avatar);
         await ctx.getOneCharacter?.(card.avatar);

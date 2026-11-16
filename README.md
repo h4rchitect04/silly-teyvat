@@ -84,6 +84,7 @@ Expressions use SillyTavern's **Character Expressions** classifier settings. Cha
 
 - The **Silly Teyvat** switch unloads the whole extension. Below it, feature sets (story view, choices, sprites, CGs, sounds, encounters, battles, Trust, prompts and card art) turn on and off separately.
 - Settings are searchable, every section has a Reset, and fine-tuning is folded under **Advanced**.
+- **Graphics quality** (Settings → Display) is High, Balanced or Low, or **Auto**, which chooses from what the browser reports about your device and says why. Balanced drops the blur behind panels; Low also drops looping glows, Burst splash art and particles and draws at most 30 frames a second.
 - **CG & Audio** has a Main volume and separate volumes for music, voices, CG audio, sound effects and interface sounds.
 - Every prompt the extension sends, including its roleplay writing guides, is editable under **Settings → Prompts**.
 - Scene, location and choice requests can use the main API, a saved Connection Manager profile or WebLLM.
@@ -94,9 +95,9 @@ Expressions use SillyTavern's **Character Expressions** classifier settings. Cha
 
 - Map tiles load from HoYoverse's map service as you zoom in. Chat text is never sent there.
 - Scene choices, Trust and travel are saved in the chat. Uploaded media and settings are kept on the SillyTavern server; copy them together if you move servers.
-- To uninstall, turn Silly Teyvat off, remove it in the extension manager and reload. Saved scene data in chats is harmless without it.
+- To uninstall, delete Silly Teyvat in **Manage extensions**. It restores the theme you had before Teyvat Slate and switches the game's lorebooks off as it goes; **Settings → Share → Restore my SillyTavern theme** does the same while you keep playing. Your cards, sprites and chats are left alone, and saved scene data in chats is harmless without the extension.
 
-Guides: [Combat](docs/guides/COMBAT.md) · [Trust, gifts and scenes](docs/guides/TRUST-GIFTS-AND-SCENES.md) · [Location catalog](docs/guides/LOCATION-CATALOG.md) · [Location music](docs/guides/LOCATION-MUSIC.md) · [Teyvat Choices](docs/guides/QUICK-REPLIES.md) · [All documentation](docs/README.md)
+Guides: [Combat](docs/guides/COMBAT.md) · [Trust, gifts and scenes](docs/guides/TRUST-GIFTS-AND-SCENES.md) · [Location catalog](docs/guides/LOCATION-CATALOG.md) · [Location music](docs/guides/LOCATION-MUSIC.md) · [Teyvat Choices](docs/guides/QUICK-REPLIES.md) · [Performance and hardware](docs/guides/PERFORMANCE.md) · [All documentation](docs/README.md)
 
 ## Source repository
 

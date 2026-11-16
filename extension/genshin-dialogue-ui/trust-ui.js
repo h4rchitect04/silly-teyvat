@@ -8,6 +8,7 @@ import {startingTrustList,setStartingTrust,resetStartingTrust} from './relations
 import {isEnemy} from './character-properties.js';
 import {ITEMS,KIND_LABELS,itemArt,kindLabel} from './battle-items.js';
 import {GIFT_CHANGE,defaultGiftChange,defaultGiftVerdict,giftTrustOverrides,setGiftTrust,resetGiftTrust} from './gift-tastes.js';
+import {cardByAvatar} from './card-index.js';
 
 const CLOSE='<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="m6 6 12 12M18 6 6 18"/></svg>';
 const el=(tag,cls,text)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(text!==undefined)n.textContent=text;return n;};
@@ -140,7 +141,7 @@ export function mountTrust({host,getContext,announce=()=>{}}){
             const ctx=getContext();if(!trustEnabled(ctx)||id!==(ctx.chat?.length || 0)-1)return;
             const message=ctx.chat[id],step=messageTrust(ctx,message);if(!step)return;
             const key=`${ctx.getCurrentChatId?.()}:${id}:${message.swipe_id ?? 0}:${step.change}`;if(noted.has(key))return;noted.add(key);
-            toast(ctx.characters?.find(c=>c.avatar===step.avatar)?.name || 'Trust',step.change);
+            toast(cardByAvatar(ctx,step.avatar)?.name || 'Trust',step.change);
         },
         dispose(){token++;abort.abort();if(dialog.open)dialog.close();dialog.remove();toasts.remove();},
     };

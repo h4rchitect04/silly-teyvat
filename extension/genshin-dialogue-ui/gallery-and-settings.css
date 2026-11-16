@@ -89,3 +89,5 @@
 /* 1.59.2: the controls column scrolls, so a focus ring on its left edge was cut off. A little
    padding, taken back with a negative margin, leaves room for it without moving anything. */
 #gi-wardrobe .gi-wardrobe-controls { padding-left: 6px; margin-left: -6px; }
+/* A line under a setting that says what it is doing now (Graphics quality: the level Auto chose and why). */
+#gi-settings .gi-note { margin: 2px 4px 8px; font-size: .82em; font-weight: normal; line-height: 1.35; opacity: .78; }

@@ -16,6 +16,7 @@ import {waypointBadges,waypointBoss,waypointEnemy,badgeLabels,badgeMarkup,isBoss
 import {iconsReady} from './battle-icons.js';
 import {searchedCards,questCardsAt,questLabel,questMarkup,QUEST_MARKER} from './card-search.js';
 import {isStatue,statueElement,statueIcon,resonanceTravelers} from './statue-resonance.js';
+import {cardByAvatar} from './card-index.js';
 
 const svg=path=>`<svg viewBox="0 0 24 24" aria-hidden="true">${path}</svg>`;
 const ICON={
@@ -314,7 +315,7 @@ export function mountWorldMap({host,getContext,adapter=createMediaAdapter(getCon
     // Wilderness enemies: who can still be met here, who was defeated in this chat, and a way to bring them back.
     function enemySection(item){
         const ctx=getContext(),section=document.createElement('section');section.className='gi-map-residents gi-map-enemies';section.append(element('h4','Enemies'));
-        const name=avatar=>ctx.characters?.find(c=>c.avatar===avatar)?.name || avatar.replace(/\.png$/i,'');
+        const name=avatar=>cardByAvatar(ctx,avatar)?.name || avatar.replace(/\.png$/i,'');
         const waiting=wildernessPool(ctx,item.location.id),defeated=clearedEnemies(ctx,item.location.id);
         const chips=document.createElement('div');chips.className='gi-map-chips';
         chips.append(...waiting.map(a=>element('span',name(a))));

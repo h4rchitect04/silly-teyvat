@@ -34,6 +34,8 @@
                 <label class="gi-row"><span>Keep reply box open</span><input type="checkbox" class="gi-switch" data-gi-setting="composer"></label>
                 <label class="gi-row" for="gi-frame-cap" title="The most frames a second the map camera, battle effects, dice and other animated graphics draw. A lower cap saves power and heat"><span>Frame rate cap</span><select id="gi-frame-cap" data-gi-setting="frameCap"><option value="60">60 FPS</option><option value="120">120 FPS</option><option value="unlimited">Unlimited</option><option value="custom">Custom</option></select></label>
                 <label class="gi-row" id="gi-frame-cap-custom-row" for="gi-frame-cap-custom" title="From 15 to 360 frames a second"><span>Custom cap (FPS)</span><input id="gi-frame-cap-custom" type="number" min="15" max="360" step="1" data-gi-setting="frameCapCustom"></label>
+                <label class="gi-row" for="gi-graphics" title="How much the browser is asked to draw. High: a computer with a graphics card (or Apple silicon) and hardware acceleration on in the browser. Balanced: laptops with integrated graphics, 4 processor cores or 4 GB of memory, and most phones and tablets; no blur behind panels, at most 60 frames a second. Low: older or low-power devices, 2 cores or 2 GB of memory, remote desktops, or a browser with hardware acceleration off; also no looping glows, no Burst splash art or particles, at most 30 frames a second"><span>Graphics quality</span><select id="gi-graphics" data-gi-setting="graphics"><option value="auto">Auto</option><option value="high">High</option><option value="balanced">Balanced</option><option value="low">Low</option></select></label>
+                <p class="gi-note" id="gi-graphics-note"></p>
                 <label class="gi-row" data-advanced title="Character, persona and recent chat lists show Genshin cards whole"><span>Card art in SillyTavern</span><input type="checkbox" class="gi-switch" data-gi-setting="cardArt"></label>
                 <h4>Text</h4>
                 <label class="gi-row gi-row-range" for="gi-reveal-speed"><span>Text speed</span><output id="gi-reveal-speed-value">45</output><input id="gi-reveal-speed" type="range" min="0" max="150" step="5" data-gi-setting="revealSpeed"></label>
@@ -164,6 +166,8 @@
             <section class="gi-set-page" data-page="share" role="tabpanel" hidden>
                 <h4>Published game data</h4>
                 <div class="gi-set-actions"><button type="button" class="menu_button" data-gi-action="share-game-data" data-gi-share title="Downloads this version's game data, or only what changed since yours">Check for game data</button></div>
+                <h4>SillyTavern</h4>
+                <div class="gi-set-actions"><button type="button" class="menu_button" data-gi-action="share-restore" data-gi-share title="Game data switches on the Teyvat Slate theme and its two lorebooks. This gives back the theme you had before and stops the lorebooks being sent with every chat. Deleting the extension does the same. Your cards, sprites and chats are not touched">Restore my SillyTavern theme</button></div>
                 <h4>Extension</h4>
                 <div class="gi-set-actions"><button type="button" class="menu_button" data-gi-action="share-extension" data-gi-share title="This installed version with its art, sounds and your settings, for data/default-user/extensions">Export extension</button></div>
                 <h4>Game data</h4>

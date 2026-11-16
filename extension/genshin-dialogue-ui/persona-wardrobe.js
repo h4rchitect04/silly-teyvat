@@ -1,5 +1,6 @@
 import {mediaSettings} from './media-store.js';
 import {linkedPersonaAvatars,linkPersona,linkedCard,personaLinks,takeoverAvatar} from './persona-link.js';
+import {cardByAvatar} from './card-index.js';
 
 let nativePersonas;
 export async function loadPersonaSupport(ctx) {
@@ -76,7 +77,7 @@ export function personaPortrait(ctx, card) {
 }
 export function stageCharacter(ctx,sprite) {
     if (sprite.avatar==='__user__') return personaCard(ctx,sprite.personaAvatar || activePersonaAvatar(ctx));
-    return ctx.characters?.find(c=>c.avatar===sprite.avatar) || ctx.characters?.find(c=>c.name===sprite.folder?.split('/')[0]);
+    return cardByAvatar(ctx,sprite.avatar) || ctx.characters?.find(c=>c.name===sprite.folder?.split('/')[0]);
 }
 export function savePersonaProfile(ctx, card, values) {
     if (!card?.isPersona) throw new Error('Select your persona first.');
