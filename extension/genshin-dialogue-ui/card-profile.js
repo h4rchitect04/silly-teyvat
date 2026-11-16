@@ -3,7 +3,7 @@
 // its SillyTavern card (description, portrait and so on). Changes are written to the card file
 // itself. Personas have their own profile (persona-wardrobe.js).
 import {baseName} from './card-name.js';
-import {cardShape} from './card-art.js';
+import {cardArtFor,cardArtState,setCardArt,removeCardArt,restoreCardArt,cardArtReady} from './card-art-store.js';
 import {cardGreetings,greetingScenes,normalizeScenes} from './greeting-scenes.js';
 import {worldWaypoints} from './world-data.js';
 import {defaultCharacterLocation,setCharacterHome} from './location-cast.js';
@@ -109,7 +109,8 @@ export function mountCardProfile({panel,getContext,getCharacter,adapter=createCa
         <label title="Used in place of the card's Scenario in chats that open on this greeting. Leave empty to use the card's.">Scenario<textarea data-greeting-scenario rows="3" spellcheck="true" placeholder="The card's scenario"></textarea></label>
         <div class="gi-greeting-actions"><button type="button" data-greeting="save">Save greetings</button><button type="button" data-greeting="add">Add greeting</button><button type="button" data-greeting="delete">Delete greeting</button></div></div></details>
         <details class="gi-card-details gi-editor-disclosure"><summary>Character details</summary><div class="gi-card-details-body">
-        <div class="gi-card-portrait"><img alt="" draggable="false"><label>Portrait<input data-card-portrait type="file" accept="image/png,image/webp,image/jpeg,image/gif,image/avif"></label></div>
+        <div class="gi-card-portrait"><img alt="" draggable="false"><label title="The character's icon: the picture SillyTavern shows for this character everywhere.">Portrait<input data-card-portrait type="file" accept="image/png,image/webp,image/jpeg,image/gif,image/avif"></label></div>
+        <div class="gi-card-portrait gi-card-art-row" title="The card shown in SillyTavern's character list while Card art in SillyTavern is on. It is kept apart from the portrait."><img alt="" draggable="false" data-card-art-preview><div class="gi-card-art-controls"><label>Card art<input data-card-art type="file" accept="image/png,image/webp,image/jpeg,image/gif,image/avif"></label><span data-card-art-note></span><button type="button" data-card-art-remove></button></div></div>
         ${CARD_FIELDS.map(([key,label,rows])=>`<label>${label}<textarea data-card="${key}" rows="${rows}" spellcheck="true"></textarea></label>`).join('')}
         <button type="button" data-card-save>Save character details</button></div></details>`;
     const abort=new AbortController(),on=(node,type,fn)=>node.addEventListener(type,fn,{signal:abort.signal}),field=key=>panel.querySelector(`[data-card="${key}"]`);
@@ -117,22 +118,25 @@ export function mountCardProfile({panel,getContext,getCharacter,adapter=createCa
     let loaded='',token=0;
     const portraitUrl=card=>getContext().getThumbnailUrl?.('avatar',card.avatar) || `/characters/${encodeURIComponent(card.avatar)}`;
     const portraitBox=panel.querySelector('.gi-card-portrait'),uploaded=new Map();let shown='';
-    // A portrait shaped like Genshin card art (or a TCG card) is shown whole as a card, as the character list,
-    // Persona Management and other card views do with Card art in SillyTavern on. SillyTavern's thumbnail is
-    // cropped to 2:3, so the full image is what tells the shape.
+    // The portrait is the character's icon. Their card art is a picture of its own (card-art-store.js).
     function paintPortrait(card,version=uploaded.get(card.avatar) || ''){
-        const thumb=portraitUrl(card),fullUrl=`/characters/${encodeURIComponent(card.avatar)}`,key=`${card.avatar}|${version}`;
-        if(shown===key)return;shown=key;
-        const withVersion=url=>version?`${url}${url.includes('?')?'&':'?'}v=${version}`:url;
-        portraitBox.classList.remove('gi-card-portrait-card','gi-card-portrait-tcg');portrait.src=withVersion(thumb);
-        if(!document.body.classList.contains('gi-card-art-on'))return;
-        const probe=new Image();probe.decoding='async';
-        probe.onload=()=>{
-            if(shown!==key)return;const shape=cardShape(probe.naturalWidth,probe.naturalHeight);if(!shape)return;
-            portrait.src=probe.src;portraitBox.classList.add('gi-card-portrait-card');portraitBox.classList.toggle('gi-card-portrait-tcg',shape==='tcg');
-        };
-        probe.src=withVersion(fullUrl);
+        const thumb=portraitUrl(card),key=`${card.avatar}|${version}`;
+        if(shown!==key){shown=key;portrait.src=version?`${thumb}${thumb.includes('?')?'&':'?'}v=${version}`:thumb;}
+        paintCardArt(card);
     }
+    const artRow=panel.querySelector('.gi-card-art-row'),artPreview=artRow.querySelector('[data-card-art-preview]'),artNote=artRow.querySelector('[data-card-art-note]'),artRemove=artRow.querySelector('[data-card-art-remove]');
+    function paintCardArt(card){
+        const ctx=getContext(),art=cardArtFor(ctx,card),state=cardArtState(ctx,card);
+        artRow.hidden=Boolean(card.isPersona);
+        artRow.classList.toggle('gi-card-portrait-card',Boolean(art));artRow.classList.toggle('gi-card-portrait-tcg',art?.kind==='tcg');
+        if(art){if(artPreview.getAttribute('src')!==art.url)artPreview.src=art.url;}else artPreview.removeAttribute('src');
+        artPreview.hidden=!art;
+        artNote.textContent={own:'Your picture.',game:'The game\u2019s card.',hidden:'Hidden: shown with the portrait in a frame.',none:'None: shown with the portrait in a frame.'}[state];
+        artRemove.hidden=state==='none';artRemove.textContent=state==='hidden'?'Use the game\u2019s card':state==='own'?'Remove my picture':'Hide card art';
+        artRemove.dataset.state=state;
+    }
+    const cardArtChanged=()=>document.dispatchEvent(new CustomEvent('gi-card-art-changed'));
+    cardArtReady.then(()=>{const card=getCharacter?.();if(card&&!abort.signal.aborted&&!panel.hidden)paintCardArt(card);});
     // Home waypoint and Greetings. The greetings are edited as a draft and saved together, so each
     // keeps its waypoint and scenario when one is added or removed.
     const home=panel.querySelector('[data-card-home]'),homeRow=home.closest('label'),gx=key=>panel.querySelector(`[data-greeting${key}]`);
@@ -217,6 +221,16 @@ export function mountCardProfile({panel,getContext,getCharacter,adapter=createCa
         try{await save(Object.fromEntries(CARD_FIELDS.map(([key])=>[key,field(key).value])),`${getCharacter()?.name}'s details saved to their card.`);}
         catch(error){status(error.message);}
         finally{button.disabled=false;}
+    });
+    on(panel.querySelector('[data-card-art]'),'change',async event=>{
+        const card=getCharacter?.(),file=event.target.files?.[0];event.target.value='';if(!card||!file)return;
+        try{await setCardArt(getContext(),card,file);paintCardArt(card);cardArtChanged();status(`${card.name}'s card art updated.`);}
+        catch(error){status(error.message);globalThis.toastr?.error?.(error.message,'Silly Teyvat');}
+    });
+    on(artRemove,'click',()=>{
+        const card=getCharacter?.();if(!card)return;
+        if(artRemove.dataset.state==='hidden')restoreCardArt(getContext(),card);else removeCardArt(getContext(),card);
+        paintCardArt(card);cardArtChanged();status(`${card.name}'s card art updated.`);
     });
     on(panel.querySelector('[data-card-portrait]'),'change',async event=>{
         const input=event.currentTarget,card=getCharacter(),file=input.files?.[0];if(!card||!file)return;input.disabled=true;

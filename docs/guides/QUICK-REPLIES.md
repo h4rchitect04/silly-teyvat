@@ -3,7 +3,7 @@
 Teyvat Choices is built into Silly Teyvat 1.3. You no longer need to import a Quick Reply preset, enable Quick Reply auto-execution, choose an Extras API, or add a Generate choices button.
 
 1. Refresh SillyTavern after installing the updated extension.
-2. Open **Extensions → Silly Teyvat**. Enable **dialogue view** and **Teyvat Choices and Genshin HUD icons**. Choices are enabled by default when dialogue view is on.
+2. Open **Extensions → Silly Teyvat**. Enable **Story view** and **Teyvat Choices**. Choices are on by default.
 3. Connect your usual **main Chat Completion API** in **API Connections** and select your normal model. No separate connection is used for suggestions.
 4. Open a character or group chat. Three replies are generated automatically for the latest character message and after each completed character response. Read to the final dialogue page to see them.
 5. Click the small circular **refresh arrow** above the choices to regenerate them. Click a reply to **send it immediately** and start the character's response. Use **Reply** for freeform text.

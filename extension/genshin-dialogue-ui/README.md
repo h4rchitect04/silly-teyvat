@@ -16,7 +16,7 @@ Requires **SillyTavern 1.19.0 or later**, Git, and about **7 GB of free disk spa
    ```
 2. Reload SillyTavern. Accept **Download** when Silly Teyvat offers its game data (**2.14 GB**). Keep the page open while it downloads and installs, then choose **Reload** when finished.
 3. Connect your own **Chat Completion API** in SillyTavern. No model subscription or API credentials are included.
-4. Choose a persona (Aether and Lumine are included), open a Genshin character card, and start chatting. The Paimon menu opens **Characters**, **Map**, **Inventory** and the other game screens. If dialogue view is off, switch **Silly Teyvat** on in that menu or press **Alt+G**.
+4. Choose a persona (Aether and Lumine are included), open a Genshin character card, and start chatting. The Paimon menu opens **Characters**, **Map**, **Inventory** and the other game screens. If the game is off, switch **Silly Teyvat** on in that menu or press **Alt+G**; the **Story view** tile there turns the visual novel pages on and off.
 
 The download includes **275 character cards, 2,484 sprites, 959 uploaded files, the Aether and Lumine personas, two lorebooks, the Teyvat Slate theme and Teyvat Choices**. Map backgrounds, portraits, TCG artwork, dice, fonts and interface assets are included with the extension. Your existing SillyTavern content is kept.
 
@@ -35,7 +35,7 @@ Expressions use SillyTavern's **Character Expressions** classifier settings. Cha
 - **Teyvat Choices** suggests three replies after each character message. Click one to send it.
 - **Auto** reads for you, **History** opens the full transcript for editing and swiping, and **Hide UI** clears the screen for screenshots, and **Full Screen** hides the browser around the game on PC and Android (on iPhone, add SillyTavern to the Home Screen and open it from there). Regenerate and Stop sit beside the dialogue box.
 - The HUD icons and the Paimon menu open SillyTavern's own panels, restyled to match the game. Teyvat Choices and the HUD icons each have their own switch in Settings → Dialogue.
-- Turn off **Dialogue view** (Settings → Dialogue, or the Silly Teyvat switch in the Paimon menu) to read the classic SillyTavern chat instead, in a frosted box at the foot of the scene. The place, sprites, map, HUD, Choices and battles carry on as usual.
+- Turn off **Story view** (its tile in the Paimon menu, or Settings → Dialogue) to read the classic SillyTavern chat instead, in a frosted box at the foot of the scene. The place, sprites, map, HUD, Choices and battles carry on as usual.
 
 ### Characters, sprites and scenes
 
@@ -83,7 +83,9 @@ Expressions use SillyTavern's **Character Expressions** classifier settings. Cha
 
 ### Settings and sharing
 
-- The **Silly Teyvat** switch unloads the whole extension. Below it, feature sets (story view, choices, sprites, CGs, sounds, encounters, battles, Trust, prompts and card art) turn on and off separately.
+- The **Silly Teyvat** switch at the top of Settings unloads the whole extension. Below it, thirteen feature sets turn on and off separately: Story view, Teyvat Choices, HUD icons and panels, sprites, Scene CGs, sounds, the world map and travel, enemies and battles, Character Customization, Trust, party replies, roleplay prompts and card art. With every set off, SillyTavern looks and behaves as it does without the game, with only the Paimon menu button added.
+- The **Silly Teyvat** switch in the Paimon menu turns every set off and back on as you had them. The Paimon icon beside each set in Settings → Features chooses which sets it controls.
+- **Card art in SillyTavern** shows each character's Genshin card in the character list. The card is a picture of its own, set or removed in the character's **Profile** (Character details → Card art); the character's own image is their icon, which is what SillyTavern shows with card art, or the game, off.
 - Settings are searchable, every section has a Reset, and fine-tuning is folded under **Advanced**.
 - **Graphics quality** (Settings → Display) is High, Balanced or Low, or **Auto**, which chooses from what the browser reports about your device and says why. Balanced drops the blur behind panels; Low also drops looping glows, Burst splash art and particles and draws at most 30 frames a second.
 - **CG & Audio** has a Main volume and separate volumes for music, voices, CG audio, sound effects and interface sounds.

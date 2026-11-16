@@ -711,3 +711,11 @@ body.gi-card-art-on #gi-wardrobe .gi-card-portrait.gi-card-portrait-tcg img { as
 #gi-wardrobe[data-tab="cgs"] .gi-wardrobe-preview > :is(img, .gi-cg-video-preview) { object-position: 50% 50%; transform: var(--cs-camera); transform-origin: 50% 50%; transition: transform 420ms var(--ty-ease); }
 #gi-wardrobe[data-tab="cgs"] .gi-cs-zoom,
 #gi-wardrobe[data-tab="cgs"] .gi-wardrobe-preview:has(> .gi-cg-video-preview) .gi-cs-zoom { display: grid; }
+/* Profile: card art is a picture of its own, beside the portrait (the character's icon). */
+#gi-wardrobe .gi-card-art-row { margin-top: 10px; }
+#gi-wardrobe .gi-card-art-row img[hidden] { display: none; }
+#gi-wardrobe .gi-card-art-row.gi-card-portrait-card img { width: auto; height: 96px; aspect-ratio: 208 / 248; object-fit: contain; border: 0; border-radius: 0; background: none; filter: drop-shadow(0 3px 5px #000a); }
+#gi-wardrobe .gi-card-art-row.gi-card-portrait-tcg img { aspect-ratio: 420 / 720; }
+#gi-wardrobe .gi-card-art-controls { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
+#gi-wardrobe .gi-card-art-controls label { align-self: stretch; }
+#gi-wardrobe .gi-card-art-controls span { font-size: .85em; opacity: .75; }

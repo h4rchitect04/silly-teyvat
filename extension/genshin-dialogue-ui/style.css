@@ -109,7 +109,7 @@ html:has(> body.gi-scene) {
 }
 
 
-body.gi-shell {
+body.gi-enabled {
     --gi-hud-top: calc(6px + env(safe-area-inset-top, 0px));
     --gi-hud-margin: 4px;
     --gi-hud-gap: clamp(4px, 1vw, 12px);
@@ -1204,7 +1204,7 @@ body.gi-scene:not(.gi-history) #chat .gi-current .gi-page { cursor: pointer; }
 #gi-sprite-stage img { position: absolute; max-width: none; max-height: none; margin: 0; }
 body.gi-sprite-replay :is(#expression-wrapper, #visual-novel-wrapper) { opacity: 0 !important; pointer-events: none !important; }
 
-body.gi-enabled #chat .mes :is(.name_text, .gi-guest-name, .mes_text, .gi-page),
+body:is(.gi-scene, .gi-classic) #chat .mes :is(.name_text, .gi-guest-name, .mes_text, .gi-page),
 body.gi-scene:not(.gi-history) #chat .gi-current .ch_name,
 body.gi-scene:not(.gi-history) #chat .gi-current :is(.mes_text, .gi-page) {
     font-family: "Silly Teyvat Dialogue", "HYWenHei", sans-serif !important;
@@ -1424,13 +1424,13 @@ body.gi-scene:not(.gi-history) #chat > .mes.gi-current .mes_block { animation: t
 #gi-review-heading:not([hidden]) { animation: ty-drop 300ms var(--ty-ease) both; }
 #gi-notice:not([hidden]) { animation: ty-rise 320ms var(--ty-ease) both; }
 @keyframes ty-drop { from { opacity: 0; translate: 0 -12px; } to { opacity: 1; translate: 0 0; } }
-#gi-choices .qr--button, body.gi-enabled #qr--bar .qr--button { animation: ty-choice 340ms var(--ty-ease) both; }
-#gi-choices .qr--button:nth-child(2), body.gi-enabled #qr--bar .qr--button:nth-child(2) { animation-delay: 60ms; }
-#gi-choices .qr--button:nth-child(3), body.gi-enabled #qr--bar .qr--button:nth-child(3) { animation-delay: 120ms; }
-#gi-choices .qr--button:nth-child(4), body.gi-enabled #qr--bar .qr--button:nth-child(4) { animation-delay: 180ms; }
+#gi-choices .qr--button, body:is(.gi-scene, .gi-classic) #qr--bar .qr--button { animation: ty-choice 340ms var(--ty-ease) both; }
+#gi-choices .qr--button:nth-child(2), body:is(.gi-scene, .gi-classic) #qr--bar .qr--button:nth-child(2) { animation-delay: 60ms; }
+#gi-choices .qr--button:nth-child(3), body:is(.gi-scene, .gi-classic) #qr--bar .qr--button:nth-child(3) { animation-delay: 120ms; }
+#gi-choices .qr--button:nth-child(4), body:is(.gi-scene, .gi-classic) #qr--bar .qr--button:nth-child(4) { animation-delay: 180ms; }
 @keyframes ty-choice { from { opacity: 0; translate: 24px 0; } to { opacity: 1; translate: 0 0; } }
-#gi-choices .qr--button, body.gi-enabled #qr--bar .qr--button { transition: background 180ms ease, translate 220ms var(--ty-ease), box-shadow 180ms ease; }
-#gi-choices .qr--button:hover, body.gi-enabled #qr--bar .qr--button:hover { translate: 6px 0; }
+#gi-choices .qr--button, body:is(.gi-scene, .gi-classic) #qr--bar .qr--button { transition: background 180ms ease, translate 220ms var(--ty-ease), box-shadow 180ms ease; }
+#gi-choices .qr--button:hover, body:is(.gi-scene, .gi-classic) #qr--bar .qr--button:hover { translate: 6px 0; }
 
 /* ---------- Combat: attack toggle ---------- */
 #gi-attack-controls #gi-attack-toggle { transition: color 200ms ease, background 200ms ease, box-shadow 260ms ease, transform 240ms var(--ty-ease); }
@@ -1599,9 +1599,9 @@ body.gi-scene:not(.gi-history) #chat > .mes.gi-current .mes_block { animation: t
 }
 
 /* ---------- Native drawers & popups: open motion ---------- */
-body.gi-enabled .drawer-content.openDrawer { animation: ty-drawer 300ms var(--ty-ease) both; }
+body.gi-shell .drawer-content.openDrawer { animation: ty-drawer 300ms var(--ty-ease) both; }
 @keyframes ty-drawer { from { opacity: 0; translate: 0 -10px; } to { opacity: 1; translate: 0 0; } }
-body.gi-enabled dialog.popup[open] { animation: ty-popup 260ms var(--ty-ease) both; }
+body.gi-shell dialog.popup[open] { animation: ty-popup 260ms var(--ty-ease) both; }
 @keyframes ty-popup { from { opacity: 0; scale: .96; } to { opacity: 1; scale: 1; } }
 /* Popup buttons wrap onto a second row instead of running past the dialog edge (e.g. Install extension). */
 body .popup .popup-controls { max-width: 100%; flex-wrap: wrap; justify-content: center; }
@@ -2205,7 +2205,7 @@ body.gi-card-art-on .avatar.avatar_collage.gi-card-collage:is(.collage_3, .colla
 @media (max-height: 560px) { #gi-toolbar.gi-paimon, body.gi-scene.gi-hidden #gi-toolbar.gi-paimon { width: min(500px, 78vw); } }
 
 /* ---------- Top-right HUD: SillyTavern's own drawer order, larger icons, tighter spacing ---------- */
-body.gi-shell {
+body.gi-enabled {
     --gi-hud-gap: clamp(2px, .45vw, 6px);
     --gi-hud-cell: min(50px, calc((100vw - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px) - 2 * var(--gi-hud-margin) - var(--gi-hud-count) * var(--gi-hud-gap)) / (var(--gi-hud-count) + 1)));
 }
@@ -3033,7 +3033,7 @@ body:not(.gi-scene):not(.gi-classic) #gi-party-health, body.gi-history #gi-party
 /* Left rail: Paimon sits above it, then back and settings, version at the foot. */
 .gi-pm-rail { display: flex; flex-direction: column; align-items: center; gap: 14px; padding: calc(env(safe-area-inset-top, 0px) + 78px) 0 max(16px, env(safe-area-inset-bottom, 0px)); background: linear-gradient(90deg, #2c3343, #353d4f); box-shadow: inset -1px 0 0 #ffffff14; }
 /* With the menu open, Paimon centres over the rail so it lines up with back and settings. */
-body.gi-shell { --pm-rail-width: 68px; }
+body.gi-enabled { --pm-rail-width: 68px; }
 #gi-launcher { transition: transform 280ms var(--ty-ease), filter 280ms ease, left 280ms var(--ty-ease); }
 #gi-launcher[aria-expanded="true"] { left: calc(env(safe-area-inset-left, 0px) + (var(--pm-rail-width) - var(--gi-hud-cell)) / 2); }
 #gi-toolbar .gi-pm-rail button { width: 46px; height: 46px; min-height: 0; padding: 0; border: 0; border-radius: 50%; color: #ece5d8; background: #ffffff10; box-shadow: inset 0 0 0 1.5px #ece5d833; text-shadow: none; transition: background 180ms ease, color 180ms ease, transform 220ms var(--ty-ease); }
@@ -3109,7 +3109,7 @@ body.gi-shell { --pm-rail-width: 68px; }
 
 /* Small and short screens. */
 @media (max-width: 520px) {
-    #gi-toolbar.gi-paimon, body.gi-scene.gi-hidden #gi-toolbar.gi-paimon { --pm-rail: 54px; } body.gi-shell { --pm-rail-width: 54px; }
+    #gi-toolbar.gi-paimon, body.gi-scene.gi-hidden #gi-toolbar.gi-paimon { --pm-rail: 54px; } body.gi-enabled { --pm-rail-width: 54px; }
     #gi-toolbar .gi-pm-rail button { width: 40px; height: 40px; }
     #gi-toolbar .gi-pm-card { grid-template-columns: minmax(0, 1fr); padding: calc(env(safe-area-inset-top, 0px) + 16px) 16px 14px; }
     .gi-pm-who { justify-items: start; padding-top: 0; }
@@ -4687,6 +4687,14 @@ body.gi-card-art-on #gi-wardrobe .gi-card-portrait.gi-card-portrait-tcg img { as
 #gi-wardrobe[data-tab="cgs"] .gi-wardrobe-preview > :is(img, .gi-cg-video-preview) { object-position: 50% 50%; transform: var(--cs-camera); transform-origin: 50% 50%; transition: transform 420ms var(--ty-ease); }
 #gi-wardrobe[data-tab="cgs"] .gi-cs-zoom,
 #gi-wardrobe[data-tab="cgs"] .gi-wardrobe-preview:has(> .gi-cg-video-preview) .gi-cs-zoom { display: grid; }
+/* Profile: card art is a picture of its own, beside the portrait (the character's icon). */
+#gi-wardrobe .gi-card-art-row { margin-top: 10px; }
+#gi-wardrobe .gi-card-art-row img[hidden] { display: none; }
+#gi-wardrobe .gi-card-art-row.gi-card-portrait-card img { width: auto; height: 96px; aspect-ratio: 208 / 248; object-fit: contain; border: 0; border-radius: 0; background: none; filter: drop-shadow(0 3px 5px #000a); }
+#gi-wardrobe .gi-card-art-row.gi-card-portrait-tcg img { aspect-ratio: 420 / 720; }
+#gi-wardrobe .gi-card-art-controls { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
+#gi-wardrobe .gi-card-art-controls label { align-self: stretch; }
+#gi-wardrobe .gi-card-art-controls span { font-size: .85em; opacity: .75; }
 
 /* 1.59: Scene Gallery and scene conditions */
 #gi-cg-gallery{position:fixed;inset:0;box-sizing:border-box;width:min(960px,calc(100vw - 32px));height:min(680px,calc(100dvh - 32px));max-width:none;max-height:none;margin:auto;padding:0;border:0;border-radius:18px;overflow:hidden;color:#ece5d8;font-family:var(--ty-font,"Silly Teyvat Dialogue",sans-serif);background:radial-gradient(ellipse 80% 60% at 70% 0%,#d7bd8426,transparent 70%),linear-gradient(160deg,#2a3147f7,#1b2030fa);box-shadow:0 0 0 1px #d3bc8e66,0 24px 60px #0009}
@@ -5826,7 +5834,7 @@ body #gi-attack-controls #gi-attack-toggle[aria-pressed="true"]::after {
 #gi-world-map .gi-map-quest h4 { display: flex; align-items: center; gap: 6px; }
 #gi-world-map .gi-map-quest h4::before { content: ""; width: 16px; height: 18px; background: url("assets/icons/map-badge-quest.webp") center / contain no-repeat; }
 
-/* Dialogue view off: the classic SillyTavern chat, every message with its own avatar, swipes and buttons,
+/* Story view off: the classic SillyTavern chat, every message with its own avatar, swipes and buttons,
    in a frosted box at the foot of the scene. The place, sprites, map, HUD and battles stay as they are;
    whatever stands behind the box shows through it blurred and a little darker. */
 html:has(> body.gi-classic) { height: 100vh; height: 100dvh; overflow: hidden !important; overscroll-behavior: none !important; }

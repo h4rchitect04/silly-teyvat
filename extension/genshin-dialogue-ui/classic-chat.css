@@ -1,4 +1,4 @@
-/* Dialogue view off: the classic SillyTavern chat, every message with its own avatar, swipes and buttons,
+/* Story view off: the classic SillyTavern chat, every message with its own avatar, swipes and buttons,
    in a frosted box at the foot of the scene. The place, sprites, map, HUD and battles stay as they are;
    whatever stands behind the box shows through it blurred and a little darker. */
 html:has(> body.gi-classic) { height: 100vh; height: 100dvh; overflow: hidden !important; overscroll-behavior: none !important; }

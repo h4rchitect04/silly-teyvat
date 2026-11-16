@@ -87,13 +87,13 @@ body.gi-scene:not(.gi-history) #chat > .mes.gi-current .mes_block { animation: t
 #gi-review-heading:not([hidden]) { animation: ty-drop 300ms var(--ty-ease) both; }
 #gi-notice:not([hidden]) { animation: ty-rise 320ms var(--ty-ease) both; }
 @keyframes ty-drop { from { opacity: 0; translate: 0 -12px; } to { opacity: 1; translate: 0 0; } }
-#gi-choices .qr--button, body.gi-enabled #qr--bar .qr--button { animation: ty-choice 340ms var(--ty-ease) both; }
-#gi-choices .qr--button:nth-child(2), body.gi-enabled #qr--bar .qr--button:nth-child(2) { animation-delay: 60ms; }
-#gi-choices .qr--button:nth-child(3), body.gi-enabled #qr--bar .qr--button:nth-child(3) { animation-delay: 120ms; }
-#gi-choices .qr--button:nth-child(4), body.gi-enabled #qr--bar .qr--button:nth-child(4) { animation-delay: 180ms; }
+#gi-choices .qr--button, body:is(.gi-scene, .gi-classic) #qr--bar .qr--button { animation: ty-choice 340ms var(--ty-ease) both; }
+#gi-choices .qr--button:nth-child(2), body:is(.gi-scene, .gi-classic) #qr--bar .qr--button:nth-child(2) { animation-delay: 60ms; }
+#gi-choices .qr--button:nth-child(3), body:is(.gi-scene, .gi-classic) #qr--bar .qr--button:nth-child(3) { animation-delay: 120ms; }
+#gi-choices .qr--button:nth-child(4), body:is(.gi-scene, .gi-classic) #qr--bar .qr--button:nth-child(4) { animation-delay: 180ms; }
 @keyframes ty-choice { from { opacity: 0; translate: 24px 0; } to { opacity: 1; translate: 0 0; } }
-#gi-choices .qr--button, body.gi-enabled #qr--bar .qr--button { transition: background 180ms ease, translate 220ms var(--ty-ease), box-shadow 180ms ease; }
-#gi-choices .qr--button:hover, body.gi-enabled #qr--bar .qr--button:hover { translate: 6px 0; }
+#gi-choices .qr--button, body:is(.gi-scene, .gi-classic) #qr--bar .qr--button { transition: background 180ms ease, translate 220ms var(--ty-ease), box-shadow 180ms ease; }
+#gi-choices .qr--button:hover, body:is(.gi-scene, .gi-classic) #qr--bar .qr--button:hover { translate: 6px 0; }
 
 /* ---------- Combat: attack toggle ---------- */
 #gi-attack-controls #gi-attack-toggle { transition: color 200ms ease, background 200ms ease, box-shadow 260ms ease, transform 240ms var(--ty-ease); }
@@ -262,9 +262,9 @@ body.gi-scene:not(.gi-history) #chat > .mes.gi-current .mes_block { animation: t
 }
 
 /* ---------- Native drawers & popups: open motion ---------- */
-body.gi-enabled .drawer-content.openDrawer { animation: ty-drawer 300ms var(--ty-ease) both; }
+body.gi-shell .drawer-content.openDrawer { animation: ty-drawer 300ms var(--ty-ease) both; }
 @keyframes ty-drawer { from { opacity: 0; translate: 0 -10px; } to { opacity: 1; translate: 0 0; } }
-body.gi-enabled dialog.popup[open] { animation: ty-popup 260ms var(--ty-ease) both; }
+body.gi-shell dialog.popup[open] { animation: ty-popup 260ms var(--ty-ease) both; }
 @keyframes ty-popup { from { opacity: 0; scale: .96; } to { opacity: 1; scale: 1; } }
 /* Popup buttons wrap onto a second row instead of running past the dialog edge (e.g. Install extension). */
 body .popup .popup-controls { max-width: 100%; flex-wrap: wrap; justify-content: center; }

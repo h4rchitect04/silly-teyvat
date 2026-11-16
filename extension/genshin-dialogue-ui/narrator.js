@@ -34,7 +34,7 @@ async function createNarrator(ctx,fetchImpl){
     await ctx.getCharacters?.();
     return NARRATOR_AVATAR;
 }
-// A reply from the card reads as narration: no sprite, no trust, and a narration page in the dialogue view.
+// A reply from the card reads as narration: no sprite, no trust, and a narration page in Story view.
 export function tagNarratorMessage(ctx,id){
     const message=ctx.chat?.[Number(id)];if(!narratorMessage(message))return false;
     (message.extra ??= {}).type='narrator';return true;

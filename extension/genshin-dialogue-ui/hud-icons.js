@@ -12,13 +12,19 @@ const mapping = {
 // icons can be hidden (Settings → Top-right SillyTavern icons), and are by default on phones.
 export const ST_DRAWERS = [['ai-config-button', 'AI Config'], ['sys-settings-button', 'API'], ['advanced-formatting-button', 'Formatting'], ['WI-SP-button', 'World Info'], ['user-settings-button', 'User Settings'], ['backgrounds-button', 'Backgrounds'], ['extensions-settings-button', 'Extensions'], ['persona-management-button', 'Persona'], ['rightNavHolder', 'Character List']];
 export const drawerIcon = (id, persona = 'Aether') => iconAsset(id === 'persona-management-button' ? `Persona_Management_${persona === 'Lumine' ? 'Lumine' : 'Aether'}` : mapping[id]);
-export function syncHudIcons(on, persona = 'Aether', hideTop = false) {
+// shell: SillyTavern's welcome screen and top bar in the game's style, with or without the icons.
+export function syncHudIcons(on, persona = 'Aether', hideTop = false, shell = true) {
     for (const [id] of ST_DRAWERS) document.querySelector(`#${id}`)?.classList.toggle('gi-hud-tucked', Boolean(on && hideTop));
-    document.body.classList.add('gi-shell');
+    document.body.classList.toggle('gi-shell', Boolean(shell));
     document.body.classList.toggle('gi-hud-enabled', on);
     const drawers = [...document.querySelectorAll('#top-settings-holder > .drawer')].filter(el => getComputedStyle(el).display !== 'none' && !el.classList.contains('gi-hud-tucked'));
     document.body.style.setProperty('--gi-hud-count', Math.max(1, drawers.length));
-    if (!on) return;
+    if (!on) {
+        // Off puts SillyTavern's own glyphs back.
+        document.querySelectorAll('.gi-hud-icon').forEach(el => el.remove());
+        document.querySelectorAll('.gi-hud-target').forEach(el => el.classList.remove('gi-hud-target'));
+        return;
+    }
     for (const [id, name] of Object.entries(mapping)) {
         const target = document.querySelector(`#${id} > .drawer-toggle .drawer-icon`);
         if (!target) continue;

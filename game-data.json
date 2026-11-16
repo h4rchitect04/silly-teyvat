@@ -18873,6 +18873,1102 @@
       "bytes": 9046,
       "sha256": "3926a3fe7123f7a7e9edbf5091e2dc26a6328f6210e7f3a8834bab7a226e58f7"
     },
+    "extension/genshin-dialogue-ui/assets/card-art/abyss-herald-wicked-torrents-59d1ad.webp": {
+      "bytes": 54848,
+      "sha256": "59d1ad96aa3e72554da5413b28784ec81bc0d04150538d8e03810f785098e7b2"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/abyss-lector-fathomless-flames-50f58f.webp": {
+      "bytes": 47474,
+      "sha256": "50f58f7bf4432d82d15940346a16f4f4a625fa303229a9214a583e63a8b0b58e"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/abyss-lector-violet-lightning-10373a.webp": {
+      "bytes": 53504,
+      "sha256": "10373a15b8f96adb48ff12345361014f27011baac12f7d0aa1d722073c96ced6"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/adel-9b25c7.webp": {
+      "bytes": 52866,
+      "sha256": "9b25c7e744faccb870e0093b95e81b99c610a1de9cf147f3639e7c8087c667d2"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/aether-9e9f15.webp": {
+      "bytes": 15174,
+      "sha256": "9e9f15921587e7868b2300497b06d41ebcd23f61c02c2077efc16860ddb19733"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/aino-568e7c.webp": {
+      "bytes": 16606,
+      "sha256": "568e7ce70283243d812b0444ad6a2bb335387c2059a81be86611892edc9a6309"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/albedo-1e0ea5.webp": {
+      "bytes": 15774,
+      "sha256": "1e0ea51e2bf62533b60cef37617f776a06d227b5a2547c5337cb96f90d7b2bee"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/alhaitham-b24b01.webp": {
+      "bytes": 15234,
+      "sha256": "b24b014f664c55179fce679aa51b6a1f84638a772ccf9a939f323952ca1d467e"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/all-devouring-narwhal-38fd07.webp": {
+      "bytes": 47902,
+      "sha256": "38fd076e8961fc35abb427c4e421abc7e7200c70cba9c379005eb4f2d4ac6cc2"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/aloha-36baf5.webp": {
+      "bytes": 60860,
+      "sha256": "36baf5e3e2389d8e1ea7e84bf1b80a8a699f769cb9d343b69777a7ef0440f49a"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/aloy-bfec31.webp": {
+      "bytes": 15736,
+      "sha256": "bfec314b28b55361232de0593963efe683aa79d54a7f1157dc38d438f30fa91f"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/alyosha-7d70bf.webp": {
+      "bytes": 16938,
+      "sha256": "7d70bfa6850392d895023c043c6956c6087fcba09b463f775042af909dba100d"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/amber-5e6e2d.webp": {
+      "bytes": 14712,
+      "sha256": "5e6e2d346a5c54c58eb0e6844f8b7fea9cf777d35de778f3b86fd7d839c4a79a"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/anemo-samachurl-fecb2a.webp": {
+      "bytes": 50892,
+      "sha256": "fecb2adf32bdcb10195f17fa2f6bf18aa96916f03e7fec297aec41f260223504"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/annihilation-specialist-mek-ousia-ff4afb.webp": {
+      "bytes": 51634,
+      "sha256": "ff4afb475d685277ea1833e2e0726e272f5b4634be244426c58238d5f6c896d6"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/annihilation-specialist-mek-pneuma-f271d9.webp": {
+      "bytes": 51112,
+      "sha256": "f271d94afc15e320a7510e4ee2afa906fc530d37f9bd938b2ab6f15fa887ee0c"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/anselm-068dc6.webp": {
+      "bytes": 59240,
+      "sha256": "068dc681abecf984d360cb71ba0732c588c9751458d69f9043d667479cb9f2c7"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/araja-492747.webp": {
+      "bytes": 56208,
+      "sha256": "4927479dfbd88f1d27bf638611bcfec7252b3b520024f2b56989929f4e9bcef8"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/arama-21a0b1.webp": {
+      "bytes": 58110,
+      "sha256": "21a0b1fbfab14feebbfefa646a807b05245d072b813e49adebb598b6d19d9f93"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/aranakula-ea62cf.webp": {
+      "bytes": 56174,
+      "sha256": "ea62cfbe98e4317400d304a9f2cb74f082ee256d25b85a733051cf6e75400d96"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/arataki-itto-33550b.webp": {
+      "bytes": 16368,
+      "sha256": "33550be6c588f26e7cabd55d624c4412d3fa6e837e20103d564a43772a2e43ab"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/areta-134aa0.webp": {
+      "bytes": 59274,
+      "sha256": "134aa0d02619ad7fd333611ecdda3e281242b595b3cd24bfb1f533fcc4871ab4"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/arithmetic-enhancer-mek-ousia-f706eb.webp": {
+      "bytes": 45370,
+      "sha256": "f706eb341b1fd6478ce2ce99168cda745905072617b2bd6b2623bcbabdc95615"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/arithmetic-enhancer-mek-pneuma-6f3864.webp": {
+      "bytes": 44826,
+      "sha256": "6f3864d8b9de632b68db77459e53c15f466584854c327bb019f3d63e7bb1000c"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/arlecchino-697146.webp": {
+      "bytes": 14788,
+      "sha256": "697146f01cd0d962dc4a3f312e31165e23add147217b160dd079dccf671cce3b"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/assault-specialist-mek-ousia-1a5f84.webp": {
+      "bytes": 55836,
+      "sha256": "1a5f84c7b505c1b1b852e76710b4c50d24ef63c897e7bf3eefe72ff88db3a3ad"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/assault-specialist-mek-pneuma-70d19f.webp": {
+      "bytes": 56430,
+      "sha256": "70d19fb9e4c279ec9d91bc647067a34bc462d4d8c6f7aa0ef34847e0cbf3e31f"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/aurelius-ef2cd8.webp": {
+      "bytes": 52290,
+      "sha256": "ef2cd88cd54579e053d37fe60aed01999dc7af2dd931910c05f6566213a5e3cc"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/aybak-5f44dc.webp": {
+      "bytes": 53068,
+      "sha256": "5f44dcaa2e80435cb9abee2497d8de93c483453c45fea0edc90374829b7688b2"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/azhdaha-78dfc6.webp": {
+      "bytes": 54904,
+      "sha256": "78dfc6431ececc215c72d4b847b934687df122f7247211b12b5bc6bebde2cb25"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/babel-c476c7.webp": {
+      "bytes": 57384,
+      "sha256": "c476c7e5a9aac17c7af5a93b27e56e0129bfd1ee8ee9f47d0f32a39e96f9fe35"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/baizhu-0e7961.webp": {
+      "bytes": 14876,
+      "sha256": "0e79617d5f872831efa4c2316b3765016e1d17ef60d31a5bc134c1551afa3fc7"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/barbara-6f06a4.webp": {
+      "bytes": 17608,
+      "sha256": "6f06a4d700f5341f8f97fbb2e258955de89daff593a16d52c8c024e30693f49e"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/beidou-7815d9.webp": {
+      "bytes": 15510,
+      "sha256": "7815d92ce8061f7b85c76004f7f349ea6bfb58437bf417d63d6dfde30f84a440"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/bennett-640a14.webp": {
+      "bytes": 15356,
+      "sha256": "640a144b3087b712768864a9e4b67770c506a3b9e626e54fdcb64ce03a0459ea"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/black-serpent-knight-rockbreaker-ax-daf2f7.webp": {
+      "bytes": 59338,
+      "sha256": "daf2f7196e2ec1bf0107c7745763d704863987d21821e9c24516c1ac1d38893e"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/black-serpent-knight-windcutter-8253f4.webp": {
+      "bytes": 52658,
+      "sha256": "8253f41ee31b2b96ba3b11c2be1d546edb05ac59c6bcb8d46dff97a38e56c190"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/blazing-axe-mitachurl-23877e.webp": {
+      "bytes": 55060,
+      "sha256": "23877ef091e0c89fb87eab53cc3f723f212feefe8ba68241666c22cf6293142e"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/candace-5d071c.webp": {
+      "bytes": 15900,
+      "sha256": "5d071cd8fe5bb38f1fdcd99d86c6c284ee5565dfbc75c770e9aee6b982508770"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/charlotte-9254ac.webp": {
+      "bytes": 15762,
+      "sha256": "9254ac87a1cf805ecc6723b33bfc381350e770b68c90f78e50ba6fe59da99567"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/chasca-fc6442.webp": {
+      "bytes": 16720,
+      "sha256": "fc644274ea9ea7d65110a5d1e169803f251cfc0c981509ec4b2779370d8b5c4e"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/chevreuse-99889c.webp": {
+      "bytes": 18410,
+      "sha256": "99889c5420905814e91b06ac880782032ef8fd71711f5d9c1b27fcc59e7c8f2f"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/chiori-6d6c2b.webp": {
+      "bytes": 15100,
+      "sha256": "6d6c2bce8b5668cf8aa62efc25c79980555668bee1e3baab2ecec4c9ae6f6ff8"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/chongyun-f31be0.webp": {
+      "bytes": 14400,
+      "sha256": "f31be022e4335b129d8469e721f98bfafeaed7f1be21d9a11e8781c2739f21f7"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/citlali-05e960.webp": {
+      "bytes": 18106,
+      "sha256": "05e960f0c9c10c2797f7f3e6903e2288d62fd1a0c79037ef12e43b51e1ad9914"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/clorinde-9ae8aa.webp": {
+      "bytes": 14638,
+      "sha256": "9ae8aa3cdec943f5342474271eb64952c4303634f87beb890976cd5fb6e0d140"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/collei-1c8317.webp": {
+      "bytes": 16150,
+      "sha256": "1c83170b31076e849853bf79436171ec60a16e9bfc12dc41bcde2214434e788e"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/columbina-0da0aa.webp": {
+      "bytes": 16238,
+      "sha256": "0da0aa5d5658d5e18864936410b1c76de6cf2d2b39a782895acad7e50c6f6267"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/consecrated-fanged-beast-456e27.webp": {
+      "bytes": 47164,
+      "sha256": "456e27a4db52b125bd0a331d146e07b9b8a4c9691ec56cedeeae5576c5dc691b"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/consecrated-flying-serpent-8690af.webp": {
+      "bytes": 47866,
+      "sha256": "8690af95622525f4db27f3ceb6a07cdb5ca7d058f34650b7da6e0d1795db059e"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/consecrated-horned-crocodile-cc4dc4.webp": {
+      "bytes": 47688,
+      "sha256": "cc4dc42dca513599073f7490b7c98e974a4e02f2aeaddab6fc994b73bd9af598"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/consecrated-scorpion-02b66c.webp": {
+      "bytes": 42510,
+      "sha256": "02b66c44dbe81190a9dba6cb2655becb42f5788e2bc98252fb00d9acbe1c38d4"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/crackling-axe-mitachurl-aebb20.webp": {
+      "bytes": 50238,
+      "sha256": "aebb20ea5d1ae8265dbbc6253642f0efc969a4124db1e971bafc371b4ee46768"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/cryo-abyss-mage-8e9f56.webp": {
+      "bytes": 52080,
+      "sha256": "8e9f56b024fb58f9555b055699d1a8a557915e667328a70a46b757e5a349d30b"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/cryo-hilichurl-shooter-f08710.webp": {
+      "bytes": 51218,
+      "sha256": "f08710906887d95edce2c40976e41ab4eb7b0105b7e4dfcef6f1853afd75cf8d"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/cryo-hypostasis-aac3fd.webp": {
+      "bytes": 59486,
+      "sha256": "aac3fda5fd996907613e60704782f78b3d575cceb3ff992e9e31a6f818163074"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/cryo-slime-9aad91.webp": {
+      "bytes": 31270,
+      "sha256": "9aad913a00b62a6aa7d82c1d0c824e7a579dd40196e54743b2fb12c56df132e6"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/cryo-whopperflower-36201a.webp": {
+      "bytes": 48342,
+      "sha256": "36201a801de4ccbe229931eb2ea5ebc91c36ffa431d85924c9585a784991a56f"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/cyno-2c1dd0.webp": {
+      "bytes": 15526,
+      "sha256": "2c1dd039aa497d0778f870e1854574f2e1428a58e8e5d4fe585ad7fcebed8a4a"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/dahlia-d24d0d.webp": {
+      "bytes": 15778,
+      "sha256": "d24d0db22fa4e65ecc4abde83c85b4a5be77c532c47887082559ac7d4baba679"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/dehya-05d4bd.webp": {
+      "bytes": 16356,
+      "sha256": "05d4bd14fbc0e64da621e90ee2268ee0bc740ba9c4fa8bff92b8e56ec60a34cf"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/dendro-samachurl-a4c6df.webp": {
+      "bytes": 49980,
+      "sha256": "a4c6df27f000c2cfacb6d528933d501970853b4d295fba368d81fde284c86c21"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/diluc-52a53b.webp": {
+      "bytes": 14560,
+      "sha256": "52a53bb3f167496d8a3ab86c2e59401d22ed0ed3bd1ba197c97abbadca5a8263"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/diona-3b3959.webp": {
+      "bytes": 15872,
+      "sha256": "3b39598afd81e2b97a7d357cc18007f6d238aacdf22d8a5d0c35576a0259daa2"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/dori-a17783.webp": {
+      "bytes": 18788,
+      "sha256": "a1778301631bde74f9167d9ddaf22bfc5cb2d4f6c53c0a8a099dcff17273b9a8"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/durin-c35484.webp": {
+      "bytes": 16738,
+      "sha256": "c3548483ae5eca3c66aa9d57742ad93475424801dd7e613746d4834027d500e3"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/dvalin-36f43b.webp": {
+      "bytes": 51666,
+      "sha256": "36f43b067957028ae70eb8361fb1acb588bd885fd1ce76c99c1ff6cc9c9c2be5"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/egle-97db96.webp": {
+      "bytes": 53346,
+      "sha256": "97db9683dc57b93c86fba84726e3f3a59b21cf33014b2ca7ea9b3e2cff931f04"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/electro-abyss-mage-d583ef.webp": {
+      "bytes": 43700,
+      "sha256": "d583efa0b571b1d0f482a593e463addea2d72547bbc44eabaa547c8f8faf00bb"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/electro-hilichurl-shooter-dfa7c8.webp": {
+      "bytes": 50536,
+      "sha256": "dfa7c8c95c0d0e8865fa5f4f61e262b83f3506cfdb9ed9d206c351ce20b9ce81"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/electro-hypostasis-f3a36c.webp": {
+      "bytes": 49568,
+      "sha256": "f3a36c7b81a459656a3425fe995e0ee57b339ecc02e648686a0de6ecb2819bc6"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/electro-samachurl-6b6d65.webp": {
+      "bytes": 54698,
+      "sha256": "6b6d65282dde632a400e142ab5b12f03317c50ad462c35e9bc4394739ee0005c"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/electro-slime-aa1ac9.webp": {
+      "bytes": 40530,
+      "sha256": "aa1ac9221a9b7546f63463c893fac358c66e393c0112499e4cc3e9f0e3391b68"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/emilie-4fbb5a.webp": {
+      "bytes": 16484,
+      "sha256": "4fbb5a258c5ac90459e72c349e9e6c3df5128227bb496fa43a62455b0cb099bf"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/emperor-of-fire-and-iron-43fa56.webp": {
+      "bytes": 61734,
+      "sha256": "43fa568d3b7d4fe5db9c05c81837a0fb9f7c8fd24212568b6353c705daf60f3e"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/eremite-daythunder-c6051b.webp": {
+      "bytes": 45880,
+      "sha256": "c6051b32627fc0c8398368cbc16ca9f02795ab961d2838315dfb614fc46dd977"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/eremite-desert-clearwater-565d11.webp": {
+      "bytes": 45608,
+      "sha256": "565d11ffb3eb0ed0b02c67ef7ef2dd29dcb0d8892183f867aeaa8335661c6002"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/eremite-floral-ring-dancer-ccecc9.webp": {
+      "bytes": 53032,
+      "sha256": "ccecc95c95fb870eac6153b43bb87f30b74106c0ed449e8cf3ae8da0d9fda14c"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/eremite-scorching-loremaster-2a7fcc.webp": {
+      "bytes": 55450,
+      "sha256": "2a7fcc119622c1be2e8f4686bc45aa406b63d2f9877c0b649cdc166acfd9ee06"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/eremite-stone-enchanter-140a3c.webp": {
+      "bytes": 49456,
+      "sha256": "140a3cef1e0f9c973f816c40ecfc1a8ee652644bf59faaaaee4208fd50024148"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/eremite-sunfrost-b635eb.webp": {
+      "bytes": 47810,
+      "sha256": "b635eb7c78039f41dff389c07753958029d3932a7955ccea498efd6b419d7591"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/escoffier-2fced1.webp": {
+      "bytes": 17120,
+      "sha256": "2fced1f0428971fe1fd3f72a16094798fc1c7d772a7424641ccdead2affa734f"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/eula-21ff3d.webp": {
+      "bytes": 16544,
+      "sha256": "21ff3d76730d8c2df88c5459b342699ad1867559ee37716eba9f6a7b51c4dda4"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/eveliina-973f82.webp": {
+      "bytes": 54568,
+      "sha256": "973f824aec6eb0616515b5afb7629260429a0d168e582a479bf7e08730923133"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/experimental-field-generator-6fcae9.webp": {
+      "bytes": 60580,
+      "sha256": "6fcae9c8a14b680023f84083247480fab78acde3a572957d499dca6437ec8308"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/faruzan-ffb5ba.webp": {
+      "bytes": 15852,
+      "sha256": "ffb5ba7812c054dcef6b63b5988c78d3323f48862761175a988c9807112aecc7"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/fatui-cryo-cicin-mage-cf46f6.webp": {
+      "bytes": 46714,
+      "sha256": "cf46f60565c7dbbd2469a64cce8d21060bbc9525fe316ecdbd2daf60e6a6140b"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/fatui-electro-cicin-mage-99930d.webp": {
+      "bytes": 58380,
+      "sha256": "99930d14e2166a9c0262372b9a71423d18e7fa0d5a2c1abf81c3987e4b0d2e76"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/fatui-pyro-agent-cca3a6.webp": {
+      "bytes": 40744,
+      "sha256": "cca3a6be2f6be01f3a73506da6e76727469a8c5cba33df39fe6c4a2a764c28e3"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/fatui-skirmisher-anemoboxer-vanguard-a0b448.webp": {
+      "bytes": 47564,
+      "sha256": "a0b4486af2da8bc1a62c1075dd574c49912cd55951051fb1b8a2e8c0a9c6dcee"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/fatui-skirmisher-cryogunner-legionnaire-5993b8.webp": {
+      "bytes": 49474,
+      "sha256": "5993b8ce579b3f762f1c2625e3f51c6628a0d5402fbb5e952b54ac2f8fc9dde4"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/fatui-skirmisher-electrohammer-vanguard-0b4f1d.webp": {
+      "bytes": 45124,
+      "sha256": "0b4f1d37b25de1a70c1bee8f175e921eb58b1242efbee7f96e09ce43bf029663"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/fatui-skirmisher-geochanter-bracer-516948.webp": {
+      "bytes": 47396,
+      "sha256": "5169488b718207074d6c8533a61f0ae253e3fd7b33f1282f3d5e1182c1cde930"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/fatui-skirmisher-hydrogunner-legionnaire-d91bfe.webp": {
+      "bytes": 45692,
+      "sha256": "d91bfe43d9be14ebaeba23a9ec2f12cc439b17915efd466c0005bb53285e84e2"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/fatui-skirmisher-pyroslinger-bracer-41510b.webp": {
+      "bytes": 42394,
+      "sha256": "41510bfe7e9a79193f2e829c6f0fb41ee97e0cb58ecd3b2a883c114751e77cb2"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/fischl-1fc8c0.webp": {
+      "bytes": 16262,
+      "sha256": "1fc8c0e48569b096f45356ebaa52066b478b926f082b3d7cec8dba141a053b84"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/flins-361f52.webp": {
+      "bytes": 15162,
+      "sha256": "361f52d2534555648ac735ad41f7f9901f123161d582740a28b06e53593c842b"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/freminet-fa9998.webp": {
+      "bytes": 15062,
+      "sha256": "fa99988535c6633ba82d3804514dda3ebe7e59d38804bb087b29440ac73a0426"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/frost-operative-80da34.webp": {
+      "bytes": 52538,
+      "sha256": "80da3444ed771f732ca8b070d0d7d0a2ad7a020ac24829048d597c746a2f2b10"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/furina-8f82a9.webp": {
+      "bytes": 16964,
+      "sha256": "8f82a9f480a6630e80084f22c77a24ec92a474481c5982c7d502a4733fe86a27"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/gaming-1a5fa2.webp": {
+      "bytes": 14976,
+      "sha256": "1a5fa249878b2be36035b7259f1f5fcd4f63eef6de00e99f1d5a8c4a5b3242b0"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/ganyu-8fba1c.webp": {
+      "bytes": 15620,
+      "sha256": "8fba1c769e26f56899b676e639644f8e5e836e27df78e733c0ffb7e0877953ec"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/geo-samachurl-5416d8.webp": {
+      "bytes": 52802,
+      "sha256": "5416d8b6c56f8f2de169a0ea6436ef938310cede8d847f640de689b242c2a824"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/geo-slime-bd76ce.webp": {
+      "bytes": 35414,
+      "sha256": "bd76cea68628320f9d598362a364d6a2c86e988f7e3a16fd97b1ed5d25019643"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/gluttonous-yumkasaur-mountain-king-131de2.webp": {
+      "bytes": 51136,
+      "sha256": "131de224548ab35f425059485f7845e17c82ff5296e5047e8db942671041e35d"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/golden-wolflord-89fef0.webp": {
+      "bytes": 50952,
+      "sha256": "89fef062798af66ece0f79951674fcf6a2f184f4dcde55b7d5251a2c4db3851a"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/goldflame-qucusaur-tyrant-3888f8.webp": {
+      "bytes": 50700,
+      "sha256": "3888f8404a23e116310a77914cd0d8dbaf17a25a82a715379708b4108d4c052a"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/gorou-3cd7cb.webp": {
+      "bytes": 15690,
+      "sha256": "3cd7cb98ce63b5b15dddce016167ba5f49f2359c47e6ebbdec130c3bb1604967"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/granny-ruoxin-b3565f.webp": {
+      "bytes": 55772,
+      "sha256": "b3565f7428c40458b5406fba6288acfe9c4f1c4f1daa8c0d3ba8055c200efdce"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/grounded-geoshroom-1673d0.webp": {
+      "bytes": 40610,
+      "sha256": "1673d0accd17b34675ed61a3586bd4307e4022f6517f8ef6eb5420052bcd4cfe"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/grounded-hydroshroom-802534.webp": {
+      "bytes": 41026,
+      "sha256": "8025345570145770ed3430afe37bca5451404adbfef306210a543c93b582c5d9"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/guardian-of-apep-s-oasis-feceed.webp": {
+      "bytes": 55494,
+      "sha256": "feceed321d10af4f043399107088a69efbe4d4443a730ea54626abcbe9ab59cb"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/hilichurl-berserker-cd1ead.webp": {
+      "bytes": 52626,
+      "sha256": "cd1ead8fc3b60717859bbd310a0197fb5ccb0131436d1ed877f12a4d5d367ce0"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/hilichurl-fighter-f34556.webp": {
+      "bytes": 47262,
+      "sha256": "f34556d03e4895b9c558e4946a353454c1732c71d78ba96de385712d9e31da88"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/hilichurl-shooter-908b22.webp": {
+      "bytes": 48224,
+      "sha256": "908b22a58ed4309fcf5c9f60ec3d095e06b5e47a4d8810afe0d121502a71bc06"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/hu-tao-0ea043.webp": {
+      "bytes": 14906,
+      "sha256": "0ea043784e169d2b210c411d50fa5a118e9e0c111e5c70dc4cec8a0cb458beca"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/hydro-abyss-mage-5b063d.webp": {
+      "bytes": 52564,
+      "sha256": "5b063d29143e2804360e5a18bfc40712c5688f3bd798ab62c4d3487e46b64995"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/hydro-hilichurl-rogue-4499d6.webp": {
+      "bytes": 50182,
+      "sha256": "4499d6b0138ddf9652ad7ceaa21cadbbb523b57596fefaf104e3f569ee53610e"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/hydro-hypostasis-cb5795.webp": {
+      "bytes": 54070,
+      "sha256": "cb5795bb275ee2d62fcacd71e5d1ea6b172a3398d28fabaa5b6695dbdace67a4"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/hydro-samachurl-84f37c.webp": {
+      "bytes": 52484,
+      "sha256": "84f37c94cbebf494c55d2bdfaa3165cf41d66196858164a8586fc3cd57ac901c"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/hydro-slime-1c97f2.webp": {
+      "bytes": 36976,
+      "sha256": "1c97f2a2586cd21958192c0234283e68c7ed7587a67b822b0b65bb7e528490ae"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/hydro-tulpa-564022.webp": {
+      "bytes": 47858,
+      "sha256": "56402255df04a75e3876ed43c40da723230d1b5f1d162b88213e0a88f5cd3e92"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/iansan-1b78d5.webp": {
+      "bytes": 17828,
+      "sha256": "1b78d55b3f2ea4d7b08c86ad776c635b85da258f54162745f02ab7e770d4a29d"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/ice-shieldwall-mitachurl-2d9d9e.webp": {
+      "bytes": 51434,
+      "sha256": "2d9d9edf9caf3ed797b41d4354bddca76cfc4370462f6ce5e96b84064085bdaa"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/ifa-2a5a42.webp": {
+      "bytes": 16850,
+      "sha256": "2a5a42112a10e8b129a0770bca991900dd2375d202dcb80b5c969587fcd000ea"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/illuga-1bc070.webp": {
+      "bytes": 15804,
+      "sha256": "1bc0700fe4635b793c4fde98e2c7dc6b041b22a2d6a45acf2808cddd3f8400b0"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/ineffa-d72c14.webp": {
+      "bytes": 16616,
+      "sha256": "d72c14078c63f66d232f91585412f6fd1b051bea7fc9c54b843f559f856a70f0"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/jadeplume-terrorshroom-9cbc8e.webp": {
+      "bytes": 47264,
+      "sha256": "9cbc8eac91fd49bb306d6f1f2010911749f0457d832797faa99b8dc98b573e18"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/jahoda-d97bda.webp": {
+      "bytes": 18194,
+      "sha256": "d97bda1c2d063307db9b7c278b70c0f507d8541e41fcac2afa3168fddea423d0"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/jakob-27cae1.webp": {
+      "bytes": 64558,
+      "sha256": "27cae148e4414c546dbc3fe48dec550584df46efb32654b407f5fc1188ac0343"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/jean-1deb4b.webp": {
+      "bytes": 14762,
+      "sha256": "1deb4bac128e58ca74ca691f5b8b3533b149c4bc284feefe6ce51048345eaf65"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/jeht-95e62f.webp": {
+      "bytes": 51964,
+      "sha256": "95e62f2d3bc154ea7f8aa880612510e615cd520cad2c230a7a8f4ae15a500282"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/kachina-a0a38a.webp": {
+      "bytes": 17358,
+      "sha256": "a0a38ac86b42fe85a6800bb804f960cd9911e7cdda7c2b760d4d9a293a0f6169"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/kaedehara-kazuha-b2782a.webp": {
+      "bytes": 14934,
+      "sha256": "b2782afc0851b6d6daad6da11d89073c5c3c99cf9250715f6c0b5434e8c4105d"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/kaeya-7af582.webp": {
+      "bytes": 14880,
+      "sha256": "7af582fdb4f20a2cd2c0983f65f482d037b2c8bb001c465cde74c82e65529688"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/kairagi-dancing-thunder-c8e44c.webp": {
+      "bytes": 51266,
+      "sha256": "c8e44c7213e449e4a1d4cc99d5a026d2f7ff40c5a416835f56672f96e5e9dee6"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/kairagi-fiery-might-0d60e3.webp": {
+      "bytes": 54524,
+      "sha256": "0d60e394ceb1213cee3567c4473cb1ff4f5c37b90f2f42fa52bd2b8c29eb5d29"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/kamisato-ayaka-30f908.webp": {
+      "bytes": 14254,
+      "sha256": "30f908e7bdbf701e177258245c4931c32a867ccfc4fe12d3174d316707ca17cb"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/kamisato-ayato-ed4206.webp": {
+      "bytes": 15624,
+      "sha256": "ed4206413b60b4b66430e2d1e2791a72d4076476b2d86c61347698c536395728"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/katheryne-43b1a6.webp": {
+      "bytes": 50962,
+      "sha256": "43b1a618123f4c8d02ee4acbaa6c9f3da554a59e70adc15db41b4e55cc7ad95d"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/kaveh-9ed4e5.webp": {
+      "bytes": 16114,
+      "sha256": "9ed4e597e006cecce5078f630944aa5a11d4e7dc0544396362d0568a01ab32a6"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/keqing-85b527.webp": {
+      "bytes": 16246,
+      "sha256": "85b52764359457bc57049fc5cdd5c6b2c092e2051270b8de953f4762f06792a3"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/kinich-bc44a0.webp": {
+      "bytes": 16752,
+      "sha256": "bc44a0070681e96818bee5e56d01c3ab72029663ccf6dbccacc8281cd0803ba8"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/kirara-b88f49.webp": {
+      "bytes": 17630,
+      "sha256": "b88f497d31e4fcef82a6915dd81281e962005c5e868c74845e45249ebec7fc09"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/klee-9131a3.webp": {
+      "bytes": 15602,
+      "sha256": "9131a31c44b8002d84699ae1cb953bfc23b16e8b5aa5ee4e5c4b59503aa4bb24"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/knyazev-66efc3.webp": {
+      "bytes": 61332,
+      "sha256": "66efc36e8edcde67a6c5a9644edae8f8a8bbefa91853430d946a079b8116df79"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/komaki-c1f5be.webp": {
+      "bytes": 57930,
+      "sha256": "c1f5bec86515fdda6464ed11028420a2801cb7cb5a1180b6d707ca9a927d30d6"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/kujou-masahito-0086f8.webp": {
+      "bytes": 59988,
+      "sha256": "0086f8e406a9116e93359ebb4f5e4f0be1bf3e31b591e304cd19c087ec294d2a"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/kujou-sara-b1a198.webp": {
+      "bytes": 15270,
+      "sha256": "b1a19809f8e35101a22b5df1f9f5d4236e4cbf35d8cd26cd8864429d47cf7722"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/kuki-shinobu-65db14.webp": {
+      "bytes": 16306,
+      "sha256": "65db147b3ef5f42cc92b2e5053482a7e51183545d869dd07b38ac205cd720959"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/kukkia-e9441e.webp": {
+      "bytes": 62226,
+      "sha256": "e9441e7a95490f1d083b4821c39a3e7a224441164cac2b988d71599833d53522"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/la-signora-0a679d.webp": {
+      "bytes": 48960,
+      "sha256": "0a679dae37a448a83ad9fc9ec8b5e242c54a48f7ec20091346d19c64560e2f86"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/lan-yan-bf348a.webp": {
+      "bytes": 17524,
+      "sha256": "bf348a7967e1316018c66923f402ac43fb63207e180e39ea7b40ae93fa332edd"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/large-cryo-slime-c78dda.webp": {
+      "bytes": 34972,
+      "sha256": "c78ddae711ce7cb87b7ab1e1cad1a7510937c13d72f442a5d021645e4cef3446"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/large-electro-slime-fbe9e0.webp": {
+      "bytes": 34482,
+      "sha256": "fbe9e0afe05e45f5c2f1d79fe78233a73ad1b601d935a7f4f3fc8eb313d2774d"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/large-hydro-slime-cc3d7d.webp": {
+      "bytes": 31072,
+      "sha256": "cc3d7d65e56648112108d6c7dd474fe89a00077fcf31f63a5ab9c322ae3b1379"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/large-pyro-slime-c8d8f2.webp": {
+      "bytes": 32708,
+      "sha256": "c8d8f2e2f263faacdc83d261e9ddab4ec2f785fd85a75f3f66304019d842fd9a"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/lasselin-aa2092.webp": {
+      "bytes": 59934,
+      "sha256": "aa2092a7c19c366abf35352ac3f03005df9145cb93234124ab3ab21139a506aa"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/lauma-e197a6.webp": {
+      "bytes": 15936,
+      "sha256": "e197a639b4f139ad768bad86d0b70c24028a7e4478b0f43b98870de624d255a4"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/layla-fa6b16.webp": {
+      "bytes": 17588,
+      "sha256": "fa6b16c3f676e26458999cead977e6ef8f6900b7fe2a5fa1759021e400f0c5bc"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/linnea-961fb0.webp": {
+      "bytes": 16848,
+      "sha256": "961fb0862863d912fe2d191e8b0ff9925869c0c9685ddd201a0056b157e852a3"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/lisa-5878ae.webp": {
+      "bytes": 16508,
+      "sha256": "5878ae32493ee1140cdc4fb7bec101637a9bff2889bc56a245551ec83246c8a0"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/lohen-b562c2.webp": {
+      "bytes": 17054,
+      "sha256": "b562c234945549dd1c5e59388bdc6d13266cda4f2809abc124caca1d2fd3a774"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/lord-of-eroded-primal-fire-10d03d.webp": {
+      "bytes": 62526,
+      "sha256": "10d03d61950bc8d439b64ede7947a17a0f76f73816159ffd1c14885222df9309"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/lumine-3c7e1b.webp": {
+      "bytes": 14810,
+      "sha256": "3c7e1b10138bce98b3d456009e509261529f2260cfab7b4fd6a8fb090f813ca4"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/lynette-352ccb.webp": {
+      "bytes": 15346,
+      "sha256": "352ccbc27cf4fed0ceff91a3464b508af5bbccb450e4e75e829113964d2faf49"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/lyney-26ecaf.webp": {
+      "bytes": 14520,
+      "sha256": "26ecaf816db0ab506845a06f131b17f66297cad49290f8fb83bd653ba7fcdf4f"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/lyris-ed5de6.webp": {
+      "bytes": 69320,
+      "sha256": "ed5de62ffed82e8662c148589a5483c98d7a571f9e4b79708cde7127c9dde312"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/m-cantre-d245d8.webp": {
+      "bytes": 64910,
+      "sha256": "d245d850f38b1ef5645dd670a28ec4855e51df04d24a536daef83376fb48b9af"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/maguu-kenki-5269d9.webp": {
+      "bytes": 59158,
+      "sha256": "5269d96963a6bb1aec2300616fbf8e5fed3fea95e2e6c4c6be2e457ada6359f5"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/maryam-29d387.webp": {
+      "bytes": 60660,
+      "sha256": "29d3873b4d67a04690a840d25cf094e0a1c0e486ba6c841b4315864f4ae9bc0b"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/master-lu-1df486.webp": {
+      "bytes": 45992,
+      "sha256": "1df48658384ccee06f326eb0f54ca1bc51e37d345df94992003d48b43ee78aba"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/mavuika-56aeaf.webp": {
+      "bytes": 18380,
+      "sha256": "56aeaff0694ae81ce86dbb22ed907f0acb7380df0ebc5de282cfa100e3ec90b8"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/mayskaya-81cf88.webp": {
+      "bytes": 61168,
+      "sha256": "81cf88f50d09ef295ed633333b4c672be1ba2884b16d6960179dc42c548fe9a2"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/mazatl-8432c5.webp": {
+      "bytes": 62110,
+      "sha256": "8432c5ff6348f9c99f1162b1ca594952ed64c6822016b830707164ef9fbd2756"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/mika-ac6616.webp": {
+      "bytes": 16490,
+      "sha256": "ac6616d44992bf0fa6312c6f3315a8e71ae951dcb67ce4ca0c1c499f919cb18a"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/millennial-pearl-seahorse-5d44bc.webp": {
+      "bytes": 53798,
+      "sha256": "5d44bc67abf425294b4741219014a0db8d3acb903b9af3c228bb7fe59cfe4389"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/mirror-maiden-34d0ec.webp": {
+      "bytes": 49974,
+      "sha256": "34d0ec9e300b29028cb15a522a7480aa97af936d129583efe2d8220897edf320"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/mitya-82d269.webp": {
+      "bytes": 18744,
+      "sha256": "82d26904d0504f192f378b9093c79452aa157c16397cd81e2acb2f5926238b6d"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/mona-cb7dc4.webp": {
+      "bytes": 16856,
+      "sha256": "cb7dc489ccaffbc712aeaec0561af1333b4a13a9a93a5bbd3eec6d2cbf87e986"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/mualani-256dad.webp": {
+      "bytes": 16514,
+      "sha256": "256dadecb2883532f17e60462f30b4cc5ce6e35129beec32e2a8f46d16b320a0"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/nahida-23e8f8.webp": {
+      "bytes": 17992,
+      "sha256": "23e8f8df1459069afa181ffe2ed733a1365602de0f0a276e1f3287d7237793bb"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/navia-b6909e.webp": {
+      "bytes": 16702,
+      "sha256": "b6909e043c3a47d6678a59c2af46ad7154863412671945fd32874785e54aaec6"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/nefer-caa928.webp": {
+      "bytes": 17198,
+      "sha256": "caa9281b7e680398c23caf8340b6fea240df0491c071f4e9e93f45b8a4ee3487"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/neko-a4ff20.webp": {
+      "bytes": 43370,
+      "sha256": "a4ff20cef9a8d68622cb979bc587ef1eadc824b045c56e3bd25638f6e2d50687"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/neuvillette-044b7a.webp": {
+      "bytes": 15832,
+      "sha256": "044b7ac7b34abca23411786a77cd75756a49c99cb210e9985c1793e887f23422"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/nicole-0f5fd2.webp": {
+      "bytes": 17058,
+      "sha256": "0f5fd2463b26590be598e33ac3f7033d0a3b6de281ca04b6e157f4b3fe4db3b1"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/nilou-5aa9c2.webp": {
+      "bytes": 17662,
+      "sha256": "5aa9c2de7006670704c49079e12e349cd571ef9f9b43743ba870456b4b89edbe"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/ningguang-2dc68f.webp": {
+      "bytes": 15940,
+      "sha256": "2dc68f02022b7a9e972734521d823b9e88e7a0d42a2d8960cf3a3a21c15fdfe4"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/nishikino-reirei-f7b68f.webp": {
+      "bytes": 57604,
+      "sha256": "f7b68ffea7e8c918286e78cc5f7bc8338bbdb0708390bdfcc7c5c2296a4316b1"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/nobushi-hitsukeban-a0d993.webp": {
+      "bytes": 56476,
+      "sha256": "a0d99385210ebf22b4027673160c215313f6ac83bf766f6632e6328a648d9f41"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/nobushi-jintouban-8140d2.webp": {
+      "bytes": 55968,
+      "sha256": "8140d23824b19dfd4367c03106896d95bf2b3c5fe9f40616922418f2db5965b0"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/nobushi-kikouban-fd19d4.webp": {
+      "bytes": 57994,
+      "sha256": "fd19d4b79438a55524e6cbcbd8c01a281e07a2a281d1e214e078b280e4d4034e"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/noelle-585d0f.webp": {
+      "bytes": 16030,
+      "sha256": "585d0fd85c245b1ec911f5376aa922887bca1a2772ac57d625eef06533cd998b"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/odette-45c070.webp": {
+      "bytes": 15168,
+      "sha256": "45c070abd7db3027419c7c889f83d20902c4ac148723ff7dba3fe11cf9f8b0d7"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/ororon-63c83f.webp": {
+      "bytes": 17722,
+      "sha256": "63c83fbd05770ee61ecf4f742b7be50f7879ac0eb799dea81740bde842031184"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/paimon-5a803f.webp": {
+      "bytes": 48148,
+      "sha256": "5a803f89d129bedd9e5f40a99b76bc5f29a778d2ca220ca26187d37d58cdf144"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/pitot-8a205e.webp": {
+      "bytes": 63706,
+      "sha256": "8a205ee2b4d108cf9975cd5fe85894e4a570995601791377b9d8e425e89ada24"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/plate-c94feb.webp": {
+      "bytes": 57470,
+      "sha256": "c94feb85efb8abc1716fbecb56365efab3c63575c61cdaf48f1d9c1bdd7ad9f5"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/prune-96950a.webp": {
+      "bytes": 16718,
+      "sha256": "96950a98911dea56ef28dcfac8ba952e270a574ad90d49822ea8d26568ed51e9"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/pyro-abyss-mage-b3c34c.webp": {
+      "bytes": 43028,
+      "sha256": "b3c34cb0a83d96bada6f2f379e6382b657a80697fe796731ac5b2e9eb98482d4"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/pyro-whopperflower-90fd13.webp": {
+      "bytes": 50864,
+      "sha256": "90fd13d0d8bffce48fa44eccd0e4618a54ce9214de57cf0784aacf0d02099a14"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/qiqi-4cdaa2.webp": {
+      "bytes": 15764,
+      "sha256": "4cdaa275f7ae7505e89da2c0700dc8e2943a64668636d875054d5de8e58ef6ea"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/raiden-shogun-e4b7d8.webp": {
+      "bytes": 14042,
+      "sha256": "e4b7d80660ac7024cf5d081cf3b0e701555f6de9b20c3f8a6aa2c4007d3ba64b"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/razor-336911.webp": {
+      "bytes": 15262,
+      "sha256": "336911b10dffde14fac7ff51d0e59f367f09c864c733fc12a98a5c3f4e0fd0ab"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/rene-bb5809.webp": {
+      "bytes": 66086,
+      "sha256": "bb580996169f8ecb34bdc70620c3a8d18ae909327eb545a598aae52673c63f68"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/rhodeia-of-loch-edbcdc.webp": {
+      "bytes": 41106,
+      "sha256": "edbcdc6741d0bd2cd7fe39ea822dcdfc3a772ead2d30c4eacaf0d4476c1d1ca6"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/rock-shieldwall-mitachurl-f9cac1.webp": {
+      "bytes": 52378,
+      "sha256": "f9cac1075a0364debb7c5cf984af02ff937ecdfb45b77c16245977d9beecad36"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/rockfond-rifthound-55aebf.webp": {
+      "bytes": 45964,
+      "sha256": "55aebf2e42b385a6f1ff4dbed2adee7ad4fd5ea62924afb025feb49a9af5fc24"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/rosaria-805fda.webp": {
+      "bytes": 15196,
+      "sha256": "805fda1a0585427b97d0ab1b26415c8e9ecbf951f0cd9ec8222efd2f406531f7"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/ruin-drake-earthguard-6009dd.webp": {
+      "bytes": 40496,
+      "sha256": "6009ddf08517dcf09fd0c6182cdf583df8c04313debd5ac705fa47f6945c16f6"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/ruin-guard-43426b.webp": {
+      "bytes": 52094,
+      "sha256": "43426b15ec471d05f72f4437c15b0c297f57af7123f17b3ea34827b254b3dc37"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/sandrone-8a1247.webp": {
+      "bytes": 16940,
+      "sha256": "8a1247d40d6e8f3bb06fb24f5b4f700103a98c9b41163353e29ab277232a5c85"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/sangonomiya-kokomi-6e6186.webp": {
+      "bytes": 16346,
+      "sha256": "6e618627ea86d4d4b248798c3febb29fb8c05d7997be030d65c29d63836c12f2"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/sayu-d6fa95.webp": {
+      "bytes": 16550,
+      "sha256": "d6fa956e295c436af541d67b411af7e4a371f991bc2abc3a9a0733715add9e65"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/sedile-f238ce.webp": {
+      "bytes": 55592,
+      "sha256": "f238ce5dfc8f2c03465bf70e7804965c31408517c2dcafc921f1eb6742721703"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/sethos-8253bb.webp": {
+      "bytes": 14256,
+      "sha256": "8253bb2fb02f5db67cc57b50d614252eeea3b096eaae9e9c774c4b6361860fc0"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/shajar-eb8814.webp": {
+      "bytes": 59004,
+      "sha256": "eb88145c1636f1510125eb3cc2aa78c62eb096554b7c844dc8c717e36578e19c"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/shenhe-12abd9.webp": {
+      "bytes": 15470,
+      "sha256": "12abd9d6a279a25c061a002c23a108b9808201e938f6038b3f342d55f93fe49d"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/shikanoin-heizou-87546b.webp": {
+      "bytes": 14962,
+      "sha256": "87546bf51e88b56ca2d7334c1dbdaf9c988314d079eb6613abf77c06e3029ef3"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/sigewinne-e6f17a.webp": {
+      "bytes": 14938,
+      "sha256": "e6f17af86e7a73f3b20ddfd1cbc4b93136072b3641868b77988cb8ba76e1aeea"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/skirk-ccba70.webp": {
+      "bytes": 16728,
+      "sha256": "ccba70adcc6e4f6cf209af6454e2d11659ecb51241d4ba7815d30a2e0228dd34"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/stonehide-lawachurl-6c3cb3.webp": {
+      "bytes": 53870,
+      "sha256": "6c3cb35e26f39ce9a814c65d2e9dc79cc81369122ed7b6f1189425b8f404ce94"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/sucrose-b728da.webp": {
+      "bytes": 17064,
+      "sha256": "b728daa15a534592731198154c2b073e4ebfecde94d39880d0c6281e8e1ebdd0"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/suppression-specialist-mek-ousia-67e27b.webp": {
+      "bytes": 57114,
+      "sha256": "67e27bc35e4a723d357c4e19e1475f5589d9e8194365aca0470b770b92f95ee6"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/suppression-specialist-mek-pneuma-fcb99f.webp": {
+      "bytes": 56048,
+      "sha256": "fcb99f6bc56bf397b72dd21dd630930b2877b1845c40822f2be4824080ef7532"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/tainted-hydro-phantasm-756523.webp": {
+      "bytes": 30170,
+      "sha256": "7565236719d9de43ecfbd1f688b14d00a8ca2377cdc8f41359636e81bacf409a"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/taroumaru-622051.webp": {
+      "bytes": 51832,
+      "sha256": "6220510fbbe69813ad303bac9e1910a358d7bfff02d471d7aafc0a074c82c172"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/tartaglia-0e34c3.webp": {
+      "bytes": 15900,
+      "sha256": "0e34c3dfdaff09d133c2f43d38506b3bec45f8d14daacbfec9df17d4c251c6c1"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/tetreaux-2710e4.webp": {
+      "bytes": 63000,
+      "sha256": "2710e4cbdbb657bab8f6fd147ecf0e0b5b911612165bca3a756d312ae07d694b"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/teucer-a3e287.webp": {
+      "bytes": 61746,
+      "sha256": "a3e287272e462490271f7c5ad849982acb860f67a4a1e7eaeda6fba0d70bc218"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/thoma-683b13.webp": {
+      "bytes": 14960,
+      "sha256": "683b13282f5f256bcdb40d96f665b145b4aeef7d2c6fe706692f778ef00f2c1f"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/thunder-manifestation-0f03de.webp": {
+      "bytes": 56020,
+      "sha256": "0f03dec7f60f7d1f1b9fb4610b83a3b3163e9ac635190e1b901f5346312514e0"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/thundercraven-rifthound-feca2e.webp": {
+      "bytes": 44614,
+      "sha256": "feca2e1599118b650d7aca55c171fb784d406bad3639380c91f9bad6f18b2ffa"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/tiepolo-1bc93d.webp": {
+      "bytes": 60828,
+      "sha256": "1bc93d8165787ae2dc2ef6f8907b400dba204ebd450f36e0ee7a6abc8de71894"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/tighnari-f215f7.webp": {
+      "bytes": 15474,
+      "sha256": "f215f79654616855063c13328479c2fe7e00aaf68c97149cb8a8c95fad150aa4"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/tlapalli-23aee3.webp": {
+      "bytes": 71628,
+      "sha256": "23aee33a0d7e4a9bc938a85e0bfc7c1beb0e79d83896d666551a40e3e57bff41"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/tonia-05e40d.webp": {
+      "bytes": 52940,
+      "sha256": "05e40d2fed83a1659f3613d0357716e9084eb3a93bdc22ef8e41b333ce00804d"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/treasure-hoarders-gravedigger-0324b9.webp": {
+      "bytes": 47244,
+      "sha256": "0324b9595d72f33b7f6f76749093ab718df9a275600ef9cd3f71940bc80e3cce"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/treasure-hoarders-marksman-02f782.webp": {
+      "bytes": 42686,
+      "sha256": "02f7822bce2e12782a3de4112d55c864dd3771f29812e7788da1632bff4bb8b3"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/treasure-hoarders-pyro-potioneer-0c1bb8.webp": {
+      "bytes": 49746,
+      "sha256": "0c1bb8d2be2570bc6d16e8b7d9aec738482d75d0601bcaff473869b042763513"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/treasure-hoarders-scout-831832.webp": {
+      "bytes": 44436,
+      "sha256": "831832b870fe108390118e2bd29f438977995c55ebed5172199bcee143a33cdd"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/tzompantli-44e8f9.webp": {
+      "bytes": 62846,
+      "sha256": "44e8f99a765ef728518bbe6438174ae0727e6ebfe1dd7396cad73ee2deef3b79"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/valdis-ae2dc0.webp": {
+      "bytes": 55638,
+      "sha256": "ae2dc0defc1c64291f8eac6870329e08aee152b4777f66b124ec99b4c2b21fc1"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/valeriy-43bdf8.webp": {
+      "bytes": 18124,
+      "sha256": "43bdf8f8785c26dfc22ba0ee0cdc18cfe6e72780c92d99fcf399f5900927ff1b"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/varesa-341eea.webp": {
+      "bytes": 17184,
+      "sha256": "341eea3229f3507ab54a23c0531d84d1c073b32c33f5311b5f21f6a66b39bf3d"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/varka-2fa258.webp": {
+      "bytes": 15726,
+      "sha256": "2fa258b9400fbef1782bd5d25ed9b90e890e2d6dc2a4ee1b97b03c2c76f97a24"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/venti-454f73.webp": {
+      "bytes": 16250,
+      "sha256": "454f7335e70ba3a0dd367c441b46f73c2901ff88fe0ee2953698d3b32cfc44a8"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/vesna-157721.webp": {
+      "bytes": 17220,
+      "sha256": "1577219b7907ea194abd92e078bf1a29e78de7ddd32238df21c248e08787ef88"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/virda-534a5b.webp": {
+      "bytes": 60696,
+      "sha256": "534a5b172f6e82e691f442e2002418159269a38e6d2c54bfa4adf757958754da"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/vodyanitsa-433801.webp": {
+      "bytes": 17066,
+      "sha256": "4338010dea6fcff46639761e39e05690e69487c39032677a54136dc886ff24e7"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/wanderer-a7cee8.webp": {
+      "bytes": 15356,
+      "sha256": "a7cee83ae08ace71f7d4df86c358f3a91a5aceb200a53e1545df472e073388ed"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/wayward-hermetic-spiritspeaker-d59ba3.webp": {
+      "bytes": 55394,
+      "sha256": "d59ba33f5e887dd216952f5033f51023621d7c9ad6758ce936943458e52e3ecc"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/whistle-96ff4c.webp": {
+      "bytes": 50134,
+      "sha256": "96ff4c932d97cb6e7310edaab33236f6454260ee3a2a197e7640bdba19a1b5d5"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/winged-cryoshroom-9eec2d.webp": {
+      "bytes": 44296,
+      "sha256": "9eec2d76d5c631898bf345352d8f9e44d35268f7288ca5ac90ff6ff6ca73f4df"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/winged-dendroshroom-de1693.webp": {
+      "bytes": 43244,
+      "sha256": "de1693e730434408fd4cfd923248069046f8bf733d29eae9cd85547ff7a38c13"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/wooden-shieldwall-mitachurl-dc12db.webp": {
+      "bytes": 54846,
+      "sha256": "dc12db34b59a5e596187290db26e792d99b0550168aca0802a67489dad9b1de8"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/wriothesley-e09d4b.webp": {
+      "bytes": 14104,
+      "sha256": "e09d4be1a6756a3ea84928a138b7db14ed3ba973885b26442743e4f5db91bb93"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/xavier-71ad3a.webp": {
+      "bytes": 62122,
+      "sha256": "71ad3afbdb737c5b6f3932b96aee683653f6f9a98cd84ceeef88286457ce04b1"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/xiangling-a4eb79.webp": {
+      "bytes": 13620,
+      "sha256": "a4eb79245f3170abd5aa150492903120f2a5b824bc501cf123177085f6e3f5d5"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/xianyun-d36dcd.webp": {
+      "bytes": 14430,
+      "sha256": "d36dcdda3ff329a069c58cd8f725f6ed221acca78b10a00b4098ce395d48b099"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/xiao-f08490.webp": {
+      "bytes": 15496,
+      "sha256": "f08490d15426f6600d5fd360df1f677b6b1d35875875eb74e208561228792a33"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/xilonen-75c388.webp": {
+      "bytes": 18354,
+      "sha256": "75c3881f5203cfe61648a9a61e568319a9ae805aa7431778f54ee9da67d05cd7"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/xingqiu-fdeb9c.webp": {
+      "bytes": 14046,
+      "sha256": "fdeb9c022f76812fda3b3e09a4bcec0d30d875e6e7a52eead19ff881fb3fc7f7"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/xinyan-a4195b.webp": {
+      "bytes": 15728,
+      "sha256": "a4195b112ac484f3fe5fabfa6f0f547882e5b31f2175bc511d5738feaa4a6597"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/yae-miko-d65fa0.webp": {
+      "bytes": 16270,
+      "sha256": "d65fa085befbc4c7ac4aecb60ad3b594606cd4117b7a5da0330740511f786753"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/yanfei-c90036.webp": {
+      "bytes": 17748,
+      "sha256": "c90036464e0a3c3818e73d5f89a76ef7ca07bd794d8bd2ef1652bf3da42de4b3"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/yaoyao-43f75f.webp": {
+      "bytes": 16678,
+      "sha256": "43f75fce7fa7a98cd65e2371fa76cb2fe880170729752e6c19ac37ee2f379538"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/yelan-ac439b.webp": {
+      "bytes": 14150,
+      "sha256": "ac439bb2f0c7b126cfec595a438076c4780bd1228c1403e139d8578c920ac017"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/yoimiya-4d4a5f.webp": {
+      "bytes": 16330,
+      "sha256": "4d4a5ff69c62fbb7c5e65ee2328a76ebea18c1c8558167286e67d71f77e2cfc0"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/yumemizuki-mizuki-dd0f33.webp": {
+      "bytes": 19188,
+      "sha256": "dd0f333106f6b22edd56afbf50129c698903d480c5d216d0c267bbc879593869"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/yun-jin-c7c5d7.webp": {
+      "bytes": 17066,
+      "sha256": "c7c5d7096c58278393203d5cb1d57f2c6367288a05fd5a278182ba1a3fef2c0c"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/zhongli-3a974a.webp": {
+      "bytes": 14462,
+      "sha256": "3a974a0f522d10417a9f24947628b8564772834874b0603a93d0b221198ee7fd"
+    },
+    "extension/genshin-dialogue-ui/assets/card-art/zibai-ca38ee.webp": {
+      "bytes": 15842,
+      "sha256": "ca38ee0a435e64c548cf3d19e910602f2ca1f56f5f1cd8bb166c15f6400f53a8"
+    },
     "extension/genshin-dialogue-ui/assets/cgs/birthday/aino-2026.webp": {
       "bytes": 304860,
       "sha256": "01b97ec2f19a024fc34d9eb2080a9531d5495d576f12f42ac14ac1a5e9b5c402"

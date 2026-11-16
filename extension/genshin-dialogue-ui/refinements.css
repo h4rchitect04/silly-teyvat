@@ -80,7 +80,7 @@ body.gi-card-art-on .avatar.avatar_collage.gi-card-collage:is(.collage_3, .colla
 @media (max-height: 560px) { #gi-toolbar.gi-paimon, body.gi-scene.gi-hidden #gi-toolbar.gi-paimon { width: min(500px, 78vw); } }
 
 /* ---------- Top-right HUD: SillyTavern's own drawer order, larger icons, tighter spacing ---------- */
-body.gi-shell {
+body.gi-enabled {
     --gi-hud-gap: clamp(2px, .45vw, 6px);
     --gi-hud-cell: min(50px, calc((100vw - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px) - 2 * var(--gi-hud-margin) - var(--gi-hud-count) * var(--gi-hud-gap)) / (var(--gi-hud-count) + 1)));
 }
