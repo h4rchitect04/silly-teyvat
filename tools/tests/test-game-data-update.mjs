@@ -8,7 +8,7 @@ import path from 'node:path';
 import {createHash} from 'node:crypto';
 import {createZipWriter} from '../../extension/genshin-dialogue-ui/zip-store.js';
 import {shareableSettings} from '../../extension/genshin-dialogue-ui/share-package.js';
-import {RangeUnsupported,chunkedArchive,compareVersions,downloadRelease,formatBytes,localPlan,localUrl,rangedArchive,updatePlan,validRelease,wholeDownload} from '../../extension/genshin-dialogue-ui/game-data-update.js';
+import {RangeUnsupported,adjustPlan,characterFolders,characterPaths,chunkedArchive,compareVersions,downloadRelease,formatBytes,localPlan,localUrl,missingCards,rangedArchive,updatePlan,validRelease,wholeDownload} from '../../extension/genshin-dialogue-ui/game-data-update.js';
 
 const folder=fs.mkdtempSync(path.join(os.tmpdir(),'teyvat-release-')),tool=new URL('../release-game-data.py',import.meta.url).pathname;
 async function exportZip(name,files){
@@ -71,6 +71,39 @@ assert.ok(same.paths.includes('silly-teyvat-game-data.json'));
 const nothing=await localPlan({...two,parts:{}},{...plan,parts:[]},{present:new Set(['cards/Klee.png','cards/Hu Tao.png']),fetcher:served({'/characters/Klee.png':changedKlee,'/characters/Hu%20Tao.png':'new'})});
 assert.deepEqual([nothing.need,nothing.paths,nothing.bytes],[[],[],0],'an update the player already has downloads nothing');
 assert.ok(wholeDownload(one,updatePlan(one,undefined))&&!wholeDownload(one,fresh),'a first install downloads one ZIP only when it needs most of it');
+
+// A player who deleted the game's characters gets them back. Check for game data (complete) finds
+// missing files even when the release is already recorded, and an update brings back unchanged ones.
+const repair=updatePlan(one,'1.0.0',{complete:true});
+assert.equal(repair.kind,'repair','an installed release can still be checked for deleted files');
+const gone=await localPlan(one,repair,{present:new Set(['cards/Klee.png']),fetcher:served({})});
+assert.deepEqual([gone.need,gone.have],[['sprites/Klee/joy.png'],['cards/Klee.png']],'a repair downloads only what was deleted');
+assert.ok(gone.paths.includes('silly-teyvat-game-data.json'),'and reads the manifest again for the settings and lorebooks');
+const intact=await localPlan(one,repair,{present:new Set(['cards/Klee.png','sprites/Klee/joy.png']),fetcher:served({})});
+assert.deepEqual([intact.need,intact.paths,intact.files],[[],[],2],'a repair with every file here downloads nothing');
+assert.ok(wholeDownload(one,{...repair,bytes:one.bytes}),'a library that lost almost everything downloads one ZIP');
+const restoring=updatePlan(two,'1.0.0',{complete:true});
+assert.deepEqual(restoring.restore,['sprites/Klee/joy.png'],'a complete update also covers unchanged files');
+assert.equal(updatePlan(two,'1.0.0').restore,undefined,'an update at startup leaves files the player deleted alone');
+const back=await localPlan(two,restoring,{present:new Set(['cards/Klee.png','cards/Hu Tao.png']),fetcher:served({'/characters/Klee.png':changedKlee,'/characters/Hu%20Tao.png':'new'})});
+assert.deepEqual([back.need,back.have.sort()],[['sprites/Klee/joy.png'],['cards/Hu Tao.png','cards/Klee.png']],'a deleted unchanged sprite comes back without a checksum check of the rest');
+assert.equal(missingCards({characters:[{avatar:'klee.png'}]},two),.5,'the character list shows how many game characters are gone');
+assert.equal(missingCards({characters:[]},null),0);
+assert.equal(missingCards({characters:[{avatar:'klee.png'}]},two,['Hu Tao.png']),0,'a game character the player kept as their own is not missing');
+
+// The player's own Klee: "keep mine" leaves all of the game's Klee out; "use the game's" downloads all of it again.
+const named={...two,files:{...two.files,'sprites/Klee/Official Art/joy.png':two.files['sprites/Klee/joy.png'],'sprites/Kleeish/joy.png':two.files['sprites/Klee/joy.png']}};
+assert.deepEqual(characterPaths(named,'klee.png').sort(),['cards/Klee.png','sprites/Klee/Official Art/joy.png','sprites/Klee/joy.png'],'a character is its card and its own sprite folder, not a similar name');
+assert.deepEqual(characterFolders(named,'Klee.png'),['Klee','Klee/Official Art']);
+const installing=await localPlan(named,updatePlan(named,undefined),{present:new Set(['cards/Klee.png','sprites/Klee/joy.png']),fetcher:served({})});
+const keep=adjustPlan(named,installing,['Klee.png'],'keep');
+assert.ok(!keep.paths.some(name=>name.includes('Klee/')||name==='cards/Klee.png'),'kept characters are not downloaded');
+assert.ok(keep.paths.includes('sprites/Kleeish/joy.png')&&keep.paths.includes('cards/Hu Tao.png'));
+assert.equal(keep.files,installing.files-3);
+const swap=adjustPlan(named,installing,['Klee.png'],'replace');
+for(const name of ['cards/Klee.png','sprites/Klee/joy.png','sprites/Klee/Official Art/joy.png'])assert.ok(swap.need.includes(name)&&swap.overwrite.includes(name),`${name} is downloaded over the player's copy`);
+assert.ok(!swap.have.includes('cards/Klee.png'));
+assert.equal(adjustPlan(named,installing,[],'keep'),installing);
 
 // A host that answers byte ranges serves only the changed files; one that doesn't, the whole ZIP.
 const bytes=fs.readFileSync(second);let ranges=true,requests=0;

@@ -1,7 +1,7 @@
 // Exports round-trip through the ZIP code, and nothing private leaves in a shared package.
 import assert from 'node:assert/strict';
 import {createZipWriter,readZip,crc32} from '../../extension/genshin-dialogue-ui/zip-store.js';
-import {shareableSettings,relocateSettings,mergeSettings,referencedPaths,spriteFolders,diskFolder,gamePersonas,gameCards,isSafeEntry,spriteUpload,shippedEntry} from '../../extension/genshin-dialogue-ui/share-package.js';
+import {shareableSettings,relocateSettings,mergeSettings,referencedPaths,spriteFolders,diskFolder,gamePersonas,gameCards,isSafeEntry,spriteUpload,shippedEntry,foreignCards,leaveCharacters} from '../../extension/genshin-dialogue-ui/share-package.js';
 import {execFileSync} from 'node:child_process';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -81,4 +81,36 @@ for(const bad of ['../secrets.json','/etc/passwd','sprites/../../x','a\\b','a//b
 assert.equal(isSafeEntry('sprites/Hu Tao/Official Art/joy.png'),true);
 assert.deepEqual(spriteUpload('Hu Tao/Official Art/Joy-2.png'),{folder:'Hu Tao/Official Art',file:'Joy-2.png',spriteName:'Joy-2',label:'joy'});
 assert.equal(diskFolder('Kairagi: Dancing Thunder/Official Art'),'Kairagi Dancing Thunder/Official Art','names match the sanitized folder on disk');
+
+// The player's own characters with a game character's file name or name are found; the game's own cards are not.
+const marked={extensions:{silly_teyvat:{role:'character'}}},asked=[];
+const library={characters:[
+    {avatar:'Klee.png',name:'Klee',data:marked},
+    {avatar:'klee_by_someone.png',name:'Klee',data:{extensions:{}}},
+    {avatar:'venti.png',name:'Bard',data:{extensions:{}}},
+    {avatar:'Hu Tao.png',name:'Hu Tao',shallow:true,data:{extensions:{fav:false}}},
+    {avatar:'Zhongli.png',name:'Zhongli',shallow:true,data:{extensions:{}}},
+    {avatar:'Mine.png',name:'Mine',data:{extensions:{}}},
+]};
+const post=async(url,body)=>{asked.push(body.avatar_url);return {data:body.avatar_url==='Hu Tao.png'?marked:{extensions:{}}};};
+const groups=await foreignCards(library,['Klee.png','Venti.png','Hu Tao.png','Zhongli.png','Kairagi Dancing Thunder.png'],{post});
+assert.deepEqual(groups.map(group=>[group.avatar,group.cards.map(card=>card.avatar)]),[['Klee.png',['klee_by_someone.png']],['Venti.png',['venti.png']],['Zhongli.png',['Zhongli.png']]],
+    'a same-named character shares the sprite folder; a game card or shallow game card is not the player\'s');
+assert.deepEqual(asked,['Hu Tao.png','Zhongli.png'],'only shallow candidates are read in full');
+const sanitized=await foreignCards({characters:[{avatar:'x.png',name:'Kairagi: Dancing Thunder',data:{}}]},['Kairagi Dancing Thunder.png'],{post});
+assert.equal(sanitized.length,1,'names match the sanitized sprite folder');
+// Kept characters: none of the game's files, tags, expression folders or settings for them arrive.
+const gameManifest={settings:{outfits:{'Klee.png':[{folder:'Klee/Summer'}],'Venti.png':[]},deep:{list:[{'klee.png':1,other:2}]},volume:1},
+    tagMap:{'Klee.png':['t'],'Venti.png':['t']},overrides:[{name:'Klee',path:'Klee/Official Art'},{name:'Venti',path:'Venti/Art'}],characterLore:[{name:'Klee.png',extraBooks:['x']}]};
+const left=leaveCharacters(gameManifest,['Klee.png']);
+for(const name of ['cards/Klee.png','cards/klee.png','sprites/Klee/joy.png','sprites/Klee/Official Art/joy.png'])assert.ok(left(name),name);
+for(const name of ['cards/Venti.png','sprites/Kleeish/joy.png','files/Klee.png'])assert.ok(!left(name),name);
+assert.deepEqual(Object.keys(gameManifest.settings.outfits),['Venti.png']);
+assert.deepEqual(gameManifest.settings.deep.list,[{other:2}]);
+assert.equal(gameManifest.settings.volume,1);
+assert.deepEqual(Object.keys(gameManifest.tagMap),['Venti.png']);
+assert.deepEqual(gameManifest.overrides.map(item=>item.name),['Venti']);
+assert.deepEqual(gameManifest.characterLore,[]);
+const untouched={settings:{a:{'Klee.png':1}}};leaveCharacters(untouched,[]);
+assert.deepEqual(untouched,{settings:{a:{'Klee.png':1}}},'nothing is stripped when every character is the game\'s');
 console.log('share package ok');

@@ -115,6 +115,28 @@ says **Already have it**. A first install that still needs more than 60% of the 
 whole ZIP; anything smaller is read by byte range. The popup counts files and tallies those added,
 already present and failed.
 
+**Check for game data** also looks for files deleted since they were installed, so a player who
+removed the game's characters can get them back without reinstalling anything. With the recorded
+release current, this is a repair: every file is checked for presence and the missing ones are
+offered. With an older one, the update also adds back unchanged files that are missing. At startup
+only the character list is consulted (no requests); the same complete check runs when more than
+half of the release's cards are gone from it. Uninstalling the extension does not clear the
+recorded release, so this is what brings deleted data back after a reinstall.
+
+Every game card carries `data.extensions.silly_teyvat`. Before installing, the check looks for the
+player's own cards (without it) that have a game card's file name or a game character's name.
+SillyTavern keeps sprites in a folder named after the character, so installing beside them would
+put the game's sprites in the player's folder and the game's settings and tags on the player's
+card. The player chooses:
+
+- **Keep mine:** the game's versions of those characters are left out (card, sprite folders, tags,
+  expression folders and any settings keyed by the card's file name). The choice is saved as
+  `gameData.kept` and applies to every later install, update and repair.
+- **Back up and use the game's:** the player's cards and every sprite in the game character's
+  folders are saved to `silly-teyvat-backup-<date>.zip`, the sprites are removed, and the game's
+  character is installed in full. A card with the same file name is replaced; one with another
+  file name stays.
+
 **Not now** is remembered for that release. **Check for game data** in Share always asks. Every
 file is checked against the release before it is installed. A development copy without a release file never asks. Published source checkouts include
 the manifest for reproducibility; the player install remains the distribution repository.
