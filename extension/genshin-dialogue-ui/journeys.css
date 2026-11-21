@@ -1,0 +1,40 @@
+/* ---------- Journeys: continue, rename or delete a saved journey (journey-menu.js) ---------- */
+#gi-journeys { position: fixed; inset: 0; box-sizing: border-box; width: min(720px, calc(100vw - 32px)); height: min(640px, calc(100dvh - 32px)); max-width: none; max-height: none; margin: auto; padding: 0; border: 0; border-radius: 18px; overflow: hidden; color: var(--ty-cream); font-family: var(--ty-font); background: radial-gradient(ellipse 80% 60% at 30% 0%, #d3bc8e2b, transparent 70%), linear-gradient(160deg, #2a3147f7, #1b2030fa); box-shadow: 0 0 0 1px #d3bc8e66, 0 24px 60px #0009; }
+#gi-journeys[open] { display: grid; grid-template-rows: auto minmax(0, 1fr) auto; animation: ty-fade 220ms ease both; }
+#gi-journeys::backdrop { background: #0b1527b3; backdrop-filter: blur(6px); }
+#gi-journeys *, #gi-journeys *::before, #gi-journeys *::after { box-sizing: border-box; }
+#gi-journeys button, #gi-journeys input { font-family: inherit; }
+.gi-journeys-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 20px; box-shadow: inset 0 -1px 0 #d3bc8e44; }
+.gi-journeys-top h2 { margin: 0; font-size: 22px; font-weight: 400; color: var(--ty-cream); letter-spacing: .02em; }
+.gi-journeys-close { display: grid; place-items: center; flex: none; width: 40px; height: 40px; padding: 8px; border: 0; border-radius: 50%; color: var(--ty-cream); background: #ece5d81f; cursor: pointer; }
+.gi-journeys-close:hover { background: #ece5d833; } .gi-journeys-close svg { width: 100%; height: 100%; }
+.gi-journeys-list { display: flex; flex-direction: column; gap: 10px; min-height: 0; padding: 14px; overflow-y: auto; }
+.gi-journeys-empty { margin: 8px; font-size: 15px; line-height: 1.5; color: #ece5d8bb; }
+.gi-journey { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 14px; flex: none; padding: 10px 12px; border-radius: 14px; background: #ece5d812; box-shadow: inset 0 0 0 1px #ece5d81a; }
+.gi-journey[data-open="true"] { background: #d3bc8e1f; box-shadow: inset 0 0 0 1px #d3bc8e66; }
+.gi-journey-art { display: grid; place-items: center; width: 56px; height: 56px; border-radius: 50%; object-fit: cover; font-size: 24px; color: var(--ty-gold-hi); background: #ece5d822; box-shadow: 0 0 0 2px #d3bc8e88; }
+.gi-journey-text { display: grid; gap: 3px; min-width: 0; }
+.gi-journey-text h3 { margin: 0; overflow: hidden; font-size: 17px; font-weight: 400; white-space: nowrap; text-overflow: ellipsis; color: var(--ty-cream); }
+.gi-journey-text p { margin: 0; overflow: hidden; font-size: 13px; white-space: nowrap; text-overflow: ellipsis; color: #ece5d8cc; }
+.gi-journey-text small { font-size: 12px; color: #ece5d899; }
+.gi-journey[data-open="true"] .gi-journey-text small { color: var(--ty-gold-hi); }
+.gi-journey-name { width: 100%; min-height: 34px; padding: 4px 10px; border: 1px solid #d3bc8e88; border-radius: 8px; font-size: 16px; color: var(--ty-cream); background: #0b152766; }
+.gi-journey-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; align-items: center; gap: 6px; max-width: 280px; }
+.gi-journey-actions button { min-height: 34px; padding: 0 12px; border: 0; border-radius: 17px; font-size: 13px; color: var(--ty-cream); background: #ece5d81f; cursor: pointer; }
+.gi-journey-actions button:hover:not(:disabled) { background: #ece5d833; }
+.gi-journey-actions button:disabled { opacity: .5; cursor: default; }
+.gi-journey-actions .gi-journey-primary { padding: 0 18px; color: #3d4557; background: var(--ty-cream); }
+.gi-journey-actions .gi-journey-primary:hover:not(:disabled) { background: #fff; }
+.gi-journey-actions .gi-journey-danger { color: #fff; background: #b8505a; }
+.gi-journey-actions .gi-journey-danger:hover:not(:disabled) { background: #cc5e68; }
+.gi-journey-confirm { flex-basis: 100%; margin: 0; font-size: 13px; line-height: 1.4; text-align: right; color: #f3c9c9; }
+#gi-journeys :is(button, input):focus-visible { outline: 2px solid var(--ty-gold-hi); outline-offset: 2px; }
+.gi-journeys-foot { display: grid; gap: 2px; padding: 10px 20px; font-size: 13px; line-height: 1.4; color: #ece5d8a6; box-shadow: inset 0 1px 0 #d3bc8e33; }
+.gi-journeys-foot p { margin: 0; color: var(--ty-cream); } .gi-journeys-foot p:empty { display: none; }
+@media (max-width: 560px) {
+    .gi-journey { grid-template-columns: auto minmax(0, 1fr); }
+    .gi-journey-art { width: 44px; height: 44px; font-size: 19px; }
+    .gi-journey-actions { grid-column: 1 / -1; justify-content: stretch; max-width: none; }
+    .gi-journey-actions button { flex: 1 1 auto; }
+    .gi-journey-confirm { text-align: left; }
+}

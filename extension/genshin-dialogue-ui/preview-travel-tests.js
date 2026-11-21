@@ -5,6 +5,8 @@ import {teleportTo,worldScalePrompt} from './world-data.js';
 import {startCharacterAtHome} from './character-location.js';
 import {mountWorldMap} from './world-map.js';
 import {travelHistoryText} from './travel-history.js';
+import {mountJourneyMenu,createJourneyMenuAdapter} from './journey-menu.js';
+import {noteJourneyPlace} from './journey-library.js';
 
 export async function runTravelTests(){
  const results=[],check=(name,ok)=>{results.push(`${ok?'PASS':'FAIL'} ${name}`);if(!ok)throw Error(name);},pause=()=>new Promise(r=>setTimeout(r,35));
@@ -44,8 +46,11 @@ export async function runTravelTests(){
   // SillyTavern's welcome page: no chat is open, so the map browses instead of starting a journey on its own.
   const openChar=ctx.characterId,groupCount=ctx.groups.length,placeBefore=travelState(ctx).location?.id,started=[];let startResult=false;ctx.characterId=undefined;
   ctx.groups.push({id:'saved',name:'Teyvat journey: Traveler',chat_id:'Silly-Teyvat-saved',chats:['Silly-Teyvat-saved'],members:[],silly_teyvat_journey:{version:1,managed:true}});
-  map=mountWorldMap({host,getContext:()=>ctx,startJourney:async id=>{started.push(id);return startResult;}});map.sync({on:true});map.open();await pause();
-  check('with no chat open the map opens on Saved journeys without starting one',host.querySelector('.gi-saved-journeys').open&&host.querySelector('.gi-saved-journeys select').value==='saved'&&!started.length);
+  let journeyLists=0;map=mountWorldMap({host,getContext:()=>ctx,openJourneys:()=>{journeyLists++;},startJourney:async id=>{started.push(id);return startResult;}});map.sync({on:true});map.open();await pause();
+  check('with no chat open the map opens without starting a journey and points to Saved journeys',!started.length&&host.querySelector('#gi-map-panel').closest('dialog').dataset.panel==='open'&&host.querySelector('.gi-saved-journeys').textContent==='Saved journeys (1)'&&/Saved journeys/.test(host.querySelector('#gi-world-map footer p').textContent));
+  host.querySelector('.gi-saved-journeys').click();await pause();
+  check('Saved journeys closes the map and opens the Journeys list',journeyLists===1&&!host.querySelector('#gi-world-map').open);
+  map.open();await pause();
   host.querySelector('[data-map="select"][data-location="bubu"]').click();await pause();
   const startButton=host.querySelector('.gi-map-sidebar [data-map="teleport"]');
   check('a waypoint offers Start journey here and nothing that writes to a chat',startButton?.textContent==='Start journey here'&&!host.querySelector('.gi-map-sidebar [data-map="bypass"]')&&!host.querySelector('.gi-map-sidebar [data-map="card-search"]'));
@@ -57,9 +62,57 @@ export async function runTravelTests(){
   check('a start from the Backgrounds menu that fails does not open the map',started.join()==='bubu,bubu,bubu'&&!host.querySelector('#gi-world-map').open);
   map.dispose();map=null;ctx.characterId=openChar;ctx.groups.length=groupCount;
   map=mountWorldMap({host,getContext:()=>ctx,startJourney:async id=>{started.push(id);return true;}});map.sync({on:true});map.open();await pause();
-  check('with a chat open the map keeps Teleport',!host.querySelector('.gi-saved-journeys').open);
+  check('with a chat open the map keeps Teleport',!/No journey is open/.test(host.querySelector('#gi-world-map footer p').textContent));
   host.querySelector('[data-map="select"][data-location="bubu"]').click();await pause();
   check('and its usual waypoint actions',host.querySelector('.gi-map-sidebar [data-map="teleport"]')?.textContent==='Teleport'&&!!host.querySelector('.gi-map-sidebar [data-map="bypass"]'));map.dispose();map=null;
+  // The Journeys list (journey-menu.js), on the welcome page.
+  const day=864e5,keptGroups=ctx.groups,keptGroup=ctx.groupId,keptChar=ctx.characterId,opened=[],renamed=[],removed=[];let openResult=true,renameFails=false;
+  ctx.groups=[{id:'100',name:'Teyvat journey: Traveler',date_last_chat:Date.now()-3*day,chats:['c1'],members:[],silly_teyvat_journey:{version:1,managed:true,source:{avatar:'__user__',chatId:'solo:c1'},lastPlace:{id:'bubu',label:'Bubu Pharmacy',region:'Liyue'}}},
+    {id:'200',name:'Teyvat journey: Kachina',date_last_chat:Date.now(),chats:['c2'],members:['Kachina.png'],silly_teyvat_journey:{version:1,managed:true,source:{avatar:'Kachina.png',chatId:'Kachina - 1'}}},
+    {id:'plain',name:'My own group',members:['Qiqi.png']}];
+  ctx.groupId=null;ctx.characterId=undefined;
+  const menu=mountJourneyMenu({host,getContext:()=>ctx,adapter:{open:async id=>{opened.push(id);return openResult;},rename:async(g,name)=>{renamed.push(name);if(renameFails)throw Error('The journey could not be renamed (500).');g.name=name;},remove:async g=>{removed.push(g.id);ctx.groups.splice(ctx.groups.indexOf(g),1);}}});
+  const cards=()=>[...host.querySelectorAll('#gi-journeys .gi-journey')],journeyStatus=()=>host.querySelector('#gi-journeys .gi-journeys-foot p').textContent;
+  try{
+   menu.open();await pause();
+   check('Journeys lists only journeys, most recently played first',cards().map(c=>c.dataset.id).join()==='200,100');
+   check('each card names the journey, who it is with and where it was left',cards()[0].querySelector('h3').textContent==='Kachina'&&cards()[0].querySelector('p').textContent==='Journey with Kachina'&&cards()[1].querySelector('p').textContent==='Solo journey · Bubu Pharmacy, Liyue'&&cards()[1].querySelector('small').textContent==='Played 3 days ago');
+   check('the newest journey has focus, so continuing it is one key press',document.activeElement===cards()[0].querySelector('[data-journey="continue"]'));
+   cards()[1].querySelector('[data-journey="rename"]').click();await pause();
+   const nameInput=host.querySelector('#gi-journeys .gi-journey-name');
+   check('Rename edits the name in place',document.activeElement===nameInput&&nameInput.value==='Traveler');
+   nameInput.value='Liyue run';nameInput.dispatchEvent(new KeyboardEvent('keydown',{key:'Enter',bubbles:true}));await pause();
+   check('and Enter saves it',renamed.join()==='Liyue run'&&cards()[1].querySelector('h3').textContent==='Liyue run');
+   cards()[1].querySelector('[data-journey="rename"]').click();await pause();renameFails=true;
+   const enter=()=>host.querySelector('#gi-journeys .gi-journey-name').dispatchEvent(new KeyboardEvent('keydown',{key:'Enter',bubbles:true}));
+   const typeName=()=>{host.querySelector('#gi-journeys .gi-journey-name').value='Typo run';};
+   typeName();enter();typeName();enter();await pause();
+   check('a second Enter while a rename is saving sends nothing',renamed.join()==='Liyue run,Typo run');
+   check('and a failed rename keeps the typed name and says why',host.querySelector('#gi-journeys .gi-journey-name')?.value==='Typo run'&&/could not be renamed/.test(journeyStatus()));
+   renameFails=false;cards()[1].querySelector('[data-journey="cancel"]').click();await pause();
+   check('Cancel then leaves the old name',cards()[1].querySelector('h3').textContent==='Liyue run');
+   cards()[1].querySelector('[data-journey="delete"]').click();await pause();
+   check('Delete asks first',!removed.length&&!!cards()[1].querySelector('[data-journey="delete-yes"]'));
+   cards()[1].querySelector('[data-journey="cancel"]').click();await pause();
+   check('and Keep leaves the journey alone',!removed.length&&cards().length===2&&!!cards()[1].querySelector('[data-journey="delete"]'));
+   cards()[1].querySelector('[data-journey="delete"]').click();await pause();cards()[1].querySelector('[data-journey="delete-yes"]').click();await pause();
+   check('confirming deletes it',removed.join()==='100'&&cards().length===1&&/Deleted/.test(journeyStatus()));
+   openResult=false;cards()[0].querySelector('[data-journey="continue"]').click();await pause();
+   check('a journey that cannot be opened brings the list back with the reason',opened.join()==='200'&&host.querySelector('#gi-journeys').open&&/could not be opened/.test(journeyStatus()));
+   openResult=true;cards()[0].querySelector('[data-journey="continue"]').click();await pause();
+   check('Continue opens the journey and closes the list',opened.join()==='200,200'&&!host.querySelector('#gi-journeys').open);
+   ctx.groupId='200';menu.open();await pause();
+   check('the open journey is marked, and cannot be continued or deleted',cards()[0].dataset.open==='true'&&cards()[0].querySelector('small').textContent==='Open now'&&cards()[0].querySelector('[data-journey="continue"]').disabled&&cards()[0].querySelector('[data-journey="delete"]').disabled);
+   menu.close();
+   check('the open journey records where it is, once',noteJourneyPlace(ctx,{id:'road',label:'Liyue road',region:'Liyue'})&&!noteJourneyPlace(ctx,{id:'road',label:'Liyue road',region:'Liyue'})&&ctx.groups.find(g=>g.id==='200').silly_teyvat_journey.lastPlace.label==='Liyue road');
+   ctx.groupId='plain';check('a group that is not a journey records nothing',!noteJourneyPlace(ctx,{id:'road',label:'Liyue road'})&&!ctx.groups.find(g=>g.id==='plain').silly_teyvat_journey);
+   ctx.groups=[];ctx.groupId=null;menu.open();await pause();
+   check('with no journeys the list says how to start one',!cards().length&&/No saved journeys yet/.test(host.querySelector('#gi-journeys .gi-journeys-list').textContent));menu.close();
+   const chatEvents=[],tags={keep:['t1'],'300':['t2']};let settingsSaves=0;
+   const nativeCtx={groups:[{id:'300',chats:['c3','c4']},{id:'keep'}],tagMap:tags,eventTypes:{GROUP_CHAT_DELETED:'deleted'},eventSource:{emit:async(type,id)=>{chatEvents.push(`${type}:${id}`);}},getRequestHeaders:()=>({}),getCharacters:async()=>{},saveSettingsDebounced:()=>{settingsSaves++;}};
+   await createJourneyMenuAdapter(()=>nativeCtx,{fetchImpl:async()=>({ok:true,status:200}),library:{open:async()=>true}}).remove(nativeCtx.groups[0]);
+   check('deleting a journey drops its chats, its record and its tags, as SillyTavern does',chatEvents.join()==='deleted:c3,deleted:c4'&&nativeCtx.groups.map(g=>g.id).join()==='keep'&&!Object.hasOwn(tags,'300')&&tags.keep.length===1&&settingsSaves===1);
+  }finally{menu.dispose();ctx.groups=keptGroups;ctx.groupId=keptGroup;ctx.characterId=keptChar;}
   ctx.chat=[{name:'Kachina',mes:'"We reached Bubu."'}];Object.assign(travelState(ctx),{regionId:'liyue',location:structuredClone(road),manualAt:null});
   background=mountBackgrounds({host,getContext:()=>ctx,adapter:{}});background.sync({on:true,id:0,generating:false});await pause();
   check('dialogue mentioning a place neither moves the party nor adds a travel record',ctx.chat.length===1&&travelState(ctx).location.id===road.id);

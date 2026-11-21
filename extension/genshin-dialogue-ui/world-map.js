@@ -10,7 +10,7 @@ import {L,makeMap,mapMarker,flightPins,toLatLng,toMapPoint,waypointIcon,waypoint
 import {locationResidentsIndex,encountersBypassed,toggleEncounterBypass} from './location-encounters.js';
 import {mountLocationRosterPicker} from './location-roster-picker.js';
 import {musicSummary} from './location-music-state.js';
-import {isJourneyGroup,createJourneyLibraryAdapter} from './journey-library.js';
+import {journeyList} from './journey-library.js';
 import {mountCardPoolMenu,locationCardPool,cardPoolSummary} from './card-pools.js';
 import {waypointBadges,waypointBoss,waypointEnemy,badgeLabels,badgeMarkup,isBossArena,domainIcon} from './waypoint-badges.js';
 import {iconsReady} from './battle-icons.js';
@@ -49,7 +49,7 @@ const cameraRamp=.1,cameraDecay=7,cameraTail=(1-cameraRamp)/cameraDecay;
 const cameraArea=cameraRamp/2-cameraTail*Math.expm1(-cameraDecay);
 const cameraEasing=t=>(t<cameraRamp?t*t/(2*cameraRamp):cameraRamp/2-cameraTail*Math.expm1(-cameraDecay*(t-cameraRamp)/(1-cameraRamp)))/cameraArea;
 
-export function mountWorldMap({host,getContext,adapter=createMediaAdapter(getContext),onChange=()=>{},announce=()=>{},prepareTeleport=async()=>({decisions:[]}),commitTeleport=()=>true,onTeleport=()=>{},retryCast=()=>{},openMusic=()=>{},openMusicLibrary=()=>{},openCardSearch=()=>{},openStatue=()=>{},openJourney=id=>createJourneyLibraryAdapter().open(id),startJourney=null}){
+export function mountWorldMap({host,getContext,adapter=createMediaAdapter(getContext),onChange=()=>{},announce=()=>{},prepareTeleport=async()=>({decisions:[]}),commitTeleport=()=>true,onTeleport=()=>{},retryCast=()=>{},openMusic=()=>{},openMusicLibrary=()=>{},openCardSearch=()=>{},openStatue=()=>{},openJourneys=()=>{},startJourney=null}){
     const mini=document.createElement('button');mini.id='gi-minimap';mini.type='button';mini.dataset.giSound='none';mini.hidden=true;mini.setAttribute('aria-label','Open world map');
     mini.innerHTML='<span class="gi-minimap-ring" aria-hidden="true"><span class="gi-minimap-glass"><span class="gi-minimap-canvas"></span><span class="gi-minimap-vignette"></span><span class="gi-minimap-player"><i class="gi-minimap-cone"></i><svg viewBox="0 0 24 24"><path d="M12 3 19 20l-7-4-7 4z"/></svg></span></span><span class="gi-minimap-north">N</span></span><span class="gi-minimap-label">World map</span>';
     const dialog=document.createElement('dialog');dialog.id='gi-world-map';dialog.setAttribute('aria-labelledby','gi-world-map-title');dialog.dataset.view='list';
@@ -57,7 +57,7 @@ export function mountWorldMap({host,getContext,adapter=createMediaAdapter(getCon
     <header class="gi-map-head"><button type="button" class="gi-map-round" data-map="panel" aria-controls="gi-map-panel" aria-expanded="true" aria-label="Regions and waypoints">${ICON.list}</button><div class="gi-map-title"><h2 id="gi-world-map-title">Teyvat</h2><p class="gi-map-current"></p></div></header>
     <nav id="gi-map-panel" class="gi-map-panel" aria-label="Regions and waypoints"><div class="gi-map-regions" role="toolbar" aria-label="Regions"></div><div class="gi-map-waypoint-list"></div>
     <details class="gi-map-world-settings"><summary>World scale</summary><label class="gi-map-row">Metres per unit<input id="gi-map-metres" type="number" min="0.01" max="10000" step="0.01"></label><label class="gi-map-row">Walking km/h<input id="gi-map-walking" type="number" min="0.1" max="100" step="0.1"></label><button type="button" data-map="scale">Save scale</button><label class="gi-map-row gi-map-cast-toggle">Location guests<input id="gi-map-encounters" type="checkbox"></label><label class="gi-map-row gi-map-cast-toggle">Main character can stay behind<input id="gi-map-main-departure" type="checkbox"></label><label class="gi-map-row gi-map-cast-toggle">Whole world in prompt<input id="gi-map-world-scope" type="checkbox"></label><button type="button" data-map="retry-cast">Retry location guests</button><details class="gi-map-prompt"><summary>Prompt preview</summary><pre class="gi-world-prompt" aria-label="World scale system prompt"></pre></details></details>
-    <button type="button" class="gi-map-music-library" data-map="music-library">Music library</button><details class="gi-saved-journeys"><summary>Saved journeys</summary><select aria-label="Previous journey"></select><button type="button" data-map="resume-journey">Resume journey</button></details></nav>
+    <button type="button" class="gi-map-music-library" data-map="music-library">Music library</button><button type="button" class="gi-map-music-library gi-saved-journeys" data-map="journeys">Saved journeys</button></nav>
     <div class="gi-map-regionbar"><button type="button" class="gi-map-region-current" data-map="regions" aria-haspopup="true" aria-expanded="false"><i class="gi-map-region-gem" aria-hidden="true"></i><span>Teyvat</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg></button><div class="gi-map-region-menu" role="menu" aria-label="Go to region" hidden></div></div>
     <div class="gi-map-tools"><button type="button" class="gi-map-round" data-map="add" aria-label="Add waypoint" title="Add waypoint">${ICON.pin}</button><button type="button" class="gi-map-round" data-map="current" aria-label="Current location" title="Current location">${ICON.locate}</button><button type="button" class="gi-map-round gi-map-close" data-map="close" aria-label="Close world map">${ICON.close}</button></div>
     <aside class="gi-map-sidebar" aria-label="Waypoint details" hidden></aside>
@@ -444,11 +444,7 @@ export function mountWorldMap({host,getContext,adapter=createMediaAdapter(getCon
     function refresh({sidebarRefresh=false}={}){
         cacheWaypoints();
         const ctx=getContext();paintHere(ctx);
-        const journeys=(ctx.groups || []).filter(isJourneyGroup),select=$('.gi-saved-journeys select'),selected=select.value;
-        select.replaceChildren(...journeys.map(g=>new Option(`${g.name} · ${g.id}`,g.id)));
-        if(journeys.some(g=>String(g.id)===selected))select.value=selected;
-        $('.gi-saved-journeys [data-map="resume-journey"]').disabled=!journeys.length;
-        if(!journeys.length)select.append(new Option('No saved journeys yet',''));
+        const journeys=journeyList(ctx).length;$('.gi-saved-journeys').textContent=journeys?`Saved journeys (${journeys})`:'Saved journeys';
         $('#gi-map-main-departure').checked=Boolean(mediaSettings(ctx).allowMainDeparture);$('#gi-map-world-scope').checked=Boolean(mediaSettings(ctx).worldPromptAllRegions);$('#gi-map-metres').value=worldScale(ctx);$('#gi-map-walking').value=walkingSpeed(ctx);$('.gi-world-prompt').textContent=worldScalePrompt(ctx) || 'Place a waypoint to add World scale to your system context.';
         $('#gi-map-encounters').checked=mediaSettings(ctx).locationEncounters!==false;
         renderList();paintMarkers();updateScale();
@@ -496,9 +492,8 @@ export function mountWorldMap({host,getContext,adapter=createMediaAdapter(getCon
             else if(options.locationId){if(current)map.setView(toLatLng(current.point),-1.5);startPlacement(options.locationId);}
             else {listWaypoints();status('');if(current){map.setView(toLatLng(current.point),from?-1.5:-2);if(from)setTimeout(()=>{if(dialog.open&&view.is('list'))map.flyTo(toLatLng(current.point),-2.5,{duration:.7});},180);}}
             if(browsing()&&!item){
-                const saved=$('.gi-saved-journeys');saved.open=(getContext().groups || []).some(isJourneyGroup);
-                setPanel(true);if(saved.open)saved.scrollIntoView({block:'nearest'});
-                status(saved.open?'No journey is open. Resume a saved journey, or choose a waypoint to start a new one there.':'No journey is open. Choose a waypoint to start a new journey there.');
+                const saved=journeyList(getContext()).length>0;setPanel(true);if(saved)$('.gi-saved-journeys').scrollIntoView({block:'nearest'});
+                status(saved?'No journey is open. Continue one from Saved journeys, or choose a waypoint to start a new one there.':'No journey is open. Choose a waypoint to start a new journey there.');
             }
             updateScale();
         },
@@ -568,11 +563,7 @@ export function mountWorldMap({host,getContext,adapter=createMediaAdapter(getCon
                 if(shown.length){const bounds=L.latLngBounds(shown),zoom=Math.min(-1.5,map.getBoundsZoom(bounds.pad(.35)));flyTo(toMapPoint(bounds.getCenter()),zoom);}
                 return;
             }
-            if(name==='resume-journey'){
-                const id=$('.gi-saved-journeys select').value,group=(ctx.groups || []).find(g=>String(g.id)===id&&isJourneyGroup(g));
-                if(!group)return;task.send('JOURNEY');
-                try{if(!await openJourney(group.id))throw new Error('This journey could not be opened.');close();}finally{task.send('DONE');}return;
-            }
+            if(name==='journeys'){close();openJourneys();return;}
             if(name==='add'){startPlacement();return;}
             if(name==='current'){const current=activeWorldLocation(ctx);if(current)select(current);else status('The current background is not linked to a map point yet.');return;}
             if(name==='select'){const selected=points.find(w=>w.location.id===target.dataset.location);if(selected)select(selected);return;}

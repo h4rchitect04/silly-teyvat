@@ -41,7 +41,8 @@ body.gi-gfx-balanced #gi-statue::backdrop,
 body.gi-gfx-balanced #gi-card-search::backdrop,
 body.gi-gfx-balanced.gi-classic #sheld,
 body.gi-gfx-balanced.gi-classic #chat,
-body.gi-gfx-balanced.gi-classic #send_form {
+body.gi-gfx-balanced.gi-classic #send_form,
+body.gi-gfx-balanced #gi-journeys::backdrop {
     -webkit-backdrop-filter: none !important;
     backdrop-filter: none !important;
 }

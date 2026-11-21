@@ -38,7 +38,8 @@ import { loadStarterLocations } from './starter-locations.js';
 import { loadStarterCGs } from './starter-cgs.js';
 import { alignEnemyPools, addNewEnemies } from './enemy-regions.js';
 import { setLocationCharacterLimit } from './location-capacity.js';
-import { createJourneyLibraryAdapter, purgeLegacyJourneys, isLegacyJourneyGroup } from './journey-library.js';
+import { createJourneyLibraryAdapter, purgeLegacyJourneys, isLegacyJourneyGroup, journeyList, noteJourneyPlace } from './journey-library.js';
+import { mountJourneyMenu, createJourneyMenuAdapter } from './journey-menu.js';
 import { mountCardArt } from './card-art.js';
 import { mountInventory } from './inventory.js';
 import { mountCardSearch, QUEST_MENU_ICON } from './card-search.js';
@@ -113,6 +114,7 @@ const questButton = () => `<button type="button" data-gi-action="card-search" ar
 const trustButton = () => `<button type="button" data-gi-action="trust" aria-label="Trust"><img class="gi-pm-icon" src="${TRUST_ICON}" alt="" aria-hidden="true" draggable="false"><span>Trust</span></button>`;
 let mounted = false;
 let removeJourneyFilter;
+let journeysUI;
 let backgroundUI;
 let worldMapUI,cardArtUI,statueUI;
 let locationCastUI;
@@ -476,6 +478,8 @@ function refresh({passive=false}={}) {
     if(placeNow?.location?.id){if(lastPlaceId&&placeNow.location.id!==lastPlaceId)holdTravelLoad(placeNow);if(placeNow.location.id!==lastPlaceId)backgroundMenuUI?.sync();lastPlaceId=placeNow.location.id;}
     locationCastUI?.sync({on:Boolean(placed&&!openingHome),generating:generating||groupGenerating||combatUI?.busy||personaSession?.busy});
     worldMapUI?.sync({on:placed,show:Boolean(placed&&!history&&!hidden&&!menuOpen),location:backgroundUI?.current,loading:Boolean(loadingUI?.visible),generating});
+    // The open journey remembers where it is, for its card in the Journeys list. Saved with the group's next chat save.
+    if(placed){const travel=ctx.chatMetadata?.silly_teyvat_world;if(travel?.location?.label)noteJourneyPlace(ctx,{id:travel.location.id,label:travel.location.label,region:backgroundRegions(ctx).find(r=>r.id===travel.regionId)?.name});}
     // Arriving at a Statue of The Seven offers the Traveler its element once the new place is on screen and nothing is busy.
     statueUI?.sync({on:placed,ready:Boolean(placed&&live&&!history&&!hidden&&!menuOpen&&!generating&&!groupGenerating&&!loadingUI?.visible&&!combatUI?.busy&&!combatUI?.engaged&&!locationCastUI?.busy&&!personaSession?.busy&&!worldMapUI?.busy&&!document.querySelector('dialog[open]:not(#gi-statue)'))});
     for (const el of uiActions('wardrobe')) el.hidden = !prefs.wardrobe;
@@ -519,10 +523,13 @@ function refresh({passive=false}={}) {
     const toggle = document.querySelector('#gi-toolbar [data-gi-action="toggle"]');
     toggle.setAttribute('aria-pressed', String(paimonOn(prefs)));
     toggle.setAttribute('aria-label', paimonOn(prefs) ? 'Silly Teyvat: On' : 'Silly Teyvat: Off');
-    // Only a welcome page with no character or journey open can start a solo journey.
+    // Only a welcome page with no character or journey open can start a solo journey, or continue a saved one.
     const soloButton = document.querySelector('#gi-toolbar [data-gi-action="solo-journey"]');
     soloButton.hidden = inChat || !prefs.worldEnabled;
     soloButton.disabled = Boolean(personaSession?.busy);
+    const continueButton = document.querySelector('#gi-toolbar [data-gi-action="continue-journey"]');
+    continueButton.hidden = inChat || !prefs.worldEnabled || !journeyList(ctx).length;
+    continueButton.disabled = Boolean(personaSession?.busy);
     for (const action of ['auto', 'history', 'hide']) document.querySelector(`#gi-toolbar [data-gi-action="${action}"]`).disabled = !active;
     document.querySelector('#gi-review-heading').hidden = !active || !history;
     const navigation = document.querySelector('#gi-navigation');
@@ -770,6 +777,7 @@ function handleAction(event) {
         case 'toggle': togglePaimon(); break;
         case 'story': setEnabled(!preferences().enabled); syncSettings(); break;
         case 'paimon-link': linkPaimon(preferences(),target.dataset.group,target.getAttribute('aria-pressed')!=='true'); context().saveSettingsDebounced(); refresh(); break;
+        case 'continue-journey': menu.send('CLOSE'); refresh(); journeysUI?.open(); break;
         case 'solo-journey': {
             // The journey is saved and opened before CHAT_CHANGED takes its own hold, so cover the
             // welcome page from the click, showing the place the journey begins.
@@ -954,6 +962,7 @@ export async function initialize(options = {}) {
                     <button type="button" class="gi-pm-edit" data-gi-action="namecards" aria-label="Change namecard" title="Change namecard" aria-expanded="false" aria-controls="gi-pm-namecards">${svg('edit')}</button>
                 </header>
                 <button type="button" class="gi-pm-switch" data-gi-action="toggle" aria-pressed="false" aria-label="Silly Teyvat"><span>Silly Teyvat</span><i aria-hidden="true"></i></button>
+                <button type="button" class="gi-pm-switch gi-pm-continue" data-gi-action="continue-journey" hidden><span>Continue journey</span></button>
                 <button type="button" class="gi-pm-switch gi-pm-solo" data-gi-action="solo-journey" hidden><span>Start solo journey</span></button>
                 <section id="gi-pm-namecards" class="gi-pm-namecards" aria-label="Namecards" hidden><header><h3>Namecard</h3>${menuButton('namecards', 'Done', 'close')}</header><div class="gi-pm-nc-list" role="radiogroup" aria-label="Choose a namecard"></div></section>
                 <div class="gi-pm-grid">${menuButton('auto', 'Auto')}${menuButton('history', 'Review', 'book')}${menuButton('wardrobe', 'Characters')}${menuButton('inventory', 'Inventory', 'bag')}${questButton()}${trustButton()}${menuButton('map', 'Map')}${menuButton('gallery', 'Gallery', 'cg')}${menuButton('compose', 'Chat Box')}${menuButton('hide', 'Hide UI')}${fullscreenButton()}${storyButton()}</div>
@@ -986,11 +995,12 @@ export async function initialize(options = {}) {
     locationMusicUI=mountLocationMusic({host,getContext:context,adapter:mediaAdapter,announce,onChange:schedule});
     worldMapUI=mountWorldMap({host,getContext:context,adapter:mediaAdapter,announce,
         openMusic:id=>locationMusicUI.openLocation(id),openMusicLibrary:()=>locationMusicUI.openLibrary(),openCardSearch:()=>cardSearchUI?.open(),
-        openJourney:id=>journeyAdapter.open(id),startJourney:id=>startSoloJourney(id),
+        openJourneys:()=>journeysUI?.open(),startJourney:id=>startSoloJourney(id),
         prepareTeleport:location=>locationCastUI.prepareTeleport(location),commitTeleport:plan=>locationCastUI.commitTeleport(plan),onTeleport:jumpToArrival,retryCast:()=>locationCastUI.retry(),
         openStatue:location=>statueUI?.open(location),
         onChange:schedule});
     statueUI=mountStatueResonance({host,getContext:context,announce,onChange:schedule});
+    journeysUI=mountJourneyMenu({host,getContext:context,adapter:createJourneyMenuAdapter(context,{library:journeyAdapter}),announce,onChange:schedule});
     syncBackgroundMenu(preferences().worldEnabled);
     mediaUI = mountSceneMedia({host,getContext:context,adapter:mediaAdapter,sound,announce});
     spriteUI = mountPageSprites({ host, getContext: context, adapter: spriteAdapter, isDefeated: defeatedHere, announce, renderMessage: id => document.querySelector(`#chat > .mes[mesid="${id}"] .mes_text`), onAppearance:event=>mediaUI?.appearance(event) });
@@ -1226,7 +1236,7 @@ export function dispose() {
     mediaUI?.dispose(); mediaUI=undefined;
     backgroundUI?.dispose();backgroundUI=undefined;
     backgroundMenuUI?.dispose();backgroundMenuUI=undefined;
-    worldMapUI?.dispose();worldMapUI=undefined;statueUI?.dispose();statueUI=undefined;
+    worldMapUI?.dispose();worldMapUI=undefined;statueUI?.dispose();statueUI=undefined;journeysUI?.dispose();journeysUI=undefined;
     locationCastUI?.dispose();locationCastUI=undefined;
     removeJourneyFilter?.();removeJourneyFilter=undefined;
     combatUI?.dispose();combatUI=undefined;
