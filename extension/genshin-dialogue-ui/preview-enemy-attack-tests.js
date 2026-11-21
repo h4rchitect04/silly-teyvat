@@ -84,6 +84,10 @@ export async function runEnemyAttackTests(){
         check('cards played in a fight in progress are counted',cardsInPlay(c)[id]===1);
         c.chatMetadata.silly_teyvat_cast.encounter.enemies=[];c.groups[0].members=['Klee.png'];
         check('when its enemies leave, the fight ends and its cards come back',!cardsInPlay(c)[id]&&!Object.keys(combatState(c).battles).length&&partyDeck(c)[id]===inDeck);}
+        // Cards discarded from the hand sit out the rest of the fight like played ones.
+        {const c=fixture(),store=combatState(c);store.bag={'sweet-madame':2};delete store.deck;delete store.deckBag;
+        const s1=battleSnapshot(c);commitRound(c,s1,{...resolveRound(s1,[],{random:()=>.5}),hand:[],discarded:['sweet-madame']},'discard-1');
+        check('a discarded card is not dealt again in the same fight',cardsInPlay(c)['sweet-madame']===1&&battleSnapshot(c).bag['sweet-madame']===1);}
         {const statueCtx=fixture(),regions=statueCtx.extensionSettings.genshin_dialogue_ui.backgroundRegions;
         regions[0].locations.push(place('statue','Statue of The Seven',50,50,{wilderness:true,statue:'Anemo'}),place('wilds-2','Deeper Wilds',80,80,{wilderness:true}));
         const hurt=()=>{partyStatus(statueCtx);for(const entry of Object.values(combatState(statueCtx).party))entry.hp=1;};

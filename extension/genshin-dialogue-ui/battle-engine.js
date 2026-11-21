@@ -1201,7 +1201,9 @@ export function finishRound(round){
     if(round.over&&round.phase!=='over')state.round++;
     state.summons=state.summons.map(s=>({...s,drew:undefined}));
     return {state,timeline:round.timeline,stats:round.stats,victory:round.over==='victory',wiped:round.over==='wipe',fled:round.over==='fled',
-        hand:[...round.hand],played:round.played.map(p=>p.id),uses:round.played.map(p=>({...p})),first:round.firstEnded || round.first,active:{...state.active}};
+        hand:[...round.hand],played:round.played.map(p=>p.id),uses:round.played.map(p=>({...p})),first:round.firstEnded || round.first,active:{...state.active},
+        // Cards discarded from the hand, which sit out the rest of the fight like played ones.
+        discarded:round.timeline.filter(e=>e.type==='discard').flatMap(e=>e.cards || [])};
 }
 // ---- Enemy intents ---------------------------------------------------------------------
 // The move an enemy will use next: its Special when ready (at once when enraged), otherwise one of its Attacks.

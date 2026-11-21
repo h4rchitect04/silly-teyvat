@@ -2,7 +2,7 @@
 // Checks the Genius Invokation mechanics in battle-engine.js with the real kits: Nightsoul's Blessing and
 // Techniques, Fighting Spirit, Serpent's Subtlety, Bond of Life, Lunar reactions, created cards and choices,
 // card Cost Reduction, Agile Switch, Charged and Plunging Attacks, prepared skills and Piercing damage.
-import {startRound,useSkill,switchTo,playCard,chooseCard,enemyTurn,endPhase,preparedDue,usePrepared,movesOf,nightsoulOf,bondOf,cardCost,moveCheck,burstReady,takeAction,bestAction} from '../../extension/genshin-dialogue-ui/battle-engine.js';
+import {startRound,finishRound,useSkill,switchTo,playCard,chooseCard,enemyTurn,endPhase,preparedDue,usePrepared,movesOf,nightsoulOf,bondOf,cardCost,moveCheck,burstReady,takeAction,bestAction} from '../../extension/genshin-dialogue-ui/battle-engine.js';
 import {defaultKit,mergeKit} from '../../extension/genshin-dialogue-ui/combat-kits.js';
 import {CARD_DEFS} from '../../extension/genshin-dialogue-ui/battle-items.js';
 
@@ -29,6 +29,13 @@ check('the Burst needs 3 Fighting Spirit',!burstReady(u(r,'Mavuika')));
 u(r,'Mavuika').energy=6;again(r);const b=hp(r,'foe');useSkill(r,2);
 check('Hour of Burning Skies deals 2 per Fighting Spirit spent (6 → 12)',b-hp(r,'foe')>=12&&u(r,'Mavuika').energy===0);
 check('spending 6 gives the Crucible of Death and Life',u(r,'Mavuika').statuses.some(s=>s.stat==='crucible'));}
+
+// Chasca: Multitarget Fire discards the three most expensive cards in hand, and the round reports them so the save
+// keeps them out of the rest of the fight (battle-state.js commitRound).
+{const r=board([unit('Chasca','party','Anemo'),unit('Bennett','party','Pyro')],{hand:['sweet-madame','hash-brown','tandoori-roast-chicken','adeptus-temptation','starsigns']});
+useSkill(r,1);again(r);const t=movesOf(u(r,'Chasca')).findIndex(m=>m.kind==='technique');useSkill(r,t);
+const gone=finishRound(r).discarded;
+check('Multitarget Fire discards three cards and the round reports them',gone.length===3&&gone.every(id=>!r.hand.includes(id)));}
 
 // Skirk: Serpent's Subtlety, Mutual Weapons Mentorship, Havoc: Extinction and Havoc: Ruin.
 {const r=board([unit('Skirk','party','Cryo')],{hand:['sweet-madame']});

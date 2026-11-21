@@ -196,8 +196,8 @@ export function commitRound(ctx,before,result,id,{items=[],loot=[]}={}){
     // buffs or Energy, at round 1, and with every card back in the deck.
     if(over)delete store.battles[before.key];
     else{
-        // Cards played stay in the bag, but not in this battle's deck: later rounds deal without them (battleSnapshot).
-        saved.spent=[...(saved.spent || []),...items.filter(id=>ITEMS[id])];
+        // Cards played or discarded stay in the bag, but not in this battle's deck: later rounds deal without them (battleSnapshot).
+        saved.spent=[...(saved.spent || []),...[...items,...(result.discarded || [])].filter(id=>ITEMS[id])];
         saved.foes=before.units.filter(u=>u.side==='enemy').map(u=>({id:u.id,visit:u.duel?'duel':u.visit}));
         saved.active={...(result.active || after.active || {})};saved.hand=[...(result.hand || [])];saved.first=result.first || 'party';
     }
