@@ -1,7 +1,7 @@
 import {autoBattle} from './preview-battle-auto.js';
 import {mountCombat} from './combat.js';
 import {combatState,partyStatus,healParty,USER_KEY} from './combat-state.js';
-import {battleSnapshot,commitRound,partyBag,partyDeck,setDeckCount,cardsInPlay,freeCount} from './battle-state.js';
+import {battleSnapshot,commitRound,partyBag,partyDeck,setDeckCount,cardsInPlay,freeCount,unpaidEnemies} from './battle-state.js';
 import {eatOutsideBattle} from './inventory.js';
 import {giveGift} from './gifts.js';
 import {resolveRound} from './battle-engine.js';
@@ -88,6 +88,15 @@ export async function runEnemyAttackTests(){
         {const c=fixture(),store=combatState(c);store.bag={'sweet-madame':2};delete store.deck;delete store.deckBag;
         const s1=battleSnapshot(c);commitRound(c,s1,{...resolveRound(s1,[],{random:()=>.5}),hand:[],discarded:['sweet-madame']},'discard-1');
         check('a discarded card is not dealt again in the same fight',cardsInPlay(c)['sweet-madame']===1&&battleSnapshot(c).bag['sweet-madame']===1);}
+        // An enemy beaten in an earlier round of a duel: the duel keeps its key, and its end settles what the enemy is owed.
+        {const c=fixture(),duel={duel:['Klee.png'],includeEnemies:true},s1=battleSnapshot(c,duel),r1=resolveRound(s1,[],{random:()=>.5});
+        r1.state.units.find(u=>u.id==='Slime.png').hp=0;commitRound(c,s1,r1,'duel-spoils-1');
+        const visit=()=>combatState(c).visits['visit-a'];
+        check('a duelled enemy beaten before the end is owed its cards',unpaidEnemies(visit()).length===1);
+        const s2=battleSnapshot(c,duel);
+        check('the duel goes on under the same key once that enemy has fallen, and remembers where it came from',s2.key===s1.key&&!s2.fresh&&s2.visits.includes('visit-a'));
+        commitRound(c,s2,{...resolveRound(s2,[],{random:()=>.5}),victory:true},'duel-spoils-2');
+        check('winning the duel settles what it was owed, so no later victory pays it again',unpaidEnemies(visit()).length===0);}
         {const statueCtx=fixture(),regions=statueCtx.extensionSettings.genshin_dialogue_ui.backgroundRegions;
         regions[0].locations.push(place('statue','Statue of The Seven',50,50,{wilderness:true,statue:'Anemo'}),place('wilds-2','Deeper Wilds',80,80,{wilderness:true}));
         const hurt=()=>{partyStatus(statueCtx);for(const entry of Object.values(combatState(statueCtx).party))entry.hp=1;};

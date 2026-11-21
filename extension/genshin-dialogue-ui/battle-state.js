@@ -117,7 +117,7 @@ export const freeCount=(ctx,id)=>Math.max(0,(partyBag(ctx)[id] || 0)-(cardsInPla
 // duel: party members the player fights on their own. They take the enemy side with their own HP.
 export function battleSnapshot(ctx,{portrait=()=>'',duel=null,includeEnemies=false}={}){
     const disabled=activeGroup(ctx)?.disabled_members || [];
-    const enemies=duel&&!includeEnemies?[]:activeEnemies(ctx).filter(e=>!disabled.includes(e.avatar)&&!duel?.includes(e.avatar)),key=duel?duelKey(duel)+(enemies.length?`:${battleKey(enemies)}`:''):battleKey(enemies);
+    const enemies=duel&&!includeEnemies?[]:activeEnemies(ctx).filter(e=>!disabled.includes(e.avatar)&&!duel?.includes(e.avatar)),key=duel?duelKey(duel):battleKey(enemies);
     settleBattles(ctx,key);
     const saved=battleStore(ctx,key);
     const units=[];
@@ -146,7 +146,10 @@ export function battleSnapshot(ctx,{portrait=()=>'',duel=null,includeEnemies=fal
     }
     // Elemental enemies enter with their own element applied (see innateAura).
     for(const u of units)if(u.hp>0&&innateAura(u)&&!auraList(u.aura).length)u.aura={element:innateAura(u),elements:[innateAura(u)]};
-    const state={key,duel:Boolean(duel),round:saved.round || 1,units,summons:structuredClone(saved.summons || []),fields:structuredClone(saved.fields || []),supports:structuredClone(saved.supports || []),supportSeq:saved.supportSeq || 0,difficulty:combatDifficulty(ctx),bag:withoutSpent(partyDeck(ctx),saved.spent)};
+    // The encounters whose enemies this fight has met, including those already beaten: what they are owed is paid,
+    // or left behind, when it ends (a duel's key names its friends, not a visit).
+    const visits=[...new Set([...(saved.foes || []),...units.filter(u=>u.side==='enemy')].map(f=>f.visit).filter(v=>v&&v!=='duel'))];
+    const state={key,visits,duel:Boolean(duel),round:saved.round || 1,units,summons:structuredClone(saved.summons || []),fields:structuredClone(saved.fields || []),supports:structuredClone(saved.supports || []),supportSeq:saved.supportSeq || 0,difficulty:combatDifficulty(ctx),bag:withoutSpent(partyDeck(ctx),saved.spent)};
     // Genius Invokation's table: each side's active character, the cards in hand and who acts first.
     // A new fight (no saved active character) begins with the coin toss, the starting hand and a choice of character.
     const pick=(sideName,id)=>units.some(u=>u.side===sideName&&u.id===id&&u.hp>0)?id:null;
@@ -189,7 +192,7 @@ export function commitRound(ctx,before,result,id,{items=[],loot=[]}={}){
         if(result.fled&&u.side==='enemy'&&!u.duel&&u.hp>0)store.visits[u.visit].enemies[u.id].fled=true;
     }
     // The fight is over: what was owed has been paid, or was left behind by running away.
-    if(result.victory||result.fled)for(const entry of Object.values(store.visits[before.key]?.enemies || {}))delete entry.spoils;
+    if(result.victory||result.fled)for(const visit of new Set([...(before.visits || []),...before.units.filter(u=>u.side==='enemy'&&!u.duel).map(u=>u.visit)]))for(const entry of Object.values(store.visits[visit]?.enemies || {}))delete entry.spoils;
     saved.round=after.round;saved.summons=after.summons;saved.fields=after.fields || [];saved.team=after.team || {};saved.supports=after.supports || [];saved.supportSeq=after.supportSeq || 0;
     const over=result.victory||result.fled||result.wiped;
     // A finished fight leaves nothing behind: the next one starts with no summons, supports, equipment, shields,
@@ -198,7 +201,9 @@ export function commitRound(ctx,before,result,id,{items=[],loot=[]}={}){
     else{
         // Cards played or discarded stay in the bag, but not in this battle's deck: later rounds deal without them (battleSnapshot).
         saved.spent=[...(saved.spent || []),...[...items,...(result.discarded || [])].filter(id=>ITEMS[id])];
-        saved.foes=before.units.filter(u=>u.side==='enemy').map(u=>({id:u.id,visit:u.duel?'duel':u.visit}));
+        // Everyone fought so far, the beaten too (battleSnapshot's visits; settleBattles ends the fight once none is left).
+        const foes=new Map((saved.foes || []).map(f=>[f.id,f]));for(const u of before.units.filter(u=>u.side==='enemy'))foes.set(u.id,{id:u.id,visit:u.duel?'duel':u.visit});
+        saved.foes=[...foes.values()];
         saved.active={...(result.active || after.active || {})};saved.hand=[...(result.hand || [])];saved.first=result.first || 'party';
     }
     // Only the whole party falling loses a fight now. Anyone still down when it is won or escaped comes to with 1 HP.

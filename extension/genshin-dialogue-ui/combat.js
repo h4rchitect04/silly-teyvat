@@ -210,7 +210,11 @@ export function mountCombat({host,getContext,onChange=()=>{},announce=()=>{},ada
             // Playing an enemy card, the characters you beat drop cards the way enemies do for a party.
             const asEnemy=duel&&Boolean(linkedCard(ctx))&&isEnemy(ctx,linkedCard(ctx));
             const duelDrops=asEnemy?snapshot.units.filter(u=>u.side==='enemy'):snapshot.units.filter(u=>u.side==='enemy'&&npcKit(u.card));
-            const loot=duel?(result.victory?rollLoot(duelDrops,{pool:locationCardPool(ctx,ctx.chatMetadata?.silly_teyvat_world?.location?.id),size:duelDrops.length}):[]):result.victory?rollLoot([...enemies,...unpaidEnemies(visitStore)],{pool,size:Object.keys(visitStore?.enemies || {}).length}):rollBossLoot(enemies.filter(u=>fallen.some(f=>f.id===u.id)),{pool});
+            // Enemies in a duel pay as in any fight: a boss's guaranteed cards when it falls, the rest at the victory,
+            // with those beaten in earlier rounds of the duel.
+            const duelPool=duel?locationCardPool(ctx,ctx.chatMetadata?.silly_teyvat_world?.location?.id):null;
+            const duelOwed=duel?(snapshot.visits || []).flatMap(v=>unpaidEnemies(combatState(ctx).visits[v])):[];
+            const loot=duel?(result.victory?rollLoot([...duelDrops,...duelOwed],{pool:duelPool,size:duelDrops.length+duelOwed.length}):rollBossLoot(enemies.filter(u=>!u.duel&&fallen.some(f=>f.id===u.id)),{pool:duelPool})):result.victory?rollLoot([...enemies,...unpaidEnemies(visitStore)],{pool,size:Object.keys(visitStore?.enemies || {}).length}):rollBossLoot(enemies.filter(u=>fallen.some(f=>f.id===u.id)),{pool});
             const saved=commitRound(getContext(),snapshot,result,id,{items:used,loot});if(!saved){battle.cancel?.();return;}
             if(duel&&(result.victory||result.fled||result.wiped))endDuelMusic(true);
             // A searched card in the loot is found: its Quest markers go, and the search ends with the last one.
