@@ -1,7 +1,7 @@
 // Gifts: a card from the bag given to someone in the scene. The narration records the gift and what it
 // did to trust, then the character answers with an ordinary saved reply.
 import {ITEMS} from './battle-items.js';
-import {partyBag} from './battle-state.js';
+import {partyBag,freeCount} from './battle-state.js';
 import {GIFT_CHANGE,giftChange,giftTastes} from './gift-tastes.js';
 import {TRUST_MAX,presentCharacters,trustOf,trustBand} from './trust.js';
 import {stripTrustTags} from './trust-tags.js';
@@ -37,6 +37,7 @@ export async function giveGift(getContext,{id,avatar,onGiven=()=>{}},{loadScript
     if(script.isGenerating()||script.isChatSaving)throw new Error('Wait for the current reply to finish before giving a gift.');
     const item=ITEMS[id],card=cardByAvatar(ctx,avatar),bag=partyBag(ctx);
     if(!item||!(bag[id]>0))throw new Error('That card is no longer in your bag.');
+    if(!(freeCount(ctx,id)>0))throw new Error(`${item.name} was played in this battle. You can give it once the battle ends.`);
     if(!card||!presentCharacters(ctx).includes(avatar))throw new Error('They are no longer here.');
     const verdict=giftVerdict(card,id,ctx),change=giftChange(ctx,card,id),chat=ctx.getCurrentChatId?.();
     bag[id]-=1;if(bag[id]<=0)delete bag[id];

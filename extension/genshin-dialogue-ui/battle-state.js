@@ -1,6 +1,6 @@
 // Bridges chat metadata and the pure battle engine: builds a snapshot of the current
 // encounter, and commits a resolved round back to the saved HP and battle state.
-import {combatState,clearEnemy,activeEnemies,combatAllies,allyElement,partyMember,partyStore,USER_KEY,combatDifficulty} from './combat-state.js';
+import {combatState,clearEnemy,activeEnemies,combatAllies,allyElement,partyMember,partyStore,sceneMembers,USER_KEY,combatDifficulty} from './combat-state.js';
 import {defaultKit,mergeKit,kitOverrideFor,travelerKit,foeKit,playableKit,burstSplashName} from './combat-kits.js';
 import {characterProperties,isEnemy} from './character-properties.js';
 import {circularCharacterAvatar} from './character-avatars.js';
@@ -48,7 +48,8 @@ export function partyDeck(ctx){
 export function setDeckCount(ctx,id,count){
     const bag=partyBag(ctx),deck=partyDeck(ctx);
     if(!ITEMS[id])return 0;
-    const others=deckSize(deck)-(deck[id] || 0),next=Math.max(0,Math.min(Math.floor(Number(count)) || 0,bag[id] || 0,DECK_MAX-others));
+    // Copies played in the fight in progress stay in the deck until it ends.
+    const others=deckSize(deck)-(deck[id] || 0),next=Math.max(Math.min(cardsInPlay(ctx)[id] || 0,deck[id] || 0),Math.min(Math.floor(Number(count)) || 0,bag[id] || 0,DECK_MAX-others));
     if(next)deck[id]=next;else delete deck[id];
     ctx.saveMetadataDebounced?.();
     return next;
@@ -84,11 +85,41 @@ export const battleKey=enemies=>[...new Set(enemies.map(e=>e.key))].sort().join(
 export const duelKey=avatars=>`duel:${[...avatars].sort().join('|')}`;
 // Enemies beaten in earlier rounds of this encounter, still owed their victory cards.
 export const unpaidEnemies=visit=>Object.values(visit?.enemies || {}).map(e=>e.spoils).filter(Boolean);
+// The deck a battle deals from: the combat deck less the cards already played in earlier rounds of it.
+const withoutSpent=(deck,spent=[])=>{const left={...deck};for(const id of spent)if(left[id]>0&&!--left[id])delete left[id];return left;};
 const battleStore=(ctx,key)=>{const store=combatState(ctx);store.battles ??= {};return store.battles[key] ??= {round:1,units:{},summons:[]};};
+// A fight in progress lasts while one of its foes is still here: an enemy of the same encounter, or a duelled friend
+// still in the scene and standing. One that walked away, or whose enemies all left, is over.
+function foeHere(ctx,foe){
+    if(foe.visit==='duel')return sceneMembers(ctx).includes(foe.id)&&!activeGroup(ctx)?.disabled_members?.includes(foe.id)&&partyMember(ctx,foe.id).hp>0;
+    const disabled=activeGroup(ctx)?.disabled_members || [];
+    return activeEnemies(ctx).some(e=>e.avatar===foe.id&&e.key===foe.visit&&!disabled.includes(e.avatar));
+}
+// Ends abandoned fights: those whose foes have all gone, and every fight but `keep` (only one is fought at a time).
+// The next fight at the same place starts afresh, with every card back in the deck.
+function settleBattles(ctx,keep=null){
+    const battles=combatState(ctx).battles || {};
+    for(const [key,saved] of Object.entries(battles)){
+        if(!saved.active)continue;
+        if(keep!==null&&key!==keep||saved.foes&&!saved.foes.some(foe=>foeHere(ctx,foe)))delete battles[key];
+    }
+}
+// Cards played in the fight in progress: they stay in the bag but sit out the rest of it, so they cannot be
+// eaten, given away or taken out of the deck until it ends.
+export function cardsInPlay(ctx){
+    settleBattles(ctx);
+    const out={};
+    for(const saved of Object.values(combatState(ctx).battles || {}))for(const id of saved.spent || [])out[id]=(out[id] || 0)+1;
+    return out;
+}
+// Copies of a card in the bag that are free to use outside the fight.
+export const freeCount=(ctx,id)=>Math.max(0,(partyBag(ctx)[id] || 0)-(cardsInPlay(ctx)[id] || 0));
 // duel: party members the player fights on their own. They take the enemy side with their own HP.
 export function battleSnapshot(ctx,{portrait=()=>'',duel=null,includeEnemies=false}={}){
     const disabled=activeGroup(ctx)?.disabled_members || [];
-    const enemies=duel&&!includeEnemies?[]:activeEnemies(ctx).filter(e=>!disabled.includes(e.avatar)&&!duel?.includes(e.avatar)),key=duel?duelKey(duel)+(enemies.length?`:${battleKey(enemies)}`:''):battleKey(enemies),saved=battleStore(ctx,key);
+    const enemies=duel&&!includeEnemies?[]:activeEnemies(ctx).filter(e=>!disabled.includes(e.avatar)&&!duel?.includes(e.avatar)),key=duel?duelKey(duel)+(enemies.length?`:${battleKey(enemies)}`:''):battleKey(enemies);
+    settleBattles(ctx,key);
+    const saved=battleStore(ctx,key);
     const units=[];
     // The Travelers' Burst art follows the element they resonate with.
     const travelerSplash=(name,element)=>{const file=burstSplashName(name,element);return file&&file!==name?new URL(`./assets/splash/${encodeURIComponent(file)}.webp`,import.meta.url).href:'';};
@@ -115,7 +146,7 @@ export function battleSnapshot(ctx,{portrait=()=>'',duel=null,includeEnemies=fal
     }
     // Elemental enemies enter with their own element applied (see innateAura).
     for(const u of units)if(u.hp>0&&innateAura(u)&&!auraList(u.aura).length)u.aura={element:innateAura(u),elements:[innateAura(u)]};
-    const state={key,duel:Boolean(duel),round:saved.round || 1,units,summons:structuredClone(saved.summons || []),fields:structuredClone(saved.fields || []),supports:structuredClone(saved.supports || []),supportSeq:saved.supportSeq || 0,difficulty:combatDifficulty(ctx),bag:{...partyDeck(ctx)}};
+    const state={key,duel:Boolean(duel),round:saved.round || 1,units,summons:structuredClone(saved.summons || []),fields:structuredClone(saved.fields || []),supports:structuredClone(saved.supports || []),supportSeq:saved.supportSeq || 0,difficulty:combatDifficulty(ctx),bag:withoutSpent(partyDeck(ctx),saved.spent)};
     // Genius Invokation's table: each side's active character, the cards in hand and who acts first.
     // A new fight (no saved active character) begins with the coin toss, the starting hand and a choice of character.
     const pick=(sideName,id)=>units.some(u=>u.side===sideName&&u.id===id&&u.hp>0)?id:null;
@@ -161,21 +192,19 @@ export function commitRound(ctx,before,result,id,{items=[],loot=[]}={}){
     if(result.victory||result.fled)for(const entry of Object.values(store.visits[before.key]?.enemies || {}))delete entry.spoils;
     saved.round=after.round;saved.summons=after.summons;saved.fields=after.fields || [];saved.team=after.team || {};saved.supports=after.supports || [];saved.supportSeq=after.supportSeq || 0;
     const over=result.victory||result.fled||result.wiped;
-    // Weapons, Artifacts and supports last one fight: the next one starts without them.
-    if(over){
-        delete saved.active;delete saved.hand;delete saved.first;delete saved.team;saved.supports=[];
-        for(const unit of Object.values(saved.units))unit.statuses=(unit.statuses || []).filter(s=>!s.slot);
+    // A finished fight leaves nothing behind: the next one starts with no summons, supports, equipment, shields,
+    // buffs or Energy, at round 1, and with every card back in the deck.
+    if(over)delete store.battles[before.key];
+    else{
+        // Cards played stay in the bag, but not in this battle's deck: later rounds deal without them (battleSnapshot).
+        saved.spent=[...(saved.spent || []),...items.filter(id=>ITEMS[id])];
+        saved.foes=before.units.filter(u=>u.side==='enemy').map(u=>({id:u.id,visit:u.duel?'duel':u.visit}));
+        saved.active={...(result.active || after.active || {})};saved.hand=[...(result.hand || [])];saved.first=result.first || 'party';
     }
-    else{saved.active={...(result.active || after.active || {})};saved.hand=[...(result.hand || [])];saved.first=result.first || 'party';}
     // Only the whole party falling loses a fight now. Anyone still down when it is won or escaped comes to with 1 HP.
     if(result.victory||result.fled)for(const u of after.units)if(u.side==='party'&&!u.duel&&u.hp<=0&&u.isUser)party[u.id].hp=1;
-    const bag=partyBag(ctx),deck=partyDeck(ctx),seen=combatState(ctx).deckBag;
-    // A card played leaves the deck, the bag and the snapshot together; loot is then matched into the deck.
-    for(const id of items){
-        if(bag[id]>0)bag[id]--;if(bag[id]===0)delete bag[id];
-        if(deck[id]>0)deck[id]--;if(deck[id]===0)delete deck[id];
-        if(seen[id]>0)seen[id]--;if(seen[id]===0)delete seen[id];
-    }
+    // Played cards are not used up: they return to the bag. Loot joins it and is matched into the deck.
+    const bag=partyBag(ctx);partyDeck(ctx);
     addToBag(bag,loot);partyDeck(ctx);
     const fled=result.fled?after.units.filter(u=>u.side==='enemy'&&!u.duel&&u.hp>0).map(u=>u.id):[];
     const event={id,kind:result.fled?'flee':'round',key:before.key,round:before.round,defeated,downed,fled,victory:result.victory,stats:result.stats,items,loot,...(before.duel?{duel:true}:{})};

@@ -5,7 +5,7 @@
 // item squares, since a Silly Teyvat bag holds a handful of cards rather than hundreds.
 import {cue} from './ui-sound.js';
 import {ITEMS,itemArt,bagCount} from './battle-items.js';
-import {partyBag,partyDeck,setDeckCount,DECK_MAX} from './battle-state.js';
+import {partyBag,partyDeck,setDeckCount,cardsInPlay,freeCount,DECK_MAX} from './battle-state.js';
 import {combatState,partyStatus,partyStore,USER_KEY} from './combat-state.js';
 import {activePersonaAvatar} from './persona-wardrobe.js';
 import {circularCharacterAvatar} from './character-avatars.js';
@@ -48,7 +48,8 @@ export function fieldUse(item){
 // Applies a dish to one party member out of combat. Returns the HP restored, or 0 if it would do nothing.
 export function eatOutsideBattle(ctx,id,avatar){
     const item=ITEMS[id],use=fieldUse(item),bag=partyBag(ctx),member=partyStatus(ctx).find(m=>m.avatar===avatar);
-    if(!use||!member||!(bag[id]>0))return 0;
+    // A card played in the fight in progress sits out until it ends: only the other copies can be eaten.
+    if(!use||!member||!(freeCount(ctx,id)>0))return 0;
     if(use.revive?!member.downed:member.downed||member.hp>=member.maxHp)return 0;
     const hp=use.revive?Math.min(member.maxHp,use.revive):Math.min(member.maxHp,member.hp+use.heal);
     partyStore(ctx)[avatar].hp=hp;bag[id]-=1;if(bag[id]<=0)delete bag[id];
@@ -125,7 +126,8 @@ export function mountInventory({host,getContext,announce=()=>{},onEat=()=>{},onC
         box.querySelector('.gi-inv-d-effects').replaceChildren(...item.text.split(/(?<=\.)\s+/).filter(Boolean).map(line=>el('li','',line)));
         box.querySelector('.gi-inv-d-set').textContent=`${group?.label || 'Card'}:`;
         box.querySelector('.gi-inv-d-use').textContent=`${group?.use || ''} ${item.target==='ally'?'Choose one party member.':item.target==='downed'?'Choose a downed party member.':item.target==='party'?'Affects the whole party.':''}`.trim();
-        box.querySelector('.gi-inv-d-foot span').textContent=`In your bag: ${count}`;
+        const {ctx:now,bag:held}=state(),out=held?cardsInPlay(now)[id] || 0:0;
+        box.querySelector('.gi-inv-d-foot span').textContent=`In your bag: ${count}${out?` (${out} played in this battle, back when it ends)`:''}`;
         paintDeck(box,card);
         paintEat(box,card);
         paintGift(box,card);
@@ -138,7 +140,7 @@ export function mountInventory({host,getContext,announce=()=>{},onEat=()=>{},onC
         const minus=section.querySelector('.gi-inv-deck-minus'),plus=section.querySelector('.gi-inv-deck-plus'),n=section.querySelector('.gi-inv-deck-n'),note=section.querySelector('.gi-inv-deck-note');
         const show=()=>{
             const deck=partyDeck(ctx),mine=deck[id] || 0,total=bagCount(deck);
-            n.textContent=`${mine} / ${count} in deck`;minus.disabled=mine<=0;plus.disabled=mine>=count||total>=DECK_MAX;
+            n.textContent=`${mine} / ${count} in deck`;minus.disabled=mine<=(cardsInPlay(ctx)[id] || 0);plus.disabled=mine>=count||total>=DECK_MAX;
             note.textContent=`Deck ${total} / ${DECK_MAX}. ${total<DECK_MAX?'New cards join it automatically while there is room.':'The deck is full: remove a card to add another.'}`;
             $('.gi-inv-total').textContent=`Cards ${bagCount(bag)} · Deck ${total}/${DECK_MAX}`;
         };
@@ -161,7 +163,8 @@ export function mountInventory({host,getContext,announce=()=>{},onEat=()=>{},onC
         if(!people){section.hidden=true;return;}
         section.hidden=false;
         const open=section.querySelector('.gi-inv-gift-open'),list=section.querySelector('.gi-inv-gift-people');
-        open.disabled=!people.length;open.title=people.length?'':'There is nobody here to give it to.';
+        const free=freeCount(ctx,id)>0;
+        open.disabled=!people.length||!free;open.title=!free?'Played in this battle: it can be given once the battle ends.':people.length?'':'There is nobody here to give it to.';
         list.setAttribute('aria-label',`Give ${item.name} to`);
         list.replaceChildren(...people.map(card=>{
             const b=el('button','gi-inv-gift-to');b.type='button';b.dataset.avatar=card.avatar;
@@ -178,11 +181,12 @@ export function mountInventory({host,getContext,announce=()=>{},onEat=()=>{},onC
         const {ctx,bag}=state(),use=fieldUse(item),section=box.querySelector('.gi-inv-d-eat');
         if(!use||!bag){section.hidden=true;return;}
         section.hidden=false;
-        section.querySelector('h4').textContent=use.revive?'Revive a downed member':`Eat now · restores ${use.heal} HP`;
+        const free=freeCount(ctx,id)>0;
+        section.querySelector('h4').textContent=!free?'Played in this battle: back when it ends':use.revive?'Revive a downed member':`Eat now · restores ${use.heal} HP`;
         const party=section.querySelector('.gi-inv-d-party');party.setAttribute('aria-label',`Use ${item.name} on`);
         party.replaceChildren(...partyStatus(ctx).map(member=>{
             const b=el('button','gi-inv-eat');b.type='button';
-            const usable=use.revive?member.downed:!member.downed&&member.hp<member.maxHp;
+            const usable=free&&(use.revive?member.downed:!member.downed&&member.hp<member.maxHp);
             b.disabled=!usable;b.dataset.avatar=member.avatar;
             b.innerHTML='<img alt="" draggable="false"><span><b></b><i class="gi-inv-eat-hp"><i></i></i><small></small></span>';
             const img=b.querySelector('img');img.src=member.avatar===USER_KEY?(ctx.getThumbnailUrl?.('persona',activePersonaAvatar(ctx)) || `/User%20Avatars/${encodeURIComponent(activePersonaAvatar(ctx))}`):(ctx.getThumbnailUrl?.('avatar',member.avatar) || `/characters/${encodeURIComponent(member.avatar)}`);
@@ -190,7 +194,7 @@ export function mountInventory({host,getContext,announce=()=>{},onEat=()=>{},onC
             b.querySelector('b').textContent=member.name;
             b.querySelector('.gi-inv-eat-hp').style.setProperty('--hp',String(member.maxHp?member.hp/member.maxHp:0));
             b.querySelector('small').textContent=member.downed?'Downed':`${member.hp} / ${member.maxHp}`;
-            b.setAttribute('aria-label',`${member.name}, ${member.downed?'downed':`${member.hp} of ${member.maxHp} HP`}${usable?'':use.revive?', not downed':member.downed?', downed: needs a revive':', already at full health'}`);
+            b.setAttribute('aria-label',`${member.name}, ${member.downed?'downed':`${member.hp} of ${member.maxHp} HP`}${usable?'':!free?', played in this battle':use.revive?', not downed':member.downed?', downed: needs a revive':', already at full health'}`);
             b.addEventListener('click',()=>{
                 const healed=eatOutsideBattle(getContext(),id,member.avatar);if(!healed)return;
                 const after=partyStatus(getContext()).find(m=>m.avatar===member.avatar);

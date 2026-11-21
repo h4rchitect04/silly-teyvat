@@ -1,7 +1,9 @@
 import {autoBattle} from './preview-battle-auto.js';
 import {mountCombat} from './combat.js';
 import {combatState,partyStatus,healParty,USER_KEY} from './combat-state.js';
-import {battleSnapshot,commitRound} from './battle-state.js';
+import {battleSnapshot,commitRound,partyBag,partyDeck,setDeckCount,cardsInPlay,freeCount} from './battle-state.js';
+import {eatOutsideBattle} from './inventory.js';
+import {giveGift} from './gifts.js';
 import {resolveRound} from './battle-engine.js';
 import {nearestGuild,resolveDefeat,findKatheryne,isGuildLocation} from './defeat.js';
 import {travelState} from './backgrounds.js';
@@ -50,6 +52,38 @@ export async function runEnemyAttackTests(){
         check('the same round cannot be applied twice',commitRound(ctx,snap,round,'round-1')===null&&event.kind==='round');
         let stale=false;try{commitRound(ctx,snap,round,'round-2');}catch{stale=true;}check('a round resolved against old health is rejected',stale);
         healParty(ctx);check('healing restores everyone',partyStatus(ctx).every(m=>m.hp===m.maxHp));
+        // Played cards are not used up: they sit out the rest of the battle, then return to the deck.
+        {const c=fixture(),bag=partyBag(c),id=Object.keys(partyDeck(c))[0],had=bag[id],inDeck=partyDeck(c)[id];
+        const s1=battleSnapshot(c);commitRound(c,s1,resolveRound(s1,[],{random:()=>.5}),'card-1',{items:[id]});
+        const s2=battleSnapshot(c);
+        check('a card played stays in the bag but leaves this battle\'s deck',partyBag(c)[id]===had&&partyDeck(c)[id]===inDeck&&(s2.bag[id] || 0)===inDeck-1);
+        commitRound(c,s2,{...resolveRound(s2,[],{random:()=>.5}),victory:true},'card-2');
+        check('the next battle deals every played card again',(battleSnapshot(c).bag[id] || 0)===inDeck&&partyBag(c)[id]===had);}
+        // Between rounds, a card played in the fight sits out: it cannot be eaten, given away or taken out of the deck.
+        {const c=fixture(),store=combatState(c);store.bag={'sweet-madame':2};delete store.deck;delete store.deckBag;
+        const s1=battleSnapshot(c);commitRound(c,s1,{...resolveRound(s1,[],{random:()=>.5}),hand:['sweet-madame']},'sit-1',{items:['sweet-madame']});
+        check('a card played in the fight in progress sits out',cardsInPlay(c)['sweet-madame']===1&&freeCount(c,'sweet-madame')===1);
+        check('a card played in this battle cannot be taken out of the deck',setDeckCount(c,'sweet-madame',0)===1&&partyDeck(c)['sweet-madame']===1);
+        setDeckCount(c,'sweet-madame',2);combatState(c).party[USER_KEY].hp=10;
+        check('the other copy can still be eaten between rounds',eatOutsideBattle(c,'sweet-madame',USER_KEY)===4&&partyBag(c)['sweet-madame']===1);
+        combatState(c).party[USER_KEY].hp=10;
+        check('the copy played in this battle cannot be eaten',eatOutsideBattle(c,'sweet-madame',USER_KEY)===0&&partyBag(c)['sweet-madame']===1);
+        let refused=false;try{await giveGift(()=>c,{id:'sweet-madame',avatar:'Klee.png'},{loadScript:async()=>({isGenerating:()=>false})});}catch(error){refused=/played in this battle/.test(error.message);}
+        check('the copy played in this battle cannot be given away',refused&&partyBag(c)['sweet-madame']===1);
+        const s2=battleSnapshot(c);
+        check('the copy eaten was the one in hand, and the played one still sits out',!s2.hand.includes('sweet-madame')&&!(s2.bag['sweet-madame']>0));}
+        // A finished fight leaves nothing behind for the next fight under the same key.
+        {const c=fixture(),s1=battleSnapshot(c),r1=resolveRound(s1,[],{random:()=>.5});
+        r1.state.summons=[{id:'hamster',name:'Origami Hamster',side:'party',usages:2}];r1.state.round=3;for(const u of r1.state.units)if(u.side==='party'){u.energy=2;u.shield=4;}
+        commitRound(c,s1,{...r1,victory:true},'over-1');
+        const s2=battleSnapshot(c);
+        check('a won fight is forgotten: the next starts at round 1 with no summons, shields or Energy',s2.round===1&&!s2.summons.length&&s2.fresh&&s2.units.filter(u=>u.side==='party').every(u=>!u.energy&&!u.shield));}
+        // A fight whose enemies all leave is over: its played cards come back.
+        {const c=fixture(),id=Object.keys(partyDeck(c))[0],inDeck=partyDeck(c)[id],s1=battleSnapshot(c);
+        commitRound(c,s1,resolveRound(s1,[],{random:()=>.5}),'gone-1',{items:[id]});
+        check('cards played in a fight in progress are counted',cardsInPlay(c)[id]===1);
+        c.chatMetadata.silly_teyvat_cast.encounter.enemies=[];c.groups[0].members=['Klee.png'];
+        check('when its enemies leave, the fight ends and its cards come back',!cardsInPlay(c)[id]&&!Object.keys(combatState(c).battles).length&&partyDeck(c)[id]===inDeck);}
         {const statueCtx=fixture(),regions=statueCtx.extensionSettings.genshin_dialogue_ui.backgroundRegions;
         regions[0].locations.push(place('statue','Statue of The Seven',50,50,{wilderness:true,statue:'Anemo'}),place('wilds-2','Deeper Wilds',80,80,{wilderness:true}));
         const hurt=()=>{partyStatus(statueCtx);for(const entry of Object.values(combatState(statueCtx).party))entry.hp=1;};

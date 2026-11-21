@@ -11,7 +11,7 @@ import {resolveDefeat,defeatNarration} from './defeat.js';
 import {activePersonaAvatar,personaCard} from './persona-wardrobe.js';
 import {circularCharacterAvatar,characterAvatarsReady} from './character-avatars.js';
 import {mountElementalDice,ELEMENT_COLORS} from './elemental-dice.js';
-import {battleSnapshot,commitRound,roundNarration,partyBag,unpaidEnemies} from './battle-state.js';
+import {battleSnapshot,commitRound,roundNarration,partyBag,freeCount,unpaidEnemies} from './battle-state.js';
 import {completeCardSearch,foundMessage} from './card-search.js';
 import {rollFuel,rerollFuel,partyElements} from './battle-engine.js';
 import {ITEMS,rollLoot,rollBossLoot} from './battle-items.js';
@@ -280,7 +280,7 @@ export function mountCombat({host,getContext,onChange=()=>{},announce=()=>{},ada
             await adapter.append(getContext(),{text:`${user} defeated ${name}.`,event:{id,kind:'death',avatar:fallen}});
             saveTravel(ctx);syncCombatPrompt(getContext(),enabled);onChange({defeated:fallen,removed:[fallen],slain:true});return;
         }
-        const [itemId,item]=Object.entries(ITEMS).find(([key,value])=>value.target==='downed'&&bag[key]>0) || [];
+        const [itemId,item]=Object.entries(ITEMS).find(([key,value])=>value.target==='downed'&&freeCount(ctx,key)>0) || [];
         let revive=false;
         if(item){
             const answer=await ask({title:`${name} is down`,buttons:[{label:`Use ${item.name}`,value:'revive',primary:true},{label:`Let ${name} go`,value:'leave'}]});
