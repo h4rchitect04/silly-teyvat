@@ -206,7 +206,8 @@ export function commitRound(ctx,before,result,id,{items=[],loot=[]}={}){
         saved.foes=[...foes.values()];
         saved.active={...(result.active || after.active || {})};saved.hand=[...(result.hand || [])];saved.first=result.first || 'party';
     }
-    // Only the whole party falling loses a fight now. Anyone still down when it is won or escaped comes to with 1 HP.
+    // Only the whole party falling loses a fight now. If you are still down when it is won or escaped, you come to
+    // with 1 HP; a downed ally sits out until healed (COMBAT.md).
     if(result.victory||result.fled)for(const u of after.units)if(u.side==='party'&&!u.duel&&u.hp<=0&&u.isUser)party[u.id].hp=1;
     // Played cards are not used up: they return to the bag. Loot joins it and is matched into the deck.
     const bag=partyBag(ctx);partyDeck(ctx);
